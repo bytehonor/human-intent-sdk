@@ -19,7 +19,9 @@ public class IntentFilterProcessor {
         Objects.requireNonNull(request, "request");
         Objects.requireNonNull(request.getUuid(), "uuid");
         Objects.requireNonNull(request.getApp(), "app");
-        LOG.info("query:{}, uuid:{}, app:{}", request.getQuery(), request.getUuid(), request.getApp());
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("query:{}, uuid:{}, app:{}", request.getQuery(), request.getUuid(), request.getApp());
+        }
         try {
             filterRequest(request);
             if (request.getSession() == null) {
