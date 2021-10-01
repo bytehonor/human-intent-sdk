@@ -28,12 +28,18 @@ public final class HumanIntentProcessor {
     public static IntentResult process(final IntentRequest request) {
         IntentFilterProcessor.before(request);
         IntentTarget target = IntentRecognizeProcessor.recognize(request);
-        if (LOG.isDebugEnabled()) {
-            LOG.debug("query:{}, uuid:{}, intent:{}, recognizer:{}", request.getQuery(), request.getUuid(),
-                    target.getIntent(), target.getRecognizer());
+        if (LOG.isInfoEnabled()) {
+            LOG.info("query:{}, intent:{}, recognizer:{}, uuid:{}", request.getQuery(), target.getIntent(),
+                    target.getRecognizer(), request.getUuid());
+        }
+
+        if (target.getSession().isAuto() == false) {
+            // 停止自动应答
+            return IntentResult.non(target);
         }
 
         if (IntentConstants.PUBLIC_AMBIGUOUS.equals(target.getIntent())) {
+            // 含糊不清的
             return doAmbiguous(target);
         }
 
@@ -43,7 +49,7 @@ public final class HumanIntentProcessor {
     }
 
     public static IntentResult doAmbiguous(IntentTarget target) {
-        List<String> intents = StringSplitUtils.split(target.getSlots().get(0).getValue());
+        List<String> intents = StringSplitUtils.split(target.getSlotValue("intents"));
         List<String> patterns = IntentRecognizeProcessor.findPatterns(intents);
         StringBuilder sb = new StringBuilder();
         sb.append(IntentConstants.TIP_HANDLER_AMBIGUOUS).append("\r\n");

@@ -1,9 +1,12 @@
 package com.bytehonor.sdk.intent.human.model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
+import com.bytehonor.sdk.define.bytehonor.util.StringObject;
 import com.bytehonor.sdk.intent.human.constant.IntentConstants;
 import com.bytehonor.sdk.intent.human.recognize.IntentRecognizer;
 import com.bytehonor.sdk.lang.bytehonor.util.ListJoinUtils;
@@ -20,14 +23,14 @@ public class IntentTarget {
 
     private String recognizer;
 
-    private List<IntentSlot> slots;
+    private Map<String, String> slots;
 
     public IntentTarget() {
-        this(null, null, 0, null, null, null);
+        this(null, null, IntentConstants.SCORE_MIN, null, null, null);
     }
 
     public IntentTarget(String query, IntentSession session, int score, String recognizer, String intent,
-            List<IntentSlot> slots) {
+            Map<String, String> slots) {
         this.query = query;
         this.session = session;
         this.score = score;
@@ -36,26 +39,47 @@ public class IntentTarget {
         this.slots = slots;
     }
 
+    /**
+     * 人工处理
+     * 
+     * @param request
+     * @return
+     */
     public static IntentTarget manual(IntentRequest request) {
         Objects.requireNonNull(request, "request");
         Objects.requireNonNull(request.getSession(), "session");
         request.getSession().setAuto(false);
-        return new IntentTarget(request.getQuery(), request.getSession(), 100, "system",
-                IntentConstants.PUBLIC_STOP_AUTO, null);
+        return new IntentTarget(request.getQuery(), request.getSession(), IntentConstants.SCORE_MAX,
+                IntentConstants.SYSTEM, IntentConstants.PUBLIC_STOP_AUTO, null);
     }
 
+    /**
+     * 未定义, 归属app
+     * 
+     * @param request
+     * @param app
+     * @return
+     */
     public static IntentTarget undefined(IntentRequest request, String app) {
         Objects.requireNonNull(request, "request");
         Objects.requireNonNull(request.getSession(), "session");
         Objects.requireNonNull(app, "app");
         request.getSession().setAuto(true);
-        return new IntentTarget(request.getQuery(), request.getSession(), 100, "system", app, null);
+        return new IntentTarget(request.getQuery(), request.getSession(), IntentConstants.SCORE_MAX,
+                IntentConstants.SYSTEM, app, null);
     }
 
-    public static IntentTarget no(IntentRequest request, IntentRecognizer handler) {
-        return auto(request, 0, handler, null);
+    public static IntentTarget deny(IntentRequest request, IntentRecognizer handler) {
+        return auto(request, IntentConstants.SCORE_MIN, handler, null);
     }
 
+    /**
+     * 模糊不清
+     * 
+     * @param request
+     * @param targets
+     * @return
+     */
     public static IntentTarget ambiguous(IntentRequest request, List<IntentTarget> targets) {
         Objects.requireNonNull(request, "request");
         Objects.requireNonNull(request.getSession(), "session");
@@ -65,14 +89,23 @@ public class IntentTarget {
         for (IntentTarget target : targets) {
             intents.add(target.getIntent());
         }
-        List<IntentSlot> slots = new ArrayList<IntentSlot>();
-        slots.add(new IntentSlot("intents", ListJoinUtils.joinString(intents)));
-        return new IntentTarget(request.getQuery(), request.getSession(), 100, "system",
-                IntentConstants.PUBLIC_AMBIGUOUS, slots);
+        Map<String, String> slots = new HashMap<String, String>();
+        slots.put("intents", ListJoinUtils.joinString(intents));
+        return new IntentTarget(request.getQuery(), request.getSession(), IntentConstants.SCORE_MAX,
+                IntentConstants.SYSTEM, IntentConstants.PUBLIC_AMBIGUOUS, slots);
     }
 
+    /**
+     * 自动
+     * 
+     * @param request
+     * @param score
+     * @param handler
+     * @param slots
+     * @return
+     */
     public static IntentTarget auto(IntentRequest request, int score, IntentRecognizer handler,
-            List<IntentSlot> slots) {
+            Map<String, String> slots) {
         Objects.requireNonNull(request, "request");
         Objects.requireNonNull(request.getSession(), "session");
         Objects.requireNonNull(handler, "handler");
@@ -105,11 +138,11 @@ public class IntentTarget {
         this.recognizer = recognizer;
     }
 
-    public List<IntentSlot> getSlots() {
+    public Map<String, String> getSlots() {
         return slots;
     }
 
-    public void setSlots(List<IntentSlot> slots) {
+    public void setSlots(Map<String, String> slots) {
         this.slots = slots;
     }
 
@@ -129,4 +162,10 @@ public class IntentTarget {
         this.intent = intent;
     }
 
+    public String getSlotValue(String key) {
+        if (StringObject.isEmpty(key)) {
+            return null;
+        }
+        return slots != null ? slots.get(key) : null;
+    }
 }

@@ -36,6 +36,7 @@ public class IntentRecognizeProcessor {
         if (target == null) {
             target = IntentTarget.undefined(request, request.getApp());
         }
+        target.getSession().setNowIntent(target.getIntent());
         return target;
     }
 

@@ -4,6 +4,12 @@ public class IntentConstants {
 
     public static final String ANY = "*";
 
+    public static final String SYSTEM = "system";
+
+    public static final int SCORE_MIN = 0;
+
+    public static final int SCORE_MAX = 100;
+
     public static final String ANSWER_NON = "你什么也没说是吧";
 
     public static final String PUBLIC_DEFAULT = "PUBLIC_DEFAULT";
@@ -57,6 +63,6 @@ public class IntentConstants {
     public static final String TIP_HANDLER_NON = "收到";
 
     public static final String TIP_HANDLER_ERROR = "出错了";
-    
-    public static final String TIP_HANDLER_AMBIGUOUS = "是否想问:";
+
+    public static final String TIP_HANDLER_AMBIGUOUS = "您是否想说:";
 }

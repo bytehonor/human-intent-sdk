@@ -22,14 +22,8 @@ public final class IntentResolveProcessor {
     public static IntentResult resolve(IntentTarget target) {
         Objects.requireNonNull(target, "target");
         Objects.requireNonNull(target.getSession(), "session");
-        target.getSession().setNowIntent(target.getIntent());
         LOG.info("session id:{}, preIntent:{}, nowIntent:{}", target.getSession().getId(),
                 target.getSession().getPreIntent(), target.getSession().getNowIntent());
-
-        if (target.getSession().isAuto() == false) {
-            // 停止自动应答
-            return IntentResult.non(target);
-        }
 
         IntentResolver handler = IntentResolverFactory.optional(target.getIntent());
         if (handler == null) {

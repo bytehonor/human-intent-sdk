@@ -23,6 +23,8 @@ public class IntentSession {
 
     private String nowIntent;
 
+    // 下面三个参数可以用个MAP代替
+
     private int page;
 
     private String newsChannel;
