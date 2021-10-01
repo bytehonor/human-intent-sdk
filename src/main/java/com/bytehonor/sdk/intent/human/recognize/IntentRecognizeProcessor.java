@@ -7,12 +7,13 @@ import java.util.Objects;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.CollectionUtils;
 
 import com.bytehonor.sdk.define.bytehonor.constant.TimeConstants;
 import com.bytehonor.sdk.define.bytehonor.util.StringObject;
-import com.bytehonor.sdk.intent.human.constant.IntentConstants;
 import com.bytehonor.sdk.intent.human.model.IntentRequest;
 import com.bytehonor.sdk.intent.human.model.IntentTarget;
+import com.bytehonor.sdk.intent.human.util.IntentRecognizeUtils;
 
 public class IntentRecognizeProcessor {
 
@@ -54,16 +55,18 @@ public class IntentRecognizeProcessor {
         }
 
         if (StringObject.isEmpty(request.getQuery())) {
+            LOG.warn("query is empty, uuid:{}, app:{}", request.getUuid(), request.getApp());
             return IntentTarget.undefined(request, request.getApp());
         }
 
+        List<IntentRecognizer> recognizers = IntentRecognizerFactory.list(request.getApp());
+        if (CollectionUtils.isEmpty(recognizers)) {
+            LOG.warn("query:{}, app:{} no recognizers", request.getQuery(), request.getApp());
+            return IntentTarget.undefined(request, request.getApp());
+        }
         List<IntentTarget> list = Collections.synchronizedList(new ArrayList<IntentTarget>());
-        IntentRecognizerFactory.list().parallelStream().forEach(handler -> {
-            if (IntentConstants.ANY.equals(handler.app()) == false
-                    && StringObject.equals(request.getApp(), handler.app()) == false) {
-                return;
-            }
-            IntentTarget tar = handler.recoginze(request);
+        recognizers.parallelStream().forEach(recognizer -> {
+            IntentTarget tar = recognizer.recoginze(request);
             if (tar.getScore() > 50) {
                 LOG.info("{}, {}, {}", tar.getScore(), tar.getIntent(), tar.getRecognizer());
                 list.add(tar);
@@ -81,11 +84,14 @@ public class IntentRecognizeProcessor {
         return IntentTarget.undefined(request, request.getApp());
     }
 
-    public static List<String> findPatterns(List<String> intents) {
+    public static List<String> findPatterns(String app, List<String> intents) {
         List<String> list = new ArrayList<String>();
         for (String intent : intents) {
             IntentRecognizer recognizer = IntentRecognizerFactory.optional(intent);
-            if (recognizer != null && StringObject.isEmpty(recognizer.pattern()) == false) {
+            if (IntentRecognizeUtils.isAppMatch(app, recognizer) == false) {
+                continue;
+            }
+            if (StringObject.isEmpty(recognizer.pattern()) == false) {
                 list.add(recognizer.pattern());
             }
         }
