@@ -34,7 +34,7 @@ public class IntentTarget {
         this.slots = slots;
     }
 
-    public static IntentTarget stop(IntentRequest request) {
+    public static IntentTarget manual(IntentRequest request) {
         Objects.requireNonNull(request, "request");
         Objects.requireNonNull(request.getSession(), "session");
         request.getSession().setAuto(false);

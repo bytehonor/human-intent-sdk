@@ -49,7 +49,7 @@ public class IntentRecognizeProcessor {
         Objects.requireNonNull(request, "request");
         long now = System.currentTimeMillis();
         if (request.getSession().isAuto() == false && (now - request.getSession().getPreTime() < TimeConstants.HOUR)) {
-            return IntentTarget.stop(request);
+            return IntentTarget.manual(request);
         }
 
         if (StringObject.isEmpty(request.getQuery())) {

@@ -2,10 +2,19 @@ package com.bytehonor.sdk.intent.human.model;
 
 public class IntentAnswer {
 
+    /**
+     * 图片
+     */
     public static final String IMAGE = "image";
 
+    /**
+     * 文本
+     */
     public static final String TEXT = "text";
 
+    /**
+     * 没有回答
+     */
     public static final String NON = "non";
 
     private String type;
