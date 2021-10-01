@@ -8,6 +8,20 @@ public class IntentConstants {
 
     public static final String PUBLIC_DEFAULT = "PUBLIC_DEFAULT";
 
+    public static final String PUBLIC_PLAY_AGAIN = "PUBLIC_PLAY_AGAIN";
+
+    public static final String PUBLIC_PLAY_CONTINUE = "PUBLIC_PLAY_CONTINUE";
+
+    /**
+     * 用户请求声音调整
+     */
+    public static final String PUBLIC_VOICE_SETTING = "PUBLIC_VOICE_SETTING";
+
+    /**
+     * 用户请求音乐
+     */
+    public static final String PUBLIC_WISH_MUSIC = "PUBLIC_WISH_MUSIC";
+
     /**
      * 停止服务
      */
@@ -33,8 +47,6 @@ public class IntentConstants {
     public static final String PUBLIC_NEWS_CHANNEL_UPDATE = "PUBLIC_NEWS_CHANNEL_UPDATE";
 
     public static final String PUBLIC_NEWS_DETAIL_SELECT = "PUBLIC_NEWS_DETAIL_SELECT";
-
-    public static final String PUBLIC_PLAY_AGAIN = "PUBLIC_PLAY_AGAIN";
 
     public static final String PUBLIC_COIN_PRICE = "PUBLIC_COIN_PRICE";
 
