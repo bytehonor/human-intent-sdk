@@ -25,6 +25,7 @@ repositories {
 
 dependencies {
     api('com.bytehonor.sdk:bytehonor-lang-sdk:1.2.3')
+    implementation('org.springframework:spring-core:5.3.5')
     implementation('org.slf4j:slf4j-api:1.7.30')
     testImplementation('ch.qos.logback:logback-classic:1.2.3')
 	testImplementation('junit:junit:4.12')
