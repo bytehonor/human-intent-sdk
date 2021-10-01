@@ -41,17 +41,16 @@ public class IntentTarget {
         return new IntentTarget(request.getQuery(), request.getSession(), score, recognizer, intent, slots);
     }
 
-    public static IntentTarget failed(IntentRequest request, IntentRecognizer handler) {
+    public static IntentTarget no(IntentRequest request, IntentRecognizer handler) {
         return create(request, 0, handler.getClass().getSimpleName(), handler.intent(), null);
     }
 
-    public static IntentTarget success(IntentRequest request, int score, IntentRecognizer handler) {
+    public static IntentTarget done(IntentRequest request, int score, IntentRecognizer handler) {
         return create(request, score, handler.getClass().getSimpleName(), handler.intent(), null);
     }
 
-    public static IntentTarget success(IntentRequest request, int score, IntentRecognizer handler,
-            List<IntentSlot> slots) {
-        return create(request, score, handler.getClass().getSimpleName(), handler.intent(), slots);
+    public static IntentTarget done(IntentRequest request, IntentRecognizer handler, List<IntentSlot> slots) {
+        return create(request, 100, handler.getClass().getSimpleName(), handler.intent(), slots);
     }
 
     public int getScore() {
