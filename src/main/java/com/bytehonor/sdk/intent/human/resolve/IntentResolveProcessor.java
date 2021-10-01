@@ -26,7 +26,7 @@ public final class IntentResolveProcessor {
         LOG.info("session id:{}, preIntent:{}, nowIntent:{}", target.getSession().getId(),
                 target.getSession().getPreIntent(), target.getSession().getNowIntent());
 
-        if (IntentConstants.PUBLIC_STOP_AUTO.equals(target.getIntent())) {
+        if (target.getSession().isAuto() == false) {
             // 停止自动应答
             return IntentResult.non(target);
         }

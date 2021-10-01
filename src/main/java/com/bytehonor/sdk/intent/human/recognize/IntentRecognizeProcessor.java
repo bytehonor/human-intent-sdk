@@ -8,6 +8,7 @@ import java.util.Objects;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.bytehonor.sdk.define.bytehonor.constant.TimeConstants;
 import com.bytehonor.sdk.define.bytehonor.util.StringObject;
 import com.bytehonor.sdk.intent.human.constant.IntentConstants;
 import com.bytehonor.sdk.intent.human.model.IntentRequest;
@@ -46,8 +47,9 @@ public class IntentRecognizeProcessor {
      */
     private static IntentTarget doRecognize(IntentRequest request) {
         Objects.requireNonNull(request, "request");
-        if (request.getSession().isAuto() == false) {
-            return IntentTarget.undefined(request, IntentConstants.PUBLIC_STOP_AUTO);
+        long now = System.currentTimeMillis();
+        if (request.getSession().isAuto() == false && (now - request.getSession().getPreTime() < TimeConstants.HOUR)) {
+            return IntentTarget.stop(request);
         }
 
         if (StringObject.isEmpty(request.getQuery())) {

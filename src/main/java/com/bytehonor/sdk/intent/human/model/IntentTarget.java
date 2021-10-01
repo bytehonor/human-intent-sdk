@@ -3,6 +3,7 @@ package com.bytehonor.sdk.intent.human.model;
 import java.util.List;
 import java.util.Objects;
 
+import com.bytehonor.sdk.intent.human.constant.IntentConstants;
 import com.bytehonor.sdk.intent.human.recognize.IntentRecognizer;
 
 public class IntentTarget {
@@ -33,32 +34,38 @@ public class IntentTarget {
         this.slots = slots;
     }
 
-    public static IntentTarget undefined(IntentRequest request, String intent) {
-        return create(request, 100, "system", intent, null);
+    public static IntentTarget stop(IntentRequest request) {
+        Objects.requireNonNull(request, "request");
+        Objects.requireNonNull(request.getSession(), "session");
+        request.getSession().setAuto(false);
+        return new IntentTarget(request.getQuery(), request.getSession(), 100, "system",
+                IntentConstants.PUBLIC_STOP_AUTO, null);
     }
 
-    public static IntentTarget create(IntentRequest request, int score, String recognizer, String intent,
-            List<IntentSlot> slots) {
+    public static IntentTarget undefined(IntentRequest request, String app) {
         Objects.requireNonNull(request, "request");
-        Objects.requireNonNull(intent, "intent");
-        return new IntentTarget(request.getQuery(), request.getSession(), score, recognizer, intent, slots);
+        Objects.requireNonNull(request.getSession(), "session");
+        Objects.requireNonNull(app, "app");
+        request.getSession().setAuto(true);
+        return new IntentTarget(request.getQuery(), request.getSession(), 100, "system", app, null);
     }
 
     public static IntentTarget no(IntentRequest request, IntentRecognizer handler) {
-        return create(request, 0, handler.getClass().getSimpleName(), handler.intent(), null);
+        return auto(request, 0, handler, null);
     }
 
-    public static IntentTarget done(IntentRequest request, int score, IntentRecognizer handler) {
-        return create(request, score, handler.getClass().getSimpleName(), handler.intent(), null);
+    public static IntentTarget auto(IntentRequest request, int score, IntentRecognizer handler) {
+        return auto(request, score, handler, null);
     }
 
-    public static IntentTarget done(IntentRequest request, IntentRecognizer handler, List<IntentSlot> slots) {
-        return create(request, 100, handler.getClass().getSimpleName(), handler.intent(), slots);
-    }
-
-    public static IntentTarget done(IntentRequest request, int score, IntentRecognizer handler,
+    public static IntentTarget auto(IntentRequest request, int score, IntentRecognizer handler,
             List<IntentSlot> slots) {
-        return create(request, score, handler.getClass().getSimpleName(), handler.intent(), slots);
+        Objects.requireNonNull(request, "request");
+        Objects.requireNonNull(request.getSession(), "session");
+        Objects.requireNonNull(handler, "handler");
+        request.getSession().setAuto(true);
+        return new IntentTarget(request.getQuery(), request.getSession(), score, handler.getClass().getSimpleName(),
+                handler.intent(), slots);
     }
 
     public int getScore() {
