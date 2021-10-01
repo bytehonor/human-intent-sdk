@@ -56,6 +56,11 @@ public class IntentTarget {
         return create(request, 100, handler.getClass().getSimpleName(), handler.intent(), slots);
     }
 
+    public static IntentTarget done(IntentRequest request, int score, IntentRecognizer handler,
+            List<IntentSlot> slots) {
+        return create(request, score, handler.getClass().getSimpleName(), handler.intent(), slots);
+    }
+
     public int getScore() {
         return score;
     }
