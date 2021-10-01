@@ -8,6 +8,8 @@ public class IntentConstants {
 
     public static final String PUBLIC_DEFAULT = "PUBLIC_DEFAULT";
 
+    public static final String PUBLIC_AMBIGUOUS = "PUBLIC_AMBIGUOUS";
+
     public static final String PUBLIC_PLAY_AGAIN = "PUBLIC_PLAY_AGAIN";
 
     public static final String PUBLIC_PLAY_CONTINUE = "PUBLIC_PLAY_CONTINUE";
@@ -55,4 +57,6 @@ public class IntentConstants {
     public static final String TIP_HANDLER_NON = "收到";
 
     public static final String TIP_HANDLER_ERROR = "出错了";
+    
+    public static final String TIP_HANDLER_AMBIGUOUS = "是否想问:";
 }

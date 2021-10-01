@@ -68,20 +68,26 @@ public class IntentRecognizeProcessor {
                 list.add(tar);
             }
         });
-        int max = 0;
-        IntentTarget target = null;
-        for (IntentTarget item : list) {
-            if (item.getScore() > max) {
-                max = item.getScore();
-                target = item;
-            }
+        int size = list.size();
+        if (size == 1) {
+            return list.get(0);
         }
-
-        if (target != null) {
-            return target;
+        if (size > 1) {
+            // 多个目标,模糊不清也是一个目标,进行二次提问
+            return IntentTarget.ambiguous(request, list);
         }
-
         // 缺省的时候就放app，由应用的默认处理器去处理
         return IntentTarget.undefined(request, request.getApp());
+    }
+
+    public static List<String> findPatterns(List<String> intents) {
+        List<String> list = new ArrayList<String>();
+        for (String intent : intents) {
+            IntentRecognizer recognizer = IntentRecognizerFactory.optional(intent);
+            if (recognizer != null && StringObject.isEmpty(recognizer.pattern()) == false) {
+                list.add(recognizer.pattern());
+            }
+        }
+        return list;
     }
 }

@@ -1,10 +1,12 @@
 package com.bytehonor.sdk.intent.human.model;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 import com.bytehonor.sdk.intent.human.constant.IntentConstants;
 import com.bytehonor.sdk.intent.human.recognize.IntentRecognizer;
+import com.bytehonor.sdk.lang.bytehonor.util.ListJoinUtils;
 
 public class IntentTarget {
 
@@ -54,8 +56,19 @@ public class IntentTarget {
         return auto(request, 0, handler, null);
     }
 
-    public static IntentTarget auto(IntentRequest request, int score, IntentRecognizer handler) {
-        return auto(request, score, handler, null);
+    public static IntentTarget ambiguous(IntentRequest request, List<IntentTarget> targets) {
+        Objects.requireNonNull(request, "request");
+        Objects.requireNonNull(request.getSession(), "session");
+        Objects.requireNonNull(targets, "targets");
+        request.getSession().setAuto(true);
+        List<String> intents = new ArrayList<String>();
+        for (IntentTarget target : targets) {
+            intents.add(target.getIntent());
+        }
+        List<IntentSlot> slots = new ArrayList<IntentSlot>();
+        slots.add(new IntentSlot("intents", ListJoinUtils.joinString(intents)));
+        return new IntentTarget(request.getQuery(), request.getSession(), 100, "system",
+                IntentConstants.PUBLIC_AMBIGUOUS, slots);
     }
 
     public static IntentTarget auto(IntentRequest request, int score, IntentRecognizer handler,
