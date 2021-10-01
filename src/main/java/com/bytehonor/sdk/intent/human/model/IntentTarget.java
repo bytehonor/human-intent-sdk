@@ -33,21 +33,25 @@ public class IntentTarget {
     }
 
     public static IntentTarget undefined(IntentRequest request, String intent) {
-        return make(request, 100, "system", intent, null);
+        return create(request, 100, "system", intent, null);
     }
 
-    public static IntentTarget make(IntentRequest request, int score, String recognizer, String intent,
+    public static IntentTarget create(IntentRequest request, int score, String recognizer, String intent,
             List<IntentSlot> slots) {
         return new IntentTarget(request.getQuery(), request.getSession(), score, recognizer, intent, slots);
     }
 
-    public static IntentTarget done(IntentRequest request, int score, IntentRecognizer handler) {
-        return make(request, score, handler.getClass().getSimpleName(), handler.intent(), null);
+    public static IntentTarget failed(IntentRequest request, IntentRecognizer handler) {
+        return create(request, 0, handler.getClass().getSimpleName(), handler.intent(), null);
     }
 
-    public static IntentTarget done(IntentRequest request, int score, IntentRecognizer handler,
+    public static IntentTarget success(IntentRequest request, int score, IntentRecognizer handler) {
+        return create(request, score, handler.getClass().getSimpleName(), handler.intent(), null);
+    }
+
+    public static IntentTarget success(IntentRequest request, int score, IntentRecognizer handler,
             List<IntentSlot> slots) {
-        return make(request, score, handler.getClass().getSimpleName(), handler.intent(), slots);
+        return create(request, score, handler.getClass().getSimpleName(), handler.intent(), slots);
     }
 
     public int getScore() {
