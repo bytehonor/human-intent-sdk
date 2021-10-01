@@ -22,8 +22,10 @@ public final class IntentResolveProcessor {
     public static IntentResult resolve(IntentTarget target) {
         Objects.requireNonNull(target, "target");
         Objects.requireNonNull(target.getSession(), "session");
-
         target.getSession().setNowIntent(target.getIntent());
+        LOG.info("session id:{}, preIntent:{}, nowIntent:{}", target.getSession().getId(),
+                target.getSession().getPreIntent(), target.getSession().getNowIntent());
+
         if (IntentConstants.PUBLIC_STOP_AUTO.equals(target.getIntent())) {
             // 停止自动应答
             return IntentResult.non(target);
