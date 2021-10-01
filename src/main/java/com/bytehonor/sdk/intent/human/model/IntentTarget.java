@@ -164,9 +164,14 @@ public class IntentTarget {
     }
 
     public String getSlotValue(String key) {
+        return getSlotValue(key, null);
+    }
+
+    public String getSlotValue(String key, String def) {
         if (StringObject.isEmpty(key)) {
-            return null;
+            return def;
         }
-        return slots != null ? slots.get(key) : null;
+        String val = slots != null ? slots.get(key) : def;
+        return StringObject.isEmpty(val) == false ? val : def;
     }
 }
