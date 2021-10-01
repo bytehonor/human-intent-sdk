@@ -1,0 +1,43 @@
+package com.bytehonor.sdk.intent.human.filter;
+
+import java.util.List;
+import java.util.Objects;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.util.CollectionUtils;
+
+import com.bytehonor.sdk.intent.human.model.IntentRequest;
+import com.bytehonor.sdk.intent.human.model.IntentResult;
+
+public class IntentFilterProcessor {
+
+    private static final Logger LOG = LoggerFactory.getLogger(IntentFilterProcessor.class);
+
+    public static void chainRequest(final IntentRequest request) {
+        Objects.requireNonNull(request, "request");
+        Objects.requireNonNull(request.getUuid(), "uuid");
+        Objects.requireNonNull(request.getApp(), "app");
+        LOG.info("query:{}, uuid:{}, app:{}", request.getQuery(), request.getUuid(), request.getApp());
+        List<IntentRequestFilter> fiters = IntentFilterFactory.request();
+        if (CollectionUtils.isEmpty(fiters)) {
+            LOG.warn("IntentRequest filters empty");
+            return;
+        }
+        for (IntentRequestFilter filter : fiters) {
+            filter.chain(request);
+        }
+    }
+
+    public static void chainResult(final IntentResult result) {
+        Objects.requireNonNull(result, "result");
+        List<IntentResultFilter> fiters = IntentFilterFactory.result();
+        if (CollectionUtils.isEmpty(fiters)) {
+            LOG.warn("IntentResult filters empty");
+            return;
+        }
+        for (IntentResultFilter filter : fiters) {
+            filter.chain(result);
+        }
+    }
+}
