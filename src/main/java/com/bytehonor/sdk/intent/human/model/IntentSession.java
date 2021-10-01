@@ -17,15 +17,17 @@ public class IntentSession {
 
     private String app;
 
+    private long preTime;
+
     private String preIntent;
 
     private String nowIntent;
 
-    private Integer page;
+    private int page;
 
     private String newsChannel;
 
-    private Integer newsIndex;
+    private int newsIndex;
 
     public static IntentSession init(String uuid, String app) {
         Objects.requireNonNull(uuid, "uuid");
@@ -44,7 +46,17 @@ public class IntentSession {
     public IntentSession() {
         this.id = 0;
         this.auto = true;
+        this.preTime = 0L;
+        this.preIntent = "";
         this.nowIntent = IntentConstants.PUBLIC_DEFAULT;
+        this.newsIndex = 0;
+        this.page = PageConstants.PAGE_FIRST;
+    }
+
+    public String toCacheKey() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(app).append(":").append(uuid).append(":").append(page).append(":").append(newsChannel);
+        return MD5Utils.md5(sb.toString());
     }
 
     public int getId() {
@@ -63,11 +75,51 @@ public class IntentSession {
         this.auto = auto;
     }
 
-    public Integer getPage() {
+    public long getPreTime() {
+        return preTime;
+    }
+
+    public void setPreTime(long preTime) {
+        this.preTime = preTime;
+    }
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
+
+    public String getApp() {
+        return app;
+    }
+
+    public void setApp(String app) {
+        this.app = app;
+    }
+
+    public String getPreIntent() {
+        return preIntent;
+    }
+
+    public void setPreIntent(String preIntent) {
+        this.preIntent = preIntent;
+    }
+
+    public String getNowIntent() {
+        return nowIntent;
+    }
+
+    public void setNowIntent(String nowIntent) {
+        this.nowIntent = nowIntent;
+    }
+
+    public int getPage() {
         return page;
     }
 
-    public void setPage(Integer page) {
+    public void setPage(int page) {
         this.page = page;
     }
 
@@ -79,50 +131,12 @@ public class IntentSession {
         this.newsChannel = newsChannel;
     }
 
-    public Integer getNewsIndex() {
+    public int getNewsIndex() {
         return newsIndex;
     }
 
-    public void setNewsIndex(Integer newsIndex) {
+    public void setNewsIndex(int newsIndex) {
         this.newsIndex = newsIndex;
-    }
-
-    public String getUuid() {
-        return uuid;
-    }
-
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
-    }
-
-    public String getPreIntent() {
-        return preIntent;
-    }
-
-    public void setPreIntent(String preIntent) {
-        this.preIntent = preIntent;
-    }
-
-    public String getApp() {
-        return app;
-    }
-
-    public void setApp(String app) {
-        this.app = app;
-    }
-
-    public String getNowIntent() {
-        return nowIntent;
-    }
-
-    public void setNowIntent(String nowIntent) {
-        this.nowIntent = nowIntent;
-    }
-
-    public String toCacheKey() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(app).append(":").append(uuid).append(":").append(page).append(":").append(newsChannel);
-        return MD5Utils.md5(sb.toString());
     }
 
 }
