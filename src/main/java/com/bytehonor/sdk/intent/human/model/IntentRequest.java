@@ -22,13 +22,14 @@ public class IntentRequest {
         this.session = new IntentSession();
     }
 
-    public static IntentRequest of(String query, String uuid, String app) {
+    public static IntentRequest create(String query, String uuid, String app) {
         IntentRequest request = new IntentRequest();
         request.setQuery(query);
         request.setUuid(uuid);
         request.setApp(app);
         request.setWords(new HashSet<String>());
         request.getSession().setUuid(uuid);
+        request.getSession().setApp(app);
         return request;
     }
 

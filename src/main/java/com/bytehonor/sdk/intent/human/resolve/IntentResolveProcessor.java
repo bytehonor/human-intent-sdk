@@ -6,7 +6,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.bytehonor.sdk.intent.human.constant.IntentConstants;
-import com.bytehonor.sdk.intent.human.filter.IntentFilterProcessor;
 import com.bytehonor.sdk.intent.human.model.IntentResult;
 import com.bytehonor.sdk.intent.human.model.IntentTarget;
 
@@ -22,6 +21,9 @@ public final class IntentResolveProcessor {
      */
     public static IntentResult resolve(IntentTarget target) {
         Objects.requireNonNull(target, "target");
+        Objects.requireNonNull(target.getSession(), "session");
+
+        target.getSession().setNowIntent(target.getIntent());
         if (IntentConstants.PUBLIC_STOP_AUTO.equals(target.getIntent())) {
             // 停止自动应答
             return IntentResult.non(target);
@@ -30,17 +32,19 @@ public final class IntentResolveProcessor {
         IntentResolver handler = IntentResolverFactory.optional(target.getIntent());
         if (handler == null) {
             LOG.error("intent:{}, query:{}, uuid:{}, app:{} no handler", target.getIntent(), target.getQuery(),
-                    target.getSession().getUuid(), target.getSession());
-            return IntentResult.text(target, "收到");
+                    target.getSession().getUuid(), target.getSession().getApp());
+            return IntentResult.text(target, IntentConstants.TIP_HANDLER_NON);
         }
+        IntentResult result = null;
         try {
-            IntentResult result = handler.resolve(target);
-            IntentFilterProcessor.chainResult(result);
-            return result;
+            result = handler.resolve(target);
         } catch (Exception e) {
             LOG.error("query:{}, intent:{}, recognizer:{}, error", target.getQuery(), target.getIntent(),
                     target.getRecognizer(), e);
-            return IntentResult.text(target, "出错了");
         }
+        if (result == null) {
+            result = IntentResult.text(target, IntentConstants.TIP_HANDLER_ERROR);
+        }
+        return result;
     }
 }

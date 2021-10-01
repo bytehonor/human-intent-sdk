@@ -10,7 +10,6 @@ import org.slf4j.LoggerFactory;
 
 import com.bytehonor.sdk.define.bytehonor.util.StringObject;
 import com.bytehonor.sdk.intent.human.constant.IntentConstants;
-import com.bytehonor.sdk.intent.human.filter.IntentFilterProcessor;
 import com.bytehonor.sdk.intent.human.model.IntentRequest;
 import com.bytehonor.sdk.intent.human.model.IntentTarget;
 
@@ -25,12 +24,18 @@ public class IntentRecognizeProcessor {
      * @return
      */
     public static IntentTarget recognize(IntentRequest request) {
+        Objects.requireNonNull(request, "request");
+        Objects.requireNonNull(request.getSession(), "session");
+        IntentTarget target = null;
         try {
-            return doRecognize(request);
+            target = doRecognize(request);
         } catch (Exception e) {
             LOG.error("query:{}, uuid:{}, app:{}, error", request.getQuery(), request.getUuid(), request.getApp(), e);
-            return IntentTarget.undefined(request, request.getApp());
         }
+        if (target == null) {
+            target = IntentTarget.undefined(request, request.getApp());
+        }
+        return target;
     }
 
     /**
@@ -41,8 +46,6 @@ public class IntentRecognizeProcessor {
      */
     private static IntentTarget doRecognize(IntentRequest request) {
         Objects.requireNonNull(request, "request");
-        IntentFilterProcessor.chainRequest(request);
-
         if (request.getSession().isAuto() == false) {
             return IntentTarget.undefined(request, IntentConstants.PUBLIC_STOP_AUTO);
         }

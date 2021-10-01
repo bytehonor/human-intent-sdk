@@ -1,6 +1,7 @@
 package com.bytehonor.sdk.intent.human.model;
 
 import java.util.List;
+import java.util.Objects;
 
 import com.bytehonor.sdk.intent.human.recognize.IntentRecognizer;
 
@@ -38,6 +39,8 @@ public class IntentTarget {
 
     public static IntentTarget create(IntentRequest request, int score, String recognizer, String intent,
             List<IntentSlot> slots) {
+        Objects.requireNonNull(request, "request");
+        Objects.requireNonNull(intent, "intent");
         return new IntentTarget(request.getQuery(), request.getSession(), score, recognizer, intent, slots);
     }
 

@@ -1,6 +1,11 @@
 package com.bytehonor.sdk.intent.human.model;
 
+import java.util.Objects;
+
 import com.bytehonor.sdk.define.bytehonor.util.MD5Utils;
+import com.bytehonor.sdk.intent.human.constant.IntentConstants;
+import com.bytehonor.sdk.intent.human.constant.NewsChannelEnum;
+import com.bytehonor.sdk.intent.human.constant.PageConstants;
 
 public class IntentSession {
 
@@ -12,7 +17,9 @@ public class IntentSession {
 
     private String app;
 
-    private String intent;
+    private String preIntent;
+
+    private String nowIntent;
 
     private Integer page;
 
@@ -20,9 +27,24 @@ public class IntentSession {
 
     private Integer newsIndex;
 
+    public static IntentSession init(String uuid, String app) {
+        Objects.requireNonNull(uuid, "uuid");
+
+        IntentSession session = new IntentSession();
+        session.setUuid(uuid);
+        session.setApp(app);
+        session.setPage(PageConstants.PAGE_FIRST);
+        session.setNewsChannel(NewsChannelEnum.TODAY.getKey());
+        session.setPreIntent("");
+        session.setNowIntent(IntentConstants.PUBLIC_DEFAULT);
+        session.setNewsIndex(0);
+        return session;
+    }
+
     public IntentSession() {
         this.id = 0;
         this.auto = true;
+        this.nowIntent = IntentConstants.PUBLIC_DEFAULT;
     }
 
     public int getId() {
@@ -73,12 +95,12 @@ public class IntentSession {
         this.uuid = uuid;
     }
 
-    public String getIntent() {
-        return intent;
+    public String getPreIntent() {
+        return preIntent;
     }
 
-    public void setIntent(String intent) {
-        this.intent = intent;
+    public void setPreIntent(String preIntent) {
+        this.preIntent = preIntent;
     }
 
     public String getApp() {
@@ -87,6 +109,14 @@ public class IntentSession {
 
     public void setApp(String app) {
         this.app = app;
+    }
+
+    public String getNowIntent() {
+        return nowIntent;
+    }
+
+    public void setNowIntent(String nowIntent) {
+        this.nowIntent = nowIntent;
     }
 
     public String toCacheKey() {

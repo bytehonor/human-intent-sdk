@@ -51,4 +51,8 @@ public class IntentConstants {
     public static final String PUBLIC_COIN_PRICE = "PUBLIC_COIN_PRICE";
 
     public static final String PRIVATE_TWITTER_SETTING = "PRIVATE_TWITTER_SETTING";
+
+    public static final String TIP_HANDLER_NON = "收到";
+
+    public static final String TIP_HANDLER_ERROR = "出错了";
 }
