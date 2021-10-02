@@ -50,7 +50,7 @@ public final class HumanIntentProcessor {
 
     public static IntentResult doAmbiguous(IntentTarget target) {
         List<String> intents = StringSplitUtils.split(target.getSlotValue("intents"));
-        List<String> patterns = IntentRecognizeProcessor.findPatterns(target.getSession().getApp(), intents);
+        List<String> patterns = IntentRecognizeProcessor.listPatterns(target.getSession().getApp(), intents);
         StringBuilder sb = new StringBuilder();
         sb.append(IntentConstants.TIP_HANDLER_AMBIGUOUS).append("\r\n");
         for (String pattern : patterns) {

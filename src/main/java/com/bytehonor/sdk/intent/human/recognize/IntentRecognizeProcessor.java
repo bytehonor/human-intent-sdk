@@ -84,13 +84,24 @@ public class IntentRecognizeProcessor {
         return IntentTarget.undefined(request, request.getApp());
     }
 
-    public static List<String> findPatterns(String app, List<String> intents) {
+    public static List<String> listPatterns(String app, List<String> intents) {
         List<String> list = new ArrayList<String>();
         for (String intent : intents) {
             IntentRecognizer recognizer = IntentRecognizerFactory.optional(intent);
             if (IntentRecognizeUtils.isAppMatch(app, recognizer) == false) {
                 continue;
             }
+            if (StringObject.isEmpty(recognizer.pattern()) == false) {
+                list.add(recognizer.pattern());
+            }
+        }
+        return list;
+    }
+
+    public static List<String> listPatterns(String app) {
+        List<String> list = new ArrayList<String>();
+        List<IntentRecognizer> recognizers = IntentRecognizerFactory.list(app);
+        for (IntentRecognizer recognizer : recognizers) {
             if (StringObject.isEmpty(recognizer.pattern()) == false) {
                 list.add(recognizer.pattern());
             }
