@@ -46,6 +46,11 @@ public class IntentConstants {
     public static final String PUBLIC_ASK_MUSIC = "PUBLIC_ASK_MUSIC";
 
     /**
+     * 用户询问特定关键词
+     */
+    public static final String PUBLIC_ASK_DEFINED_KEYWORD = "PUBLIC_ASK_DEFINED_KEYWORD";
+
+    /**
      * 用户请求声音调整
      */
     public static final String PUBLIC_VOICE_SETTING = "PUBLIC_VOICE_SETTING";

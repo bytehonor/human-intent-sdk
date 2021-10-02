@@ -48,10 +48,6 @@ public final class HumanIntentProcessor {
         return result;
     }
 
-    public static List<String> listPatterns(String app) {
-        return IntentRecognizeProcessor.listPatterns(app);
-    }
-
     public static IntentResult doAmbiguous(IntentTarget target) {
         List<String> intents = StringSplitUtils.split(target.getSlotValue("intents"));
         List<String> patterns = IntentRecognizeProcessor.listPatterns(target.getSession().getApp(), intents);
