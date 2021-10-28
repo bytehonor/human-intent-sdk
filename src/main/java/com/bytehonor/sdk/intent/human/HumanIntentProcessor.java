@@ -1,11 +1,8 @@
 package com.bytehonor.sdk.intent.human;
 
-import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.bytehonor.sdk.intent.human.constant.IntentConstants;
 import com.bytehonor.sdk.intent.human.filter.IntentFilterFactory;
 import com.bytehonor.sdk.intent.human.filter.IntentFilterProcessor;
 import com.bytehonor.sdk.intent.human.filter.IntentRequestFilter;
@@ -19,7 +16,6 @@ import com.bytehonor.sdk.intent.human.recognize.IntentRecognizerFactory;
 import com.bytehonor.sdk.intent.human.resolve.IntentResolveProcessor;
 import com.bytehonor.sdk.intent.human.resolve.IntentResolver;
 import com.bytehonor.sdk.intent.human.resolve.IntentResolverFactory;
-import com.bytehonor.sdk.lang.bytehonor.string.StringSplitUtils;
 
 public final class HumanIntentProcessor {
 
@@ -33,31 +29,9 @@ public final class HumanIntentProcessor {
                     target.getRecognizer(), request.getUuid());
         }
 
-        if (target.getSession().isAuto() == false) {
-            // 停止自动应答
-            return IntentResult.non(target);
-        }
-
-        if (IntentConstants.PUBLIC_AMBIGUOUS.equals(target.getIntent())) {
-            // 含糊不清的
-            return doAmbiguous(target);
-        }
-
         IntentResult result = IntentResolveProcessor.resolve(target);
         IntentFilterProcessor.after(result);
         return result;
-    }
-
-    public static IntentResult doAmbiguous(IntentTarget target) {
-        List<String> intents = StringSplitUtils.split(target.getSlotValue("intents"));
-        List<String> patterns = IntentRecognizeProcessor.listPatterns(target.getSession().getApp(), intents);
-        StringBuilder sb = new StringBuilder();
-        sb.append(IntentConstants.TIP_HANDLER_AMBIGUOUS).append("\r\n");
-        for (String pattern : patterns) {
-            sb.append("\r\n");
-            sb.append(pattern).append("?");
-        }
-        return IntentResult.text(target, sb.toString());
     }
 
     public static void setRecognizer(IntentRecognizer recognizer) {
