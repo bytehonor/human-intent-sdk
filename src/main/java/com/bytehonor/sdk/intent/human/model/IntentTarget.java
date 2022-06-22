@@ -5,11 +5,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import com.bytehonor.sdk.beautify.lang.util.ListJoinUtils;
 import com.bytehonor.sdk.define.bytehonor.util.StringObject;
 import com.bytehonor.sdk.intent.human.constant.IntentConstants;
 import com.bytehonor.sdk.intent.human.recognize.IntentRecognizer;
 import com.bytehonor.sdk.intent.human.util.IntentSlotBuilder;
-import com.bytehonor.sdk.lang.bytehonor.util.ListJoinUtils;
 
 public class IntentTarget {
 

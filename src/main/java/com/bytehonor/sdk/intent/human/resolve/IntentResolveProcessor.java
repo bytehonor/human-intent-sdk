@@ -6,11 +6,11 @@ import java.util.Objects;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.bytehonor.sdk.beautify.lang.string.StringSplitUtils;
 import com.bytehonor.sdk.intent.human.constant.IntentConstants;
 import com.bytehonor.sdk.intent.human.model.IntentResult;
 import com.bytehonor.sdk.intent.human.model.IntentTarget;
 import com.bytehonor.sdk.intent.human.recognize.IntentRecognizeProcessor;
-import com.bytehonor.sdk.lang.bytehonor.string.StringSplitUtils;
 
 public final class IntentResolveProcessor {
 

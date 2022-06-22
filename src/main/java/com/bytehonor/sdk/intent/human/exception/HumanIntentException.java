@@ -4,19 +4,19 @@ package com.bytehonor.sdk.intent.human.exception;
  * @author lijianqiang
  *
  */
-public class HumanIntentSdkException extends RuntimeException {
+public class HumanIntentException extends RuntimeException {
 
     private static final long serialVersionUID = 8241747723232910227L;
 
-    public HumanIntentSdkException() {
+    public HumanIntentException() {
         super();
     }
 
-    public HumanIntentSdkException(String message) {
+    public HumanIntentException(String message) {
         super(message);
     }
 
-    public HumanIntentSdkException(Exception cause) {
+    public HumanIntentException(Exception cause) {
         super(cause);
     }
 }
