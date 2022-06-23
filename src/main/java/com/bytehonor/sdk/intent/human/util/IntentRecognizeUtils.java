@@ -2,9 +2,9 @@ package com.bytehonor.sdk.intent.human.util;
 
 import org.springframework.util.CollectionUtils;
 
-import com.bytehonor.sdk.define.bytehonor.util.StringObject;
 import com.bytehonor.sdk.intent.human.constant.IntentConstants;
 import com.bytehonor.sdk.intent.human.recognize.IntentRecognizer;
+import com.bytehonor.sdk.lang.spring.util.StringObject;
 
 public class IntentRecognizeUtils {
 

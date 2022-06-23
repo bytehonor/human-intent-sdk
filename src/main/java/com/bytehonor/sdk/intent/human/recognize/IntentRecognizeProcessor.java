@@ -9,11 +9,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.CollectionUtils;
 
-import com.bytehonor.sdk.define.bytehonor.constant.TimeConstants;
-import com.bytehonor.sdk.define.bytehonor.util.StringObject;
+import com.bytehonor.sdk.define.spring.constant.TimeConstants;
 import com.bytehonor.sdk.intent.human.model.IntentRequest;
 import com.bytehonor.sdk.intent.human.model.IntentTarget;
 import com.bytehonor.sdk.intent.human.util.IntentRecognizeUtils;
+import com.bytehonor.sdk.lang.spring.util.StringObject;
 
 public class IntentRecognizeProcessor {
 

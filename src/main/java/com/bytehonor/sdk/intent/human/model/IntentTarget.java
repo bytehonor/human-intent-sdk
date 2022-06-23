@@ -5,11 +5,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import com.bytehonor.sdk.beautify.lang.util.ListJoinUtils;
-import com.bytehonor.sdk.define.bytehonor.util.StringObject;
 import com.bytehonor.sdk.intent.human.constant.IntentConstants;
 import com.bytehonor.sdk.intent.human.recognize.IntentRecognizer;
 import com.bytehonor.sdk.intent.human.util.IntentSlotBuilder;
+import com.bytehonor.sdk.lang.spring.util.JoinUtils;
+import com.bytehonor.sdk.lang.spring.util.StringObject;
 
 public class IntentTarget {
 
@@ -90,8 +90,7 @@ public class IntentTarget {
             intents.add(target.getIntent());
         }
 
-        Map<String, String> slots = IntentSlotBuilder.create().put("intents", ListJoinUtils.joinString(intents))
-                .build();
+        Map<String, String> slots = IntentSlotBuilder.create().put("intents", JoinUtils.strings(intents)).build();
         return new IntentTarget(request.getQuery(), request.getSession(), IntentConstants.SCORE_MAX,
                 IntentConstants.SYSTEM, IntentConstants.PUBLIC_AMBIGUOUS, slots);
     }

@@ -2,10 +2,10 @@ package com.bytehonor.sdk.intent.human.model;
 
 import java.util.Objects;
 
-import com.bytehonor.sdk.define.bytehonor.util.MD5Utils;
 import com.bytehonor.sdk.intent.human.constant.IntentConstants;
 import com.bytehonor.sdk.intent.human.constant.NewsChannelEnum;
 import com.bytehonor.sdk.intent.human.constant.PageConstants;
+import com.bytehonor.sdk.lang.spring.util.MD5Utils;
 
 public class IntentSession {
 
