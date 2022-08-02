@@ -13,7 +13,7 @@ import com.bytehonor.sdk.define.spring.constant.TimeConstants;
 import com.bytehonor.sdk.intent.human.model.IntentRequest;
 import com.bytehonor.sdk.intent.human.model.IntentTarget;
 import com.bytehonor.sdk.intent.human.util.IntentRecognizeUtils;
-import com.bytehonor.sdk.lang.spring.util.StringObject;
+import com.bytehonor.sdk.lang.spring.string.StringObject;
 
 public class IntentRecognizeProcessor {
 

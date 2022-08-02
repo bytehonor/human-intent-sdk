@@ -3,7 +3,7 @@ package com.bytehonor.sdk.intent.human.util;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.bytehonor.sdk.lang.spring.util.StringObject;
+import com.bytehonor.sdk.lang.spring.string.StringObject;
 
 public class IntentSlotBuilder {
 

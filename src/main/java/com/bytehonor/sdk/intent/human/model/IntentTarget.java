@@ -8,8 +8,8 @@ import java.util.Objects;
 import com.bytehonor.sdk.intent.human.constant.IntentConstants;
 import com.bytehonor.sdk.intent.human.recognize.IntentRecognizer;
 import com.bytehonor.sdk.intent.human.util.IntentSlotBuilder;
+import com.bytehonor.sdk.lang.spring.string.StringObject;
 import com.bytehonor.sdk.lang.spring.util.JoinUtils;
-import com.bytehonor.sdk.lang.spring.util.StringObject;
 
 public class IntentTarget {
 

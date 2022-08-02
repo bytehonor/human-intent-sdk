@@ -4,7 +4,7 @@ import org.springframework.util.CollectionUtils;
 
 import com.bytehonor.sdk.intent.human.constant.IntentConstants;
 import com.bytehonor.sdk.intent.human.recognize.IntentRecognizer;
-import com.bytehonor.sdk.lang.spring.util.StringObject;
+import com.bytehonor.sdk.lang.spring.string.StringObject;
 
 public class IntentRecognizeUtils {
 
