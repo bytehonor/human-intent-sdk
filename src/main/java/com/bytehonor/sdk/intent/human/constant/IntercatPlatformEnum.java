@@ -1,6 +1,6 @@
 package com.bytehonor.sdk.intent.human.constant;
 
-import com.bytehonor.sdk.lang.spring.string.StringObject;
+import com.bytehonor.sdk.lang.spring.string.SpringString;
 
 /**
  * 
@@ -25,7 +25,7 @@ public enum IntercatPlatformEnum {
     }
 
     public static IntercatPlatformEnum keyOf(String key) {
-        if (StringObject.isEmpty(key)) {
+        if (SpringString.isEmpty(key)) {
             return null;
         }
         key = key.toLowerCase();

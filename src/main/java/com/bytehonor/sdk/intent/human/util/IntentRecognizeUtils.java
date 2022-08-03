@@ -4,12 +4,12 @@ import org.springframework.util.CollectionUtils;
 
 import com.bytehonor.sdk.intent.human.constant.IntentConstants;
 import com.bytehonor.sdk.intent.human.recognize.IntentRecognizer;
-import com.bytehonor.sdk.lang.spring.string.StringObject;
+import com.bytehonor.sdk.lang.spring.string.SpringString;
 
 public class IntentRecognizeUtils {
 
     public static boolean isAppMatch(String app, IntentRecognizer recognizer) {
-        if (StringObject.isEmpty(app) || recognizer == null) {
+        if (SpringString.isEmpty(app) || recognizer == null) {
             return false;
         }
         if (CollectionUtils.isEmpty(recognizer.apps())) {

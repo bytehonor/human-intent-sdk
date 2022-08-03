@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.util.CollectionUtils;
 
 import com.bytehonor.sdk.intent.human.util.IntentRecognizeUtils;
-import com.bytehonor.sdk.lang.spring.string.StringObject;
+import com.bytehonor.sdk.lang.spring.string.SpringString;
 
 public class IntentRecognizerFactory {
 
@@ -39,7 +39,7 @@ public class IntentRecognizerFactory {
     }
 
     public static List<IntentRecognizer> list(String app) {
-        if (StringObject.isEmpty(app)) {
+        if (SpringString.isEmpty(app)) {
             LOG.warn("list recognizer of app is empty!");
             return new ArrayList<IntentRecognizer>();
         }

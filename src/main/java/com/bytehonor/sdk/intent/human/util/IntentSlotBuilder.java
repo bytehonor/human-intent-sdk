@@ -3,7 +3,7 @@ package com.bytehonor.sdk.intent.human.util;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.bytehonor.sdk.lang.spring.string.StringObject;
+import com.bytehonor.sdk.lang.spring.string.SpringString;
 
 public class IntentSlotBuilder {
 
@@ -18,7 +18,7 @@ public class IntentSlotBuilder {
     }
 
     public IntentSlotBuilder put(String key, String value) {
-        if (StringObject.isEmpty(key) || StringObject.isEmpty(value)) {
+        if (SpringString.isEmpty(key) || SpringString.isEmpty(value)) {
             return this;
         }
         this.slots.put(key, value);

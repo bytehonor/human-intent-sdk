@@ -1,6 +1,6 @@
 package com.bytehonor.sdk.intent.human.constant;
 
-import com.bytehonor.sdk.lang.spring.string.StringObject;
+import com.bytehonor.sdk.lang.spring.string.SpringString;
 
 /**
  * 
@@ -27,7 +27,7 @@ public enum NewsChannelEnum {
     }
 
     public static NewsChannelEnum keyOf(String key) {
-        if (StringObject.isEmpty(key)) {
+        if (SpringString.isEmpty(key)) {
             return TODAY;
         }
         for (NewsChannelEnum item : NewsChannelEnum.values()) {
@@ -39,7 +39,7 @@ public enum NewsChannelEnum {
     }
 
     public static NewsChannelEnum nameOf(String name) {
-        if (StringObject.isEmpty(name)) {
+        if (SpringString.isEmpty(name)) {
             return TODAY;
         }
         for (NewsChannelEnum item : NewsChannelEnum.values()) {

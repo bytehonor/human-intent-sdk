@@ -9,11 +9,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.CollectionUtils;
 
-import com.bytehonor.sdk.define.spring.constant.TimeConstants;
 import com.bytehonor.sdk.intent.human.model.IntentRequest;
 import com.bytehonor.sdk.intent.human.model.IntentTarget;
 import com.bytehonor.sdk.intent.human.util.IntentRecognizeUtils;
-import com.bytehonor.sdk.lang.spring.string.StringObject;
+import com.bytehonor.sdk.lang.spring.constant.TimeConstants;
+import com.bytehonor.sdk.lang.spring.string.SpringString;
 
 public class IntentRecognizeProcessor {
 
@@ -54,7 +54,7 @@ public class IntentRecognizeProcessor {
             return IntentTarget.manual(request);
         }
 
-        if (StringObject.isEmpty(request.getQuery())) {
+        if (SpringString.isEmpty(request.getQuery())) {
             LOG.warn("query is empty, uuid:{}, app:{}", request.getUuid(), request.getApp());
             return IntentTarget.undefined(request, request.getApp());
         }
@@ -91,7 +91,7 @@ public class IntentRecognizeProcessor {
             if (IntentRecognizeUtils.isAppMatch(app, recognizer) == false) {
                 continue;
             }
-            if (StringObject.isEmpty(recognizer.pattern()) == false) {
+            if (SpringString.isEmpty(recognizer.pattern()) == false) {
                 list.add(recognizer.pattern());
             }
         }
@@ -102,7 +102,7 @@ public class IntentRecognizeProcessor {
         List<String> list = new ArrayList<String>();
         List<IntentRecognizer> recognizers = IntentRecognizerFactory.list(app);
         for (IntentRecognizer recognizer : recognizers) {
-            if (StringObject.isEmpty(recognizer.pattern()) == false) {
+            if (SpringString.isEmpty(recognizer.pattern()) == false) {
                 list.add(recognizer.pattern());
             }
         }

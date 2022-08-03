@@ -8,7 +8,7 @@ import java.util.Objects;
 import com.bytehonor.sdk.intent.human.constant.IntentConstants;
 import com.bytehonor.sdk.intent.human.recognize.IntentRecognizer;
 import com.bytehonor.sdk.intent.human.util.IntentSlotBuilder;
-import com.bytehonor.sdk.lang.spring.string.StringObject;
+import com.bytehonor.sdk.lang.spring.string.SpringString;
 import com.bytehonor.sdk.lang.spring.util.JoinUtils;
 
 public class IntentTarget {
@@ -167,10 +167,10 @@ public class IntentTarget {
     }
 
     public String getSlotValue(String key, String def) {
-        if (StringObject.isEmpty(key)) {
+        if (SpringString.isEmpty(key)) {
             return def;
         }
         String val = slots != null ? slots.get(key) : def;
-        return StringObject.isEmpty(val) == false ? val : def;
+        return SpringString.isEmpty(val) == false ? val : def;
     }
 }
