@@ -1,46 +1,23 @@
 package com.bytehonor.sdk.intent.human.model;
 
+import java.util.List;
+
 public class IntentResult {
 
-    private IntentTarget target;
+    private List<IntentAnswer> answers;
 
-    private IntentAnswer answer;
-
-    public static IntentResult non(IntentTarget target) {
+    public static IntentResult of(List<IntentAnswer> answers) {
         IntentResult result = new IntentResult();
-        result.setTarget(target);
-        result.setAnswer(IntentAnswer.non());
+        result.setAnswers(answers);
         return result;
     }
 
-    public static IntentResult text(IntentTarget target, String answer) {
-        IntentResult result = new IntentResult();
-        result.setTarget(target);
-        result.setAnswer(IntentAnswer.text(answer));
-        return result;
+    public List<IntentAnswer> getAnswers() {
+        return answers;
     }
 
-    public static IntentResult image(IntentTarget target, String answer) {
-        IntentResult result = new IntentResult();
-        result.setTarget(target);
-        result.setAnswer(IntentAnswer.image(answer));
-        return result;
-    }
-
-    public IntentTarget getTarget() {
-        return target;
-    }
-
-    public void setTarget(IntentTarget target) {
-        this.target = target;
-    }
-
-    public IntentAnswer getAnswer() {
-        return answer;
-    }
-
-    public void setAnswer(IntentAnswer answer) {
-        this.answer = answer;
+    public void setAnswers(List<IntentAnswer> answers) {
+        this.answers = answers;
     }
 
 }

@@ -3,26 +3,23 @@ package com.bytehonor.sdk.intent.human.model;
 public class IntentAnswer {
 
     /**
-     * 图片
+     * 媒体
      */
-    public static final String IMAGE = "image";
+    public static final String MEDIA = "media";
 
     /**
      * 文本
      */
     public static final String TEXT = "text";
 
-    /**
-     * 没有回答
-     */
     public static final String NON = "non";
 
     private String type;
 
     private String value;
 
-    public static IntentAnswer image(String value) {
-        return of(IMAGE, value);
+    public static IntentAnswer media(String value) {
+        return of(MEDIA, value);
     }
 
     public static IntentAnswer text(String value) {

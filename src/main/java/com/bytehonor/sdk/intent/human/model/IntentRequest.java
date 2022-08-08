@@ -1,11 +1,6 @@
 package com.bytehonor.sdk.intent.human.model;
 
-import java.util.HashSet;
-import java.util.Set;
-
 public class IntentRequest {
-
-    private long ts;
 
     private String query;
 
@@ -13,13 +8,7 @@ public class IntentRequest {
 
     private String app;
 
-    private Set<String> words;
-
-    private IntentSession session;
-
     public IntentRequest() {
-        this.ts = System.currentTimeMillis();
-        this.session = new IntentSession();
     }
 
     public static IntentRequest create(String query, String uuid, String app) {
@@ -27,34 +16,7 @@ public class IntentRequest {
         request.setQuery(query);
         request.setUuid(uuid);
         request.setApp(app);
-        request.setWords(new HashSet<String>());
-        request.getSession().setUuid(uuid);
-        request.getSession().setApp(app);
         return request;
-    }
-
-    public long getTs() {
-        return ts;
-    }
-
-    public void setTs(long ts) {
-        this.ts = ts;
-    }
-
-    public String getApp() {
-        return app;
-    }
-
-    public void setApp(String app) {
-        this.app = app;
-    }
-
-    public String getUuid() {
-        return uuid;
-    }
-
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
     }
 
     public String getQuery() {
@@ -65,20 +27,20 @@ public class IntentRequest {
         this.query = query;
     }
 
-    public Set<String> getWords() {
-        return words;
+    public String getUuid() {
+        return uuid;
     }
 
-    public void setWords(Set<String> words) {
-        this.words = words;
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
     }
 
-    public IntentSession getSession() {
-        return session;
+    public String getApp() {
+        return app;
     }
 
-    public void setSession(IntentSession session) {
-        this.session = session;
+    public void setApp(String app) {
+        this.app = app;
     }
 
 }

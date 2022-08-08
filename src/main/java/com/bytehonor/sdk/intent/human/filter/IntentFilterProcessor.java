@@ -9,7 +9,6 @@ import org.springframework.util.CollectionUtils;
 
 import com.bytehonor.sdk.intent.human.model.IntentRequest;
 import com.bytehonor.sdk.intent.human.model.IntentResult;
-import com.bytehonor.sdk.intent.human.model.IntentSession;
 
 public class IntentFilterProcessor {
 
@@ -24,11 +23,11 @@ public class IntentFilterProcessor {
         }
         try {
             filterRequest(request);
-            if (request.getSession() == null) {
-                LOG.error("request query:{} uuid:{} app:{}, no session", request.getQuery(), request.getUuid(),
-                        request.getApp());
-                request.setSession(IntentSession.init(request.getUuid(), request.getApp()));
-            }
+//            if (request.getSession() == null) {
+//                LOG.error("request query:{} uuid:{} app:{}, no session", request.getQuery(), request.getUuid(),
+//                        request.getApp());
+//                request.setSession(IntentSession.init(request.getUuid(), request.getApp()));
+//            }
         } catch (Exception e) {
             LOG.error("query:{}, uuid:{}, app:{}, prepare error", request.getQuery(), request.getUuid(),
                     request.getApp(), e);

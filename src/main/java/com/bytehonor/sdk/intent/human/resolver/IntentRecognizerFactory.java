@@ -1,4 +1,4 @@
-package com.bytehonor.sdk.intent.human.recognize;
+package com.bytehonor.sdk.intent.human.resolver;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,11 +19,11 @@ public class IntentRecognizerFactory {
 
     private static final Logger LOG = LoggerFactory.getLogger(IntentRecognizerFactory.class);
 
-    private static Map<String, IntentRecognizer> INTENTS = new HashMap<String, IntentRecognizer>();
+    private static Map<String, IntentResolver> INTENTS = new HashMap<String, IntentResolver>();
 
-    private static Map<String, List<IntentRecognizer>> APPS = new ConcurrentHashMap<String, List<IntentRecognizer>>();
+    private static Map<String, List<IntentResolver>> APPS = new ConcurrentHashMap<String, List<IntentResolver>>();
 
-    public static void put(IntentRecognizer recognizer) {
+    public static void put(IntentResolver recognizer) {
         Objects.requireNonNull(recognizer, "recognizer");
         Objects.requireNonNull(recognizer.intent(), "intent");
 
@@ -33,22 +33,22 @@ public class IntentRecognizerFactory {
         INTENTS.put(recognizer.intent(), recognizer);
     }
 
-    public static IntentRecognizer optional(String intent) {
+    public static IntentResolver optional(String intent) {
         Objects.requireNonNull(intent, "intent");
         return INTENTS.get(intent);
     }
 
-    public static List<IntentRecognizer> list(String app) {
+    public static List<IntentResolver> list(String app) {
         if (SpringString.isEmpty(app)) {
             LOG.warn("list recognizer of app is empty!");
-            return new ArrayList<IntentRecognizer>();
+            return new ArrayList<IntentResolver>();
         }
-        List<IntentRecognizer> list = APPS.get(app);
+        List<IntentResolver> list = APPS.get(app);
         if (CollectionUtils.isEmpty(list) == false) {
             return list;
         }
-        list = new ArrayList<IntentRecognizer>();
-        for (Entry<String, IntentRecognizer> item : INTENTS.entrySet()) {
+        list = new ArrayList<IntentResolver>();
+        for (Entry<String, IntentResolver> item : INTENTS.entrySet()) {
             if (IntentRecognizeUtils.isAppMatch(app, item.getValue()) == false) {
                 continue;
             }
