@@ -3,12 +3,15 @@ package com.bytehonor.sdk.intent.human.resolver;
 import com.bytehonor.sdk.intent.human.model.IntentPayload;
 import com.bytehonor.sdk.intent.human.model.IntentResult;
 import com.bytehonor.sdk.intent.human.model.IntentSession;
+import com.bytehonor.sdk.lang.spring.match.TextMatcher;
 
-public class MusicIntentResolver implements IntentResolver {
+public abstract class AbstractIntentResolver implements IntentResolver {
 
+    protected TextMatcher matcher;
+    
     @Override
-    public String intent() {
-        return null;
+    public final String intent() {
+        return this.getClass().getSimpleName();
     }
 
     @Override
@@ -19,8 +22,7 @@ public class MusicIntentResolver implements IntentResolver {
 
     @Override
     public boolean match(IntentPayload payload) {
-        // TODO Auto-generated method stub
-        return false;
+        return matcher.match(payload.getWords());
     }
 
     @Override
