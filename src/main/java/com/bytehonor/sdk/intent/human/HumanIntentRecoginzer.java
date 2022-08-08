@@ -14,6 +14,7 @@ import com.bytehonor.sdk.intent.human.model.IntentPayload;
 import com.bytehonor.sdk.intent.human.model.IntentRequest;
 import com.bytehonor.sdk.intent.human.model.IntentResult;
 import com.bytehonor.sdk.intent.human.model.IntentSession;
+import com.bytehonor.sdk.intent.human.resolver.IntentMatcher;
 import com.bytehonor.sdk.intent.human.resolver.IntentResolver;
 import com.bytehonor.sdk.intent.human.resolver.IntentResolverPool;
 import com.bytehonor.sdk.intent.human.worker.IntentWorker;
@@ -70,7 +71,7 @@ public final class HumanIntentRecoginzer {
         List<IntentAnswer> answers = new ArrayList<IntentAnswer>();
         answers.add(IntentAnswer.text(IntentConstants.TIP_HANDLER_AMBIGUOUS));
         for (IntentResolver recognizer : recognizers) {
-            answers.add(IntentAnswer.text(recognizer.pattern()));
+            answers.add(IntentAnswer.text(recognizer.matcher().getPattern()));
         }
         return IntentResult.of(answers);
     }
@@ -90,10 +91,14 @@ public final class HumanIntentRecoginzer {
         List<IntentResolver> resolvers = new ArrayList<IntentResolver>();
         List<IntentResolver> all = pool.all();
         for (IntentResolver item : all) {
-            if (item.match(payload)) {
+            if (doMatch(item.matcher(), payload)) {
                 resolvers.add(item);
             }
         }
         return resolvers;
+    }
+
+    private static boolean doMatch(IntentMatcher matcher, IntentPayload payload) {
+        return matcher.getMatcher().match(payload.getWords());
     }
 }

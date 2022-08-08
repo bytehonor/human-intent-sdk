@@ -6,23 +6,20 @@ import com.bytehonor.sdk.intent.human.model.IntentSession;
 
 public class MusicIntentResolver implements IntentResolver {
 
-    private IntentMatcher matcher;
+    private final IntentMatcher matcher;
+
+    public MusicIntentResolver() {
+        this.matcher = IntentMatcher.builder("播放音乐").include("放", "歌").include("音乐").build();
+    }
 
     @Override
     public IntentResult answer(IntentPayload payload, IntentSession session) {
-        // TODO Auto-generated method stub
         return null;
     }
 
     @Override
-    public String pattern() {
-        return matcher.getPattern();
-    }
-
-    @Override
-    public boolean match(IntentPayload payload) {
-        // TODO Auto-generated method stub
-        return false;
+    public IntentMatcher matcher() {
+        return matcher;
     }
 
 }

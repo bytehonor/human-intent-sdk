@@ -6,9 +6,7 @@ import com.bytehonor.sdk.intent.human.model.IntentSession;
 
 public interface IntentResolver {
 
-    public String pattern();
-
-    public boolean match(IntentPayload payload);
+    public IntentMatcher matcher();
 
     public IntentResult answer(IntentPayload payload, IntentSession session);
 }
