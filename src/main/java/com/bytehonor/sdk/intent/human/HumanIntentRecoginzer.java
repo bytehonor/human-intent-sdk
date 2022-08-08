@@ -8,21 +8,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.bytehonor.sdk.intent.human.constant.IntentConstants;
-import com.bytehonor.sdk.intent.human.filter.IntentFilterFactory;
 import com.bytehonor.sdk.intent.human.filter.IntentFilterProcessor;
-import com.bytehonor.sdk.intent.human.filter.IntentRequestFilter;
-import com.bytehonor.sdk.intent.human.filter.IntentResultFilter;
 import com.bytehonor.sdk.intent.human.model.IntentAnswer;
 import com.bytehonor.sdk.intent.human.model.IntentPayload;
 import com.bytehonor.sdk.intent.human.model.IntentRequest;
 import com.bytehonor.sdk.intent.human.model.IntentResult;
 import com.bytehonor.sdk.intent.human.model.IntentSession;
-import com.bytehonor.sdk.intent.human.resolver.IntentRecognizerFactory;
 import com.bytehonor.sdk.intent.human.resolver.IntentResolver;
 import com.bytehonor.sdk.intent.human.resolver.IntentResolverPool;
 import com.bytehonor.sdk.intent.human.worker.IntentWorker;
 import com.bytehonor.sdk.lang.spring.constant.TimeConstants;
-import com.bytehonor.sdk.lang.spring.match.TextMatcher;
 import com.bytehonor.sdk.lang.spring.string.SpringString;
 
 public final class HumanIntentRecoginzer {
@@ -30,8 +25,6 @@ public final class HumanIntentRecoginzer {
     private static final Logger LOG = LoggerFactory.getLogger(HumanIntentRecoginzer.class);
 
     private String app;
-
-    private TextMatcher matcher;
 
     private final IntentResolverPool pool;
 
@@ -102,26 +95,5 @@ public final class HumanIntentRecoginzer {
             }
         }
         return resolvers;
-    }
-
-    public static void setRecognizer(IntentResolver recognizer) {
-        if (recognizer == null) {
-            return;
-        }
-        IntentRecognizerFactory.put(recognizer);
-    }
-
-    public static void setFilter(IntentRequestFilter filter) {
-        if (filter == null) {
-            return;
-        }
-        IntentFilterFactory.putRequest(filter);
-    }
-
-    public static void setFilter(IntentResultFilter filter) {
-        if (filter == null) {
-            return;
-        }
-        IntentFilterFactory.putResult(filter);
     }
 }

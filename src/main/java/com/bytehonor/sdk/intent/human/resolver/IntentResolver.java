@@ -6,8 +6,6 @@ import com.bytehonor.sdk.intent.human.model.IntentSession;
 
 public interface IntentResolver {
 
-    public String intent();
-
     public String pattern();
 
     public boolean match(IntentPayload payload);
