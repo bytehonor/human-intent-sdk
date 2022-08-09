@@ -8,9 +8,12 @@ import com.bytehonor.sdk.intent.human.model.IntentAnswer;
 import com.bytehonor.sdk.intent.human.model.IntentContext;
 import com.bytehonor.sdk.intent.human.model.IntentPayload;
 import com.bytehonor.sdk.intent.human.model.IntentSession;
+import com.bytehonor.sdk.lang.spring.core.Randomizer;
+import com.google.common.collect.Lists;
 
 public class UnsupportIntentResolver implements IntentResolver {
 
+    private static final List<String> LIST = Lists.newArrayList("呵", "嗯", "哦", "咦");
     private final IntentMatcher matcher;
 
     public UnsupportIntentResolver() {
@@ -20,7 +23,8 @@ public class UnsupportIntentResolver implements IntentResolver {
     @Override
     public List<IntentAnswer> answer(IntentPayload payload, IntentSession session, IntentContext context) {
         List<IntentAnswer> answers = new ArrayList<IntentAnswer>();
-        answers.add(IntentAnswer.text("呵"));
+        int index = Randomizer.integer(0, 100) % LIST.size();
+        answers.add(IntentAnswer.text(LIST.get(index)));
         return answers;
     }
 
