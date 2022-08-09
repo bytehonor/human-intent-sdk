@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 
 import com.bytehonor.sdk.intent.human.constant.IntentConstants;
 import com.bytehonor.sdk.intent.human.constant.IntentPlatformEnum;
+import com.bytehonor.sdk.intent.human.listener.IntentListenerThread;
 import com.bytehonor.sdk.intent.human.matcher.IntentMatcher;
 import com.bytehonor.sdk.intent.human.model.IntentAnswer;
 import com.bytehonor.sdk.intent.human.model.IntentContext;
@@ -52,9 +53,19 @@ public final class HumanIntentRecoginzer {
     }
 
     public IntentResult recognize(IntentRequest request, IntentWorker worker) {
-        // IntentFilterProcessor.before(request);
-        IntentResult result = doRecognize(request, worker);
-        // IntentFilterProcessor.after(result);
+        Objects.requireNonNull(request, "request");
+        Objects.requireNonNull(worker, "worker");
+
+        IntentSession session = worker.get(request.getUuid());
+        IntentResult result = doRecognize(request, session);
+
+        session.setId(session.getId() + 1);
+        session.setPreIntent(session.getNowIntent());
+        session.setNowIntent(result.getResolver());
+        worker.put(session);
+
+        IntentListenerThread.add(result);
+
         return result;
     }
 
@@ -71,10 +82,9 @@ public final class HumanIntentRecoginzer {
      * @param request
      * @return
      */
-    private IntentResult doRecognize(IntentRequest request, IntentWorker worker) {
+    private IntentResult doRecognize(IntentRequest request, IntentSession session) {
         Objects.requireNonNull(request, "request");
 
-        IntentSession session = worker.get(request.getUuid());
         long now = System.currentTimeMillis();
         if (session.isAuto() == false && (now - session.getPreTime() < TimeConstants.HOUR)) {
             return IntentResult.non(); // 返回空
