@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import com.bytehonor.sdk.intent.human.model.IntentAnswer;
 import com.bytehonor.sdk.intent.human.model.IntentRequest;
 import com.bytehonor.sdk.intent.human.model.IntentResult;
+import com.bytehonor.sdk.intent.human.model.IntentSession;
 import com.bytehonor.sdk.intent.human.worker.CacheIntentWorker;
 
 public class HumanIntentRecoginzerTest {
@@ -18,9 +19,11 @@ public class HumanIntentRecoginzerTest {
 
     @Test
     public void test() {
-        HumanIntentRecoginzer recognizer = HumanIntentRecoginzer.create("测试");
+        HumanIntentRecoginzer recognizer = HumanIntentRecoginzer.create("测试", new CacheIntentWorker());
+        String uuid = "testuser";
 
         List<String> list = new ArrayList<String>();
+        list.add("【收到不支持的消息类型，暂无法显示】");
         list.add("你是谁");
         list.add("你叫什么");
         list.add("你的名字");
@@ -31,17 +34,19 @@ public class HumanIntentRecoginzerTest {
         list.add("放歌");
         list.add("播放音乐");
         list.add("你多大");
-        list.add("【收到不支持的消息类型，暂无法显示】");
+        list.add("晚上吃什么");
         for (String text : list) {
             LOG.info("**** text:{}", text);
-            IntentRequest request = IntentRequest.create(text, "testuser");
-            IntentResult result = recognizer.recognize(request, new CacheIntentWorker());
+            IntentRequest request = IntentRequest.create(text, uuid);
+            IntentResult result = recognizer.recognize(request);
             print(result);
         }
     }
 
     private void print(IntentResult result) {
-        LOG.info("**** resolver:{}", result.getResolver());
+        IntentSession session = result.getSession();
+        LOG.info("**** resolver:{}, {}, {}, {}", result.getResolver(), session.getId(), session.getNowIntent(),
+                session.getPreIntent());
         List<IntentAnswer> answers = result.getAnswers();
         for (IntentAnswer answer : answers) {
             LOG.info("{}", answer.getValue());

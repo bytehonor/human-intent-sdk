@@ -1,5 +1,6 @@
 package com.bytehonor.sdk.intent.human.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -9,7 +10,9 @@ import java.util.Set;
 import com.bytehonor.sdk.intent.human.exception.HumanIntentException;
 import com.bytehonor.sdk.intent.human.resolver.IntentResolver;
 
-public class IntentContext {
+public class IntentContext implements Serializable {
+
+    private static final long serialVersionUID = -774487225071783615L;
 
     private final String name;
 

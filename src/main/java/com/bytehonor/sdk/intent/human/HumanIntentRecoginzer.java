@@ -33,17 +33,22 @@ public final class HumanIntentRecoginzer {
 
     private final IntentContext context;
 
-    public HumanIntentRecoginzer(IntentContext context) {
+    private final IntentWorker worker;
+
+    public HumanIntentRecoginzer(IntentContext context, IntentWorker worker) {
         Objects.requireNonNull(context, "context");
+        Objects.requireNonNull(worker, "worker");
+
         this.context = context;
+        this.worker = worker;
     }
 
-    public static HumanIntentRecoginzer create(String name) {
-        return create(new IntentContext(name, IntentPlatformEnum.UNDEFINED.getKey()));
+    public static HumanIntentRecoginzer create(String name, IntentWorker worker) {
+        return create(new IntentContext(name, IntentPlatformEnum.UNDEFINED.getKey()), worker);
     }
 
-    public static HumanIntentRecoginzer create(IntentContext context) {
-        HumanIntentRecoginzer recognizer = new HumanIntentRecoginzer(context);
+    public static HumanIntentRecoginzer create(IntentContext context, IntentWorker worker) {
+        HumanIntentRecoginzer recognizer = new HumanIntentRecoginzer(context, worker);
         recognizer.add(new MusicIntentResolver());
         recognizer.add(new WhatAbleIntentResolver());
         recognizer.add(new WhoIamIntentResolver());
@@ -52,20 +57,25 @@ public final class HumanIntentRecoginzer {
         return recognizer;
     }
 
-    public IntentResult recognize(IntentRequest request, IntentWorker worker) {
+    public IntentResult recognize(IntentRequest request) {
         Objects.requireNonNull(request, "request");
-        Objects.requireNonNull(worker, "worker");
 
         IntentSession session = worker.get(request.getUuid());
+        if (session == null) {
+            session = IntentSession.init(request.getUuid());
+        }
+
         IntentResult result = doRecognize(request, session);
 
         session.setId(session.getId() + 1);
         session.setPreIntent(session.getNowIntent());
         session.setNowIntent(result.getResolver());
+        session.setPreTime(System.currentTimeMillis());
         worker.put(session);
 
-        IntentListenerThread.add(result);
+        result.setSession(session);
 
+        IntentListenerThread.add(result);
         return result;
     }
 

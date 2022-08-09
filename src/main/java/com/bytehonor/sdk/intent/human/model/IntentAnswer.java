@@ -1,6 +1,10 @@
 package com.bytehonor.sdk.intent.human.model;
 
-public class IntentAnswer {
+import java.io.Serializable;
+
+public class IntentAnswer implements Serializable {
+
+    private static final long serialVersionUID = -364312310080158140L;
 
     /**
      * 媒体

@@ -1,10 +1,13 @@
 package com.bytehonor.sdk.intent.human.model;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 import com.bytehonor.sdk.intent.human.constant.IntentConstants;
 
-public class IntentSession {
+public class IntentSession implements Serializable {
+
+    private static final long serialVersionUID = -1460407043271707300L;
 
     private int id;
 

@@ -18,12 +18,7 @@ public class CacheIntentWorker implements IntentWorker {
 
     @Override
     public IntentSession get(String uuid) {
-        IntentSession session = CACHE.getIfPresent(uuid);
-        if (session == null) {
-            session = IntentSession.init(uuid);
-            CACHE.put(uuid, session);
-        }
-        return session;
+        return CACHE.getIfPresent(uuid);
     }
 
     @Override

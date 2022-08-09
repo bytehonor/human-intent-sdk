@@ -57,7 +57,6 @@ public class IntentListenerThread {
     private static void filterResult(final IntentResult result) {
         List<IntentListener> listeners = IntentListenerFactory.list();
         if (CollectionUtils.isEmpty(listeners)) {
-            LOG.warn("IntentResult listeners empty");
             return;
         }
         for (IntentListener listener : listeners) {
