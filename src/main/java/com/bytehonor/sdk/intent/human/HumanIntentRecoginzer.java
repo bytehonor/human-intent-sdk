@@ -43,6 +43,10 @@ public final class HumanIntentRecoginzer {
         this.worker = worker;
     }
 
+    public static HumanIntentRecoginzer create(String name, String platform, IntentWorker worker) {
+        return create(new IntentContext(name, platform), worker);
+    }
+
     public static HumanIntentRecoginzer create(String name, IntentWorker worker) {
         return create(new IntentContext(name, IntentPlatformEnum.UNDEFINED.getKey()), worker);
     }
@@ -62,7 +66,7 @@ public final class HumanIntentRecoginzer {
 
         IntentSession session = worker.get(request.getUuid());
         if (session == null) {
-            session = IntentSession.init(request.getUuid());
+            session = IntentSession.init(request.getUuid(), context.getPlatform());
         }
 
         IntentResult result = doRecognize(request, session);
@@ -70,7 +74,7 @@ public final class HumanIntentRecoginzer {
         session.setId(session.getId() + 1);
         session.setPreIntent(session.getNowIntent());
         session.setNowIntent(result.getResolver());
-        session.setPreTime(System.currentTimeMillis());
+        session.setLastAt(System.currentTimeMillis());
         worker.put(session);
 
         result.setSession(session);
@@ -96,7 +100,7 @@ public final class HumanIntentRecoginzer {
         Objects.requireNonNull(request, "request");
 
         long now = System.currentTimeMillis();
-        if (session.isAuto() == false && (now - session.getPreTime() < TimeConstants.HOUR)) {
+        if (session.isAuto() == false && (now - session.getLastAt() < TimeConstants.HOUR)) {
             return IntentResult.non(); // 返回空
         }
 

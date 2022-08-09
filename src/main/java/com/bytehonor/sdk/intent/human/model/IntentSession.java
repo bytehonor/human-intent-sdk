@@ -3,8 +3,6 @@ package com.bytehonor.sdk.intent.human.model;
 import java.io.Serializable;
 import java.util.Objects;
 
-import com.bytehonor.sdk.intent.human.constant.IntentConstants;
-
 public class IntentSession implements Serializable {
 
     private static final long serialVersionUID = -1460407043271707300L;
@@ -15,28 +13,30 @@ public class IntentSession implements Serializable {
 
     private String uuid;
 
-    private long preTime;
+    private String platform;
 
     private String preIntent;
 
     private String nowIntent;
 
-    public static IntentSession init(String uuid) {
+    private long lastAt;
+
+    public static IntentSession init(String uuid, String platform) {
         Objects.requireNonNull(uuid, "uuid");
 
         IntentSession session = new IntentSession();
         session.setUuid(uuid);
-        session.setPreIntent("");
-        session.setNowIntent(IntentConstants.PUBLIC_DEFAULT);
+        session.setPlatform(platform);
         return session;
     }
 
     public IntentSession() {
         this.id = 0;
         this.auto = true;
-        this.preTime = 0L;
+        this.lastAt = 0L;
         this.preIntent = "";
-        this.nowIntent = IntentConstants.PUBLIC_DEFAULT;
+        this.nowIntent = "";
+        this.platform = "";
     }
 
     public int getId() {
@@ -55,20 +55,20 @@ public class IntentSession implements Serializable {
         this.auto = auto;
     }
 
-    public long getPreTime() {
-        return preTime;
-    }
-
-    public void setPreTime(long preTime) {
-        this.preTime = preTime;
-    }
-
     public String getUuid() {
         return uuid;
     }
 
     public void setUuid(String uuid) {
         this.uuid = uuid;
+    }
+
+    public String getPlatform() {
+        return platform;
+    }
+
+    public void setPlatform(String platform) {
+        this.platform = platform;
     }
 
     public String getPreIntent() {
@@ -86,4 +86,13 @@ public class IntentSession implements Serializable {
     public void setNowIntent(String nowIntent) {
         this.nowIntent = nowIntent;
     }
+
+    public long getLastAt() {
+        return lastAt;
+    }
+
+    public void setLastAt(long lastAt) {
+        this.lastAt = lastAt;
+    }
+
 }
