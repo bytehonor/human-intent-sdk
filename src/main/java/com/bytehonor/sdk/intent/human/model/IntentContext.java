@@ -21,6 +21,8 @@ public class IntentContext {
 
     public IntentContext(String name, String platform) {
         Objects.requireNonNull(name, "name");
+        Objects.requireNonNull(platform, "platform");
+        
         this.name = name;
         this.platform = platform;
         this.resolvers = new ArrayList<IntentResolver>();

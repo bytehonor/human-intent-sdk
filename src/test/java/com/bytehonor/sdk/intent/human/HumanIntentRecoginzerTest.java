@@ -35,7 +35,7 @@ public class HumanIntentRecoginzerTest {
         for (String text : list) {
             LOG.info("**** text:{}", text);
             IntentRequest request = IntentRequest.create(text, "testuser");
-            IntentResult result = recognizer.process(request, new CacheIntentWorker());
+            IntentResult result = recognizer.recognize(request, new CacheIntentWorker());
             print(result);
         }
     }

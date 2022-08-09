@@ -38,7 +38,10 @@ public final class HumanIntentRecoginzer {
     }
 
     public static HumanIntentRecoginzer create(String name) {
-        IntentContext context = new IntentContext(name, IntentPlatformEnum.UNDEFINED.getKey());
+        return create(new IntentContext(name, IntentPlatformEnum.UNDEFINED.getKey()));
+    }
+
+    public static HumanIntentRecoginzer create(IntentContext context) {
         HumanIntentRecoginzer recognizer = new HumanIntentRecoginzer(context);
         recognizer.add(new MusicIntentResolver());
         recognizer.add(new WhatAbleIntentResolver());
@@ -48,7 +51,7 @@ public final class HumanIntentRecoginzer {
         return recognizer;
     }
 
-    public IntentResult process(IntentRequest request, IntentWorker worker) {
+    public IntentResult recognize(IntentRequest request, IntentWorker worker) {
         // IntentFilterProcessor.before(request);
         IntentResult result = doRecognize(request, worker);
         // IntentFilterProcessor.after(result);
@@ -71,9 +74,13 @@ public final class HumanIntentRecoginzer {
     private IntentResult doRecognize(IntentRequest request, IntentWorker worker) {
         Objects.requireNonNull(request, "request");
 
-        IntentPayload payload = IntentPayload.of(request.getQuery());
         IntentSession session = worker.get(request.getUuid());
+        long now = System.currentTimeMillis();
+        if (session.isAuto() == false && (now - session.getPreTime() < TimeConstants.HOUR)) {
+            return IntentResult.non(); // 返回空
+        }
 
+        IntentPayload payload = IntentPayload.of(request.getQuery());
         List<IntentResolver> list = doParse(payload, session);
         int size = list != null ? list.size() : 0;
         if (size == 0) {
@@ -101,11 +108,6 @@ public final class HumanIntentRecoginzer {
 
     private List<IntentResolver> doParse(IntentPayload payload, IntentSession session) {
         Objects.requireNonNull(payload, "payload");
-        long now = System.currentTimeMillis();
-        if (session.isAuto() == false && (now - session.getPreTime() < TimeConstants.HOUR)) {
-            return new ArrayList<IntentResolver>();
-        }
-
         if (SpringString.isEmpty(payload.getQuery())) {
             LOG.warn("query is empty");
             return new ArrayList<IntentResolver>();
