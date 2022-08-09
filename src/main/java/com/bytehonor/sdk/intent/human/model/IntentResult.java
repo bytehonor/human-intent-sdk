@@ -5,33 +5,33 @@ import java.util.List;
 
 public class IntentResult {
 
-    private String intent;
+    private String resolver;
 
     private List<IntentAnswer> answers;
 
-    public static IntentResult of(String intent, List<IntentAnswer> answers) {
+    public static IntentResult of(String resolver, List<IntentAnswer> answers) {
         IntentResult result = new IntentResult();
-        result.setIntent(intent);
+        result.setResolver(resolver);
         result.setAnswers(answers);
         return result;
     }
 
     public static IntentResult non() {
-        return of("non", new ArrayList<IntentAnswer>());
+        return of("NON", new ArrayList<IntentAnswer>());
     }
 
-    public static IntentResult one(String intent, String text) {
+    public static IntentResult one(String resolver, String text) {
         ArrayList<IntentAnswer> answers = new ArrayList<IntentAnswer>();
         answers.add(IntentAnswer.text(text));
-        return of(intent, answers);
+        return of(resolver, answers);
     }
 
-    public String getIntent() {
-        return intent;
+    public String getResolver() {
+        return resolver;
     }
 
-    public void setIntent(String intent) {
-        this.intent = intent;
+    public void setResolver(String resolver) {
+        this.resolver = resolver;
     }
 
     public List<IntentAnswer> getAnswers() {

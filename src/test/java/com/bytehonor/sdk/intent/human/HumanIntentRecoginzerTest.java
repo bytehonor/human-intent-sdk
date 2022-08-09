@@ -40,6 +40,7 @@ public class HumanIntentRecoginzerTest {
     }
 
     private void print(IntentResult result) {
+        LOG.info("**** resolver:{}", result.getResolver());
         List<IntentAnswer> answers = result.getAnswers();
         for (IntentAnswer answer : answers) {
             LOG.info("{}", answer.getValue());

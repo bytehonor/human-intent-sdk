@@ -7,34 +7,38 @@ import com.bytehonor.sdk.lang.spring.string.SpringString;
  * @author lijianqiang
  *
  */
-public enum IntercatPlatformEnum {
+public enum IntentPlatformEnum {
 
     WEIXIN_MP("weixin_mp", "微信公众号"),
 
     XIAOMI_AIBOX("xiaomi_aibox", "小米智能音箱"),
 
-    XIAOMI_MOBILE("xiaomi_mobile", "小米手机小爱"),;
+    XIAOMI_MOBILE("xiaomi_mobile", "小米手机小爱"),
+
+    UNDEFINED("undefined", "未定义"),
+
+    ;
 
     private String key;
 
     private String value;
 
-    private IntercatPlatformEnum(String key, String value) {
+    private IntentPlatformEnum(String key, String value) {
         this.key = key;
         this.value = value;
     }
 
-    public static IntercatPlatformEnum keyOf(String key) {
+    public static IntentPlatformEnum keyOf(String key) {
         if (SpringString.isEmpty(key)) {
-            return null;
+            return UNDEFINED;
         }
         key = key.toLowerCase();
-        for (IntercatPlatformEnum item : IntercatPlatformEnum.values()) {
+        for (IntentPlatformEnum item : IntentPlatformEnum.values()) {
             if (item.getKey().equals(key)) {
                 return item;
             }
         }
-        return null;
+        return UNDEFINED;
     }
 
     public String getKey() {

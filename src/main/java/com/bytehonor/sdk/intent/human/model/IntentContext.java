@@ -13,19 +13,30 @@ public class IntentContext {
 
     private final String name;
 
+    private final String platform;
+
     private final List<IntentResolver> resolvers;
 
     private final Set<String> patterns;
 
-    public IntentContext(String name) {
+    public IntentContext(String name, String platform) {
         Objects.requireNonNull(name, "name");
         this.name = name;
+        this.platform = platform;
         this.resolvers = new ArrayList<IntentResolver>();
         this.patterns = new HashSet<String>();
     }
 
     public String getName() {
         return name;
+    }
+
+    public String getPlatform() {
+        return platform;
+    }
+
+    public Set<String> getPatterns() {
+        return patterns;
     }
 
     public List<IntentResolver> getResolvers() {

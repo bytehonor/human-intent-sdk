@@ -9,11 +9,11 @@ import com.bytehonor.sdk.intent.human.model.IntentContext;
 import com.bytehonor.sdk.intent.human.model.IntentPayload;
 import com.bytehonor.sdk.intent.human.model.IntentSession;
 
-public class WhatCanDoIntentResolver implements IntentResolver {
+public class WhatAbleIntentResolver implements IntentResolver {
 
     private final IntentMatcher matcher;
 
-    public WhatCanDoIntentResolver() {
+    public WhatAbleIntentResolver() {
         this.matcher = IntentMatcher.builder("你会什么").include("你能", "做什么").include("你会", "什么").include("你有", "什么", "功能")
                 .build();
     }

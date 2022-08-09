@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.bytehonor.sdk.intent.human.constant.IntentConstants;
+import com.bytehonor.sdk.intent.human.constant.IntentPlatformEnum;
 import com.bytehonor.sdk.intent.human.matcher.IntentMatcher;
 import com.bytehonor.sdk.intent.human.model.IntentAnswer;
 import com.bytehonor.sdk.intent.human.model.IntentContext;
@@ -17,8 +18,8 @@ import com.bytehonor.sdk.intent.human.model.IntentResult;
 import com.bytehonor.sdk.intent.human.model.IntentSession;
 import com.bytehonor.sdk.intent.human.resolver.IntentResolver;
 import com.bytehonor.sdk.intent.human.resolver.MusicIntentResolver;
-import com.bytehonor.sdk.intent.human.resolver.WeixinUnsupportIntentResolver;
-import com.bytehonor.sdk.intent.human.resolver.WhatCanDoIntentResolver;
+import com.bytehonor.sdk.intent.human.resolver.UnsupportIntentResolver;
+import com.bytehonor.sdk.intent.human.resolver.WhatAbleIntentResolver;
 import com.bytehonor.sdk.intent.human.resolver.WhoIamIntentResolver;
 import com.bytehonor.sdk.intent.human.worker.IntentWorker;
 import com.bytehonor.sdk.lang.spring.constant.TimeConstants;
@@ -30,17 +31,18 @@ public final class HumanIntentRecoginzer {
 
     private final IntentContext context;
 
-    public HumanIntentRecoginzer(String name) {
-        Objects.requireNonNull(name, "name");
-        this.context = new IntentContext(name);
+    public HumanIntentRecoginzer(IntentContext context) {
+        Objects.requireNonNull(context, "context");
+        this.context = context;
     }
 
     public static HumanIntentRecoginzer create(String name) {
-        HumanIntentRecoginzer recognizer = new HumanIntentRecoginzer(name);
+        IntentContext context = new IntentContext(name, IntentPlatformEnum.UNDEFINED.getKey());
+        HumanIntentRecoginzer recognizer = new HumanIntentRecoginzer(context);
         recognizer.add(new MusicIntentResolver());
-        recognizer.add(new WhatCanDoIntentResolver());
+        recognizer.add(new WhatAbleIntentResolver());
         recognizer.add(new WhoIamIntentResolver());
-        recognizer.add(new WeixinUnsupportIntentResolver());
+        recognizer.add(new UnsupportIntentResolver());
         return recognizer;
     }
 
