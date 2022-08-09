@@ -8,7 +8,7 @@ import com.google.common.cache.CacheBuilder;
 
 public class CacheIntentWorker implements IntentWorker {
 
-    private static int CAPACITY = 4096;
+    private static int CAPACITY = 1024;
 
     private static Cache<String, IntentSession> CACHE = CacheBuilder.newBuilder().initialCapacity(CAPACITY) // 设置初始容量为100
             .maximumSize(1024 * CAPACITY) // 设置缓存的最大容量
