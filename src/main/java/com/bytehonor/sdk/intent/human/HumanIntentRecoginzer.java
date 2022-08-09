@@ -8,14 +8,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.bytehonor.sdk.intent.human.constant.IntentConstants;
+import com.bytehonor.sdk.intent.human.matcher.IntentMatcher;
 import com.bytehonor.sdk.intent.human.model.IntentAnswer;
 import com.bytehonor.sdk.intent.human.model.IntentContext;
 import com.bytehonor.sdk.intent.human.model.IntentPayload;
 import com.bytehonor.sdk.intent.human.model.IntentRequest;
 import com.bytehonor.sdk.intent.human.model.IntentResult;
 import com.bytehonor.sdk.intent.human.model.IntentSession;
-import com.bytehonor.sdk.intent.human.resolver.IntentMatcher;
 import com.bytehonor.sdk.intent.human.resolver.IntentResolver;
+import com.bytehonor.sdk.intent.human.resolver.MusicIntentResolver;
+import com.bytehonor.sdk.intent.human.resolver.WeixinUnsupportIntentResolver;
+import com.bytehonor.sdk.intent.human.resolver.WhatCanDoIntentResolver;
+import com.bytehonor.sdk.intent.human.resolver.WhoIamIntentResolver;
 import com.bytehonor.sdk.intent.human.worker.IntentWorker;
 import com.bytehonor.sdk.lang.spring.constant.TimeConstants;
 import com.bytehonor.sdk.lang.spring.string.SpringString;
@@ -31,17 +35,27 @@ public final class HumanIntentRecoginzer {
         this.context = new IntentContext(name);
     }
 
+    public static HumanIntentRecoginzer create(String name) {
+        HumanIntentRecoginzer recognizer = new HumanIntentRecoginzer(name);
+        recognizer.add(new MusicIntentResolver());
+        recognizer.add(new WhatCanDoIntentResolver());
+        recognizer.add(new WhoIamIntentResolver());
+        recognizer.add(new WeixinUnsupportIntentResolver());
+        return recognizer;
+    }
+
     public IntentResult process(IntentRequest request, IntentWorker worker) {
         // IntentFilterProcessor.before(request);
-        IntentResult result = recognize(request, worker);
+        IntentResult result = doRecognize(request, worker);
         // IntentFilterProcessor.after(result);
         return result;
     }
 
-    public void add(IntentResolver resolver) {
+    public HumanIntentRecoginzer add(IntentResolver resolver) {
         Objects.requireNonNull(resolver, "resolver");
 
-        this.context.getPool().add(resolver);
+        this.context.add(resolver);
+        return this;
     }
 
     /**
@@ -50,13 +64,13 @@ public final class HumanIntentRecoginzer {
      * @param request
      * @return
      */
-    public IntentResult recognize(IntentRequest request, IntentWorker worker) {
+    private IntentResult doRecognize(IntentRequest request, IntentWorker worker) {
         Objects.requireNonNull(request, "request");
 
         IntentPayload payload = IntentPayload.of(request.getQuery());
         IntentSession session = worker.get(request.getUuid());
 
-        List<IntentResolver> list = doRecognize(payload, session);
+        List<IntentResolver> list = doParse(payload, session);
         int size = list != null ? list.size() : 0;
         if (size == 0) {
             return IntentResult.non(); // 返回空
@@ -68,19 +82,20 @@ public final class HumanIntentRecoginzer {
         }
 
         IntentResolver recognizer = list.get(0);
-        return recognizer.answer(payload, session, context);
+        List<IntentAnswer> answers = recognizer.answer(payload, session, context);
+        return IntentResult.of(recognizer.getClass().getSimpleName(), answers);
     }
 
-    private static IntentResult doAmbiguous(List<IntentResolver> recognizers) {
+    private static IntentResult doAmbiguous(List<IntentResolver> resolvers) {
         List<IntentAnswer> answers = new ArrayList<IntentAnswer>();
         answers.add(IntentAnswer.text(IntentConstants.TIP_HANDLER_AMBIGUOUS));
-        for (IntentResolver recognizer : recognizers) {
-            answers.add(IntentAnswer.text(recognizer.matcher().getPattern()));
+        for (IntentResolver resolver : resolvers) {
+            answers.add(IntentAnswer.text(resolver.matcher().getPattern()));
         }
-        return IntentResult.of(answers);
+        return IntentResult.of("Ambiguous", answers);
     }
 
-    private List<IntentResolver> doRecognize(IntentPayload payload, IntentSession session) {
+    private List<IntentResolver> doParse(IntentPayload payload, IntentSession session) {
         Objects.requireNonNull(payload, "payload");
         long now = System.currentTimeMillis();
         if (session.isAuto() == false && (now - session.getPreTime() < TimeConstants.HOUR)) {
@@ -93,10 +108,10 @@ public final class HumanIntentRecoginzer {
         }
 
         List<IntentResolver> result = new ArrayList<IntentResolver>();
-        List<IntentResolver> all = context.getPool().all();
-        for (IntentResolver item : all) {
-            if (doMatch(item.matcher(), payload)) {
-                result.add(item);
+        List<IntentResolver> resolvers = context.getResolvers();
+        for (IntentResolver resolver : resolvers) {
+            if (doMatch(resolver.matcher(), payload)) {
+                result.add(resolver);
             }
         }
         return result;

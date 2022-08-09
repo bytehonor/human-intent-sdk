@@ -3,7 +3,7 @@ package com.bytehonor.sdk.intent.human.model;
 import java.util.Objects;
 import java.util.Set;
 
-import com.bytehonor.sdk.intent.human.resolver.IntentMatcher;
+import com.bytehonor.sdk.intent.human.matcher.IntentMatcher;
 
 public class IntentPayload {
 

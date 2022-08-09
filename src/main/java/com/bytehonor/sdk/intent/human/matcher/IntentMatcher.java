@@ -1,4 +1,4 @@
-package com.bytehonor.sdk.intent.human.resolver;
+package com.bytehonor.sdk.intent.human.matcher;
 
 import java.util.ArrayList;
 import java.util.HashSet;

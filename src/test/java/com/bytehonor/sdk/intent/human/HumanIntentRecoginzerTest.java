@@ -10,9 +10,6 @@ import org.slf4j.LoggerFactory;
 import com.bytehonor.sdk.intent.human.model.IntentAnswer;
 import com.bytehonor.sdk.intent.human.model.IntentRequest;
 import com.bytehonor.sdk.intent.human.model.IntentResult;
-import com.bytehonor.sdk.intent.human.resolver.MusicIntentResolver;
-import com.bytehonor.sdk.intent.human.resolver.WhatCanDoIntentResolver;
-import com.bytehonor.sdk.intent.human.resolver.WhoIamIntentResolver;
 import com.bytehonor.sdk.intent.human.worker.CacheIntentWorker;
 
 public class HumanIntentRecoginzerTest {
@@ -21,10 +18,7 @@ public class HumanIntentRecoginzerTest {
 
     @Test
     public void test() {
-        HumanIntentRecoginzer recognizer = new HumanIntentRecoginzer("测试");
-        recognizer.add(new MusicIntentResolver());
-        recognizer.add(new WhatCanDoIntentResolver());
-        recognizer.add(new WhoIamIntentResolver());
+        HumanIntentRecoginzer recognizer = HumanIntentRecoginzer.create("测试");
 
         List<String> list = new ArrayList<String>();
         list.add("你是谁");
@@ -36,6 +30,7 @@ public class HumanIntentRecoginzerTest {
         list.add("你能做什么你是谁");
         list.add("放歌");
         list.add("播放音乐");
+        list.add("【收到不支持的消息类型，暂无法显示】");
         for (String text : list) {
             LOG.info("**** text:{}", text);
             IntentRequest request = IntentRequest.create(text, "testuser");

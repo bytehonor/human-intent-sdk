@@ -9,26 +9,18 @@ import com.bytehonor.sdk.intent.human.model.IntentContext;
 import com.bytehonor.sdk.intent.human.model.IntentPayload;
 import com.bytehonor.sdk.intent.human.model.IntentSession;
 
-public class WhatCanDoIntentResolver implements IntentResolver {
+public class WeixinUnsupportIntentResolver implements IntentResolver {
 
     private final IntentMatcher matcher;
 
-    public WhatCanDoIntentResolver() {
-        this.matcher = IntentMatcher.builder("你会什么").include("你能", "做什么").include("你会", "什么").include("你有", "什么", "功能")
-                .build();
+    public WeixinUnsupportIntentResolver() {
+        this.matcher = IntentMatcher.builder("收到不支持的消息类型，暂无法显示").include("收到", "不支持", "消息类型").build();
     }
 
     @Override
     public List<IntentAnswer> answer(IntentPayload payload, IntentSession session, IntentContext context) {
-        List<IntentResolver> resolvers = context.getResolvers();
         List<IntentAnswer> answers = new ArrayList<IntentAnswer>();
-        answers.add(IntentAnswer.text("你可以对我说："));
-        for (IntentResolver resolver : resolvers) {
-            if (resolver.privated()) {
-                continue;
-            }
-            answers.add(IntentAnswer.text(resolver.matcher().getPattern()));
-        }
+        answers.add(IntentAnswer.text("呵"));
         return answers;
     }
 
@@ -39,7 +31,7 @@ public class WhatCanDoIntentResolver implements IntentResolver {
 
     @Override
     public boolean privated() {
-        return false;
+        return true;
     }
 
 }
