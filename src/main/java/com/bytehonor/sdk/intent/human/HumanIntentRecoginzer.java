@@ -8,15 +8,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.bytehonor.sdk.intent.human.constant.IntentConstants;
-import com.bytehonor.sdk.intent.human.filter.IntentFilterProcessor;
 import com.bytehonor.sdk.intent.human.model.IntentAnswer;
+import com.bytehonor.sdk.intent.human.model.IntentContext;
 import com.bytehonor.sdk.intent.human.model.IntentPayload;
 import com.bytehonor.sdk.intent.human.model.IntentRequest;
 import com.bytehonor.sdk.intent.human.model.IntentResult;
 import com.bytehonor.sdk.intent.human.model.IntentSession;
 import com.bytehonor.sdk.intent.human.resolver.IntentMatcher;
 import com.bytehonor.sdk.intent.human.resolver.IntentResolver;
-import com.bytehonor.sdk.intent.human.resolver.IntentResolverPool;
 import com.bytehonor.sdk.intent.human.worker.IntentWorker;
 import com.bytehonor.sdk.lang.spring.constant.TimeConstants;
 import com.bytehonor.sdk.lang.spring.string.SpringString;
@@ -25,19 +24,24 @@ public final class HumanIntentRecoginzer {
 
     private static final Logger LOG = LoggerFactory.getLogger(HumanIntentRecoginzer.class);
 
-    private String app;
+    private final IntentContext context;
 
-    private final IntentResolverPool pool;
-
-    public HumanIntentRecoginzer() {
-        this.pool = new IntentResolverPool();
+    public HumanIntentRecoginzer(String name) {
+        Objects.requireNonNull(name, "name");
+        this.context = new IntentContext(name);
     }
 
     public IntentResult process(IntentRequest request, IntentWorker worker) {
-        IntentFilterProcessor.before(request);
+        // IntentFilterProcessor.before(request);
         IntentResult result = recognize(request, worker);
-        IntentFilterProcessor.after(result);
+        // IntentFilterProcessor.after(result);
         return result;
+    }
+
+    public void add(IntentResolver resolver) {
+        Objects.requireNonNull(resolver, "resolver");
+
+        this.context.getPool().add(resolver);
     }
 
     /**
@@ -55,7 +59,7 @@ public final class HumanIntentRecoginzer {
         List<IntentResolver> list = doRecognize(payload, session);
         int size = list != null ? list.size() : 0;
         if (size == 0) {
-            return null; // 返回空
+            return IntentResult.non(); // 返回空
         }
 
         if (size > 1) {
@@ -64,7 +68,7 @@ public final class HumanIntentRecoginzer {
         }
 
         IntentResolver recognizer = list.get(0);
-        return recognizer.answer(payload, session);
+        return recognizer.answer(payload, session, context);
     }
 
     private static IntentResult doAmbiguous(List<IntentResolver> recognizers) {
@@ -88,17 +92,17 @@ public final class HumanIntentRecoginzer {
             return new ArrayList<IntentResolver>();
         }
 
-        List<IntentResolver> resolvers = new ArrayList<IntentResolver>();
-        List<IntentResolver> all = pool.all();
+        List<IntentResolver> result = new ArrayList<IntentResolver>();
+        List<IntentResolver> all = context.getPool().all();
         for (IntentResolver item : all) {
             if (doMatch(item.matcher(), payload)) {
-                resolvers.add(item);
+                result.add(item);
             }
         }
-        return resolvers;
+        return result;
     }
 
     private static boolean doMatch(IntentMatcher matcher, IntentPayload payload) {
-        return matcher.getMatcher().match(payload.getWords());
+        return matcher.match(payload.getWords());
     }
 }

@@ -6,16 +6,10 @@ public class IntentRequest {
 
     private String uuid;
 
-    private String app;
-
-    public IntentRequest() {
-    }
-
-    public static IntentRequest create(String query, String uuid, String app) {
+    public static IntentRequest create(String query, String uuid) {
         IntentRequest request = new IntentRequest();
         request.setQuery(query);
         request.setUuid(uuid);
-        request.setApp(app);
         return request;
     }
 
@@ -33,14 +27,6 @@ public class IntentRequest {
 
     public void setUuid(String uuid) {
         this.uuid = uuid;
-    }
-
-    public String getApp() {
-        return app;
-    }
-
-    public void setApp(String app) {
-        this.app = app;
     }
 
 }

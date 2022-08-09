@@ -17,9 +17,8 @@ public class IntentFilterProcessor {
     public static void before(IntentRequest request) {
         Objects.requireNonNull(request, "request");
         Objects.requireNonNull(request.getUuid(), "uuid");
-        Objects.requireNonNull(request.getApp(), "app");
         if (LOG.isDebugEnabled()) {
-            LOG.debug("query:{}, uuid:{}, app:{}", request.getQuery(), request.getUuid(), request.getApp());
+            LOG.debug("query:{}, uuid:{}", request.getQuery(), request.getUuid());
         }
         try {
             filterRequest(request);
@@ -29,8 +28,7 @@ public class IntentFilterProcessor {
 //                request.setSession(IntentSession.init(request.getUuid(), request.getApp()));
 //            }
         } catch (Exception e) {
-            LOG.error("query:{}, uuid:{}, app:{}, prepare error", request.getQuery(), request.getUuid(),
-                    request.getApp(), e);
+            LOG.error("query:{}, uuid:{}, prepare error", request.getQuery(), request.getUuid(), e);
         }
     }
 

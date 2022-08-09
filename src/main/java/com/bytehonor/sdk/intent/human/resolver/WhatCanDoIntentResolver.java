@@ -3,27 +3,29 @@ package com.bytehonor.sdk.intent.human.resolver;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.bytehonor.sdk.intent.human.constant.MusicUrlEnum;
 import com.bytehonor.sdk.intent.human.model.IntentAnswer;
 import com.bytehonor.sdk.intent.human.model.IntentContext;
 import com.bytehonor.sdk.intent.human.model.IntentPayload;
 import com.bytehonor.sdk.intent.human.model.IntentResult;
 import com.bytehonor.sdk.intent.human.model.IntentSession;
 
-public class MusicIntentResolver implements IntentResolver {
+public class WhatCanDoIntentResolver implements IntentResolver {
 
     private final IntentMatcher matcher;
 
-    public MusicIntentResolver() {
-        this.matcher = IntentMatcher.builder("播放音乐").include("放", "歌").include("播放", "音乐").build();
+    public WhatCanDoIntentResolver() {
+        this.matcher = IntentMatcher.builder("你会什么").include("你能", "做什么").include("你会", "什么").include("你有", "什么", "功能")
+                .build();
     }
 
     @Override
     public IntentResult answer(IntentPayload payload, IntentSession session, IntentContext context) {
-        String mp3 = MusicUrlEnum.random().getUrl();
+        List<IntentResolver> recognizers = context.getPool().all();
         List<IntentAnswer> answers = new ArrayList<IntentAnswer>();
-        answers.add(IntentAnswer.text("嗯，" + matcher.getPattern()));
-        answers.add(IntentAnswer.media(mp3));
+        answers.add(IntentAnswer.text("你可以对我说："));
+        for (IntentResolver recognizer : recognizers) {
+            answers.add(IntentAnswer.text(recognizer.matcher().getPattern()));
+        }
         return IntentResult.of(answers);
     }
 

@@ -3,7 +3,7 @@ package com.bytehonor.sdk.intent.human.model;
 import java.util.Objects;
 import java.util.Set;
 
-import com.bytehonor.sdk.lang.spring.match.TextMatcher;
+import com.bytehonor.sdk.intent.human.resolver.IntentMatcher;
 
 public class IntentPayload {
 
@@ -15,7 +15,7 @@ public class IntentPayload {
         Objects.requireNonNull(query, "query");
         IntentPayload payload = new IntentPayload();
         payload.setQuery(query);
-        payload.setWords(TextMatcher.words(query));
+        payload.setWords(IntentMatcher.words(query));
         return payload;
     }
 

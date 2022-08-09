@@ -15,7 +15,7 @@ public class IntentResolverPool {
         resolvers = new HashMap<String, IntentResolver>();
     }
 
-    public void put(IntentResolver resolver) {
+    public void add(IntentResolver resolver) {
         Objects.requireNonNull(resolver, "resolver");
 
         resolvers.put(resolver.getClass().getSimpleName(), resolver);
