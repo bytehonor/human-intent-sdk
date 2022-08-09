@@ -16,6 +16,7 @@ import com.bytehonor.sdk.intent.human.model.IntentPayload;
 import com.bytehonor.sdk.intent.human.model.IntentRequest;
 import com.bytehonor.sdk.intent.human.model.IntentResult;
 import com.bytehonor.sdk.intent.human.model.IntentSession;
+import com.bytehonor.sdk.intent.human.resolver.HowOldIntentResolver;
 import com.bytehonor.sdk.intent.human.resolver.IntentResolver;
 import com.bytehonor.sdk.intent.human.resolver.MusicIntentResolver;
 import com.bytehonor.sdk.intent.human.resolver.UnsupportIntentResolver;
@@ -43,6 +44,7 @@ public final class HumanIntentRecoginzer {
         recognizer.add(new WhatAbleIntentResolver());
         recognizer.add(new WhoIamIntentResolver());
         recognizer.add(new UnsupportIntentResolver());
+        recognizer.add(new HowOldIntentResolver());
         return recognizer;
     }
 

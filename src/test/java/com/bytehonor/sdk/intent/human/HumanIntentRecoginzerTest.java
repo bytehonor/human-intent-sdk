@@ -30,6 +30,7 @@ public class HumanIntentRecoginzerTest {
         list.add("你能做什么你是谁");
         list.add("放歌");
         list.add("播放音乐");
+        list.add("你多大");
         list.add("【收到不支持的消息类型，暂无法显示】");
         for (String text : list) {
             LOG.info("**** text:{}", text);
