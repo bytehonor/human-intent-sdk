@@ -101,33 +101,34 @@ public final class HumanIntentRecognizer {
 
         long now = System.currentTimeMillis();
         if (session.isPaused() && (now - session.getLastAt() < TimeConstants.HOUR)) {
-            return IntentResult.non(); // 返回空
+            return IntentResult.non(request.getQuery()); // 返回空
         }
 
         IntentPayload payload = IntentPayload.of(request.getQuery());
         List<IntentResolver> list = doParse(payload, session);
         int size = list != null ? list.size() : 0;
         if (size == 0) {
-            return IntentResult.chat(ChatClient.ask(request.getQuery(), request.getUuid()));
+            String chat = ChatClient.ask(request.getQuery(), request.getUuid());
+            return IntentResult.chat(request.getQuery(), chat);
         }
 
         if (size > 1) {
             // 含糊不清的
-            return doAmbiguous(list);
+            return IntentResult.ambiguous(request.getQuery(), doAmbiguous(list));
         }
 
         IntentResolver recognizer = list.get(0);
         String answers = recognizer.answer(payload, session, context);
-        return IntentResult.of(recognizer.getClass().getSimpleName(), answers);
+        return IntentResult.of(request.getQuery(), recognizer.getClass().getSimpleName(), answers);
     }
 
-    private static IntentResult doAmbiguous(List<IntentResolver> resolvers) {
+    private static String doAmbiguous(List<IntentResolver> resolvers) {
         StringBuilder answers = new StringBuilder();
         answers.append(IntentConstants.TIP_HANDLER_AMBIGUOUS);
         for (IntentResolver resolver : resolvers) {
             answers.append(resolver.matcher().getPattern());
         }
-        return IntentResult.of(IntentResult.AMBIGUOUS, answers.toString());
+        return answers.toString();
     }
 
     private List<IntentResolver> doParse(IntentPayload payload, IntentSession session) {

@@ -14,33 +14,44 @@ public class IntentResult implements Serializable {
 
     public static final String CHAT = "Chat";
 
+    private String query;
+
     private String resolver;
 
     private String answer;
 
     private IntentSession session;
 
-    public static IntentResult of(String resolver, String answer) {
+    public static IntentResult of(String query, String resolver, String answer) {
         IntentResult result = new IntentResult();
+        result.setQuery(query);
         result.setResolver(resolver);
         result.setAnswer(answer);
         return result;
     }
 
-    public static IntentResult non() {
-        return of(NON, "");
+    public static IntentResult non(String query) {
+        return of(query, NON, "");
     }
 
-    public static IntentResult empty() {
-        return of(EMPTY, "");
+    public static IntentResult empty(String query) {
+        return of(query, EMPTY, "");
     }
 
-    public static IntentResult chat(String text) {
-        return one(CHAT, text);
+    public static IntentResult chat(String query, String text) {
+        return of(query, CHAT, text);
     }
 
-    public static IntentResult one(String resolver, String text) {
-        return of(resolver, text);
+    public static IntentResult ambiguous(String query, String text) {
+        return of(query, AMBIGUOUS, text);
+    }
+
+    public String getQuery() {
+        return query;
+    }
+
+    public void setQuery(String query) {
+        this.query = query;
     }
 
     public String getResolver() {
