@@ -28,15 +28,15 @@ import com.bytehonor.sdk.intent.human.worker.IntentWorker;
 import com.bytehonor.sdk.lang.spring.constant.TimeConstants;
 import com.bytehonor.sdk.lang.spring.string.SpringString;
 
-public final class HumanIntentRecoginzer {
+public final class HumanIntentRecognizer {
 
-    private static final Logger LOG = LoggerFactory.getLogger(HumanIntentRecoginzer.class);
+    private static final Logger LOG = LoggerFactory.getLogger(HumanIntentRecognizer.class);
 
     private final IntentContext context;
 
     private final IntentWorker worker;
 
-    public HumanIntentRecoginzer(IntentContext context, IntentWorker worker) {
+    public HumanIntentRecognizer(IntentContext context, IntentWorker worker) {
         Objects.requireNonNull(context, "context");
         Objects.requireNonNull(worker, "worker");
 
@@ -44,16 +44,16 @@ public final class HumanIntentRecoginzer {
         this.worker = worker;
     }
 
-    public static HumanIntentRecoginzer create(String name, String platform, IntentWorker worker) {
+    public static HumanIntentRecognizer create(String name, String platform, IntentWorker worker) {
         return create(new IntentContext(name, platform), worker);
     }
 
-    public static HumanIntentRecoginzer create(String name, IntentWorker worker) {
+    public static HumanIntentRecognizer create(String name, IntentWorker worker) {
         return create(new IntentContext(name, IntentPlatformEnum.UNDEFINED.getKey()), worker);
     }
 
-    public static HumanIntentRecoginzer create(IntentContext context, IntentWorker worker) {
-        HumanIntentRecoginzer recognizer = new HumanIntentRecoginzer(context, worker);
+    public static HumanIntentRecognizer create(IntentContext context, IntentWorker worker) {
+        HumanIntentRecognizer recognizer = new HumanIntentRecognizer(context, worker);
         recognizer.add(new UnsupportIntentResolver());
         recognizer.add(new AskMusicIntentResolver());
         recognizer.add(new AskAbilityIntentResolver());
@@ -84,7 +84,7 @@ public final class HumanIntentRecoginzer {
         return result;
     }
 
-    public HumanIntentRecoginzer add(IntentResolver resolver) {
+    public HumanIntentRecognizer add(IntentResolver resolver) {
         Objects.requireNonNull(resolver, "resolver");
 
         this.context.add(resolver);

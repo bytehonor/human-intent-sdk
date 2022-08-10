@@ -13,13 +13,13 @@ import com.bytehonor.sdk.intent.human.model.IntentResult;
 import com.bytehonor.sdk.intent.human.model.IntentSession;
 import com.bytehonor.sdk.intent.human.worker.DefaultIntentWorker;
 
-public class HumanIntentRecoginzerTest {
+public class HumanIntentRecognizerTest {
 
-    private static final Logger LOG = LoggerFactory.getLogger(HumanIntentRecoginzerTest.class);
+    private static final Logger LOG = LoggerFactory.getLogger(HumanIntentRecognizerTest.class);
 
     @Test
     public void test() {
-        HumanIntentRecoginzer recognizer = HumanIntentRecoginzer.create("测试", new DefaultIntentWorker());
+        HumanIntentRecognizer recognizer = HumanIntentRecognizer.create("测试", new DefaultIntentWorker());
         String uuid = "testuser";
 
         List<String> list = new ArrayList<String>();
