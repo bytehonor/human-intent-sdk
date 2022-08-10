@@ -5,6 +5,7 @@ import java.util.Objects;
 
 import com.bytehonor.sdk.intent.human.constant.NewsChannelEnum;
 import com.bytehonor.sdk.intent.human.constant.PageConstants;
+import com.bytehonor.sdk.lang.spring.util.MD5Utils;
 
 public class IntentSession implements Serializable {
 
@@ -51,6 +52,12 @@ public class IntentSession implements Serializable {
         this.newsChannel = NewsChannelEnum.TODAY.getKey();
     }
 
+    public String toCacheKey() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(platform).append(":").append(uuid).append(":").append(page).append(":").append(newsChannel);
+        return MD5Utils.md5(sb.toString());
+    }
+    
     public int getId() {
         return id;
     }
