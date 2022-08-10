@@ -74,7 +74,6 @@ public final class HumanIntentRecognizer {
         session.setId(session.getId() + 1);
         session.setPreIntent(session.getNowIntent());
         session.setNowIntent(result.getResolver());
-        session.setLastAt(System.currentTimeMillis());
         session.setPlatform(context.getPlatform());
         worker.put(request.getUuid(), session);
 
@@ -104,6 +103,7 @@ public final class HumanIntentRecognizer {
         if (session.isPaused() && (now - session.getLastAt() < TimeConstants.HOUR)) {
             return IntentResult.non(request.getQuery()); // 返回空
         }
+        session.setLastAt(now);
         session.setPaused(false);
 
         IntentPayload payload = IntentPayload.of(request.getQuery());
