@@ -6,5 +6,5 @@ public interface IntentWorker {
 
     public IntentSession get(String uuid);
 
-    public void put(IntentSession session);
+    public void put(String uuid, IntentSession session);
 }

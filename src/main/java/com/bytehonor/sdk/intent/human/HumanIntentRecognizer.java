@@ -75,7 +75,7 @@ public final class HumanIntentRecognizer {
         session.setPreIntent(session.getNowIntent());
         session.setNowIntent(result.getResolver());
         session.setLastAt(System.currentTimeMillis());
-        worker.put(session);
+        worker.put(request.getUuid(), session);
 
         result.setSession(session);
 

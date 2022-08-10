@@ -22,8 +22,8 @@ public class DefaultIntentWorker implements IntentWorker {
     }
 
     @Override
-    public void put(IntentSession session) {
-        CACHE.put(session.getUuid(), session);
+    public void put(String uuid, IntentSession session) {
+        CACHE.put(uuid, session);
     }
 
 }
