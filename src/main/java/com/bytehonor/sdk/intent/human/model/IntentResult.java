@@ -8,6 +8,12 @@ public class IntentResult implements Serializable {
 
     private static final long serialVersionUID = 5281736029229466964L;
 
+    public static final String NON = "Non";
+
+    public static final String EMPTY = "Empty";
+
+    public static final String AMBIGUOUS = "Ambiguous";
+
     private String resolver;
 
     private List<IntentAnswer> answers;
@@ -22,7 +28,11 @@ public class IntentResult implements Serializable {
     }
 
     public static IntentResult non() {
-        return of("NON", new ArrayList<IntentAnswer>());
+        return of(NON, new ArrayList<IntentAnswer>());
+    }
+
+    public static IntentResult empty() {
+        return of(EMPTY, new ArrayList<IntentAnswer>());
     }
 
     public static IntentResult one(String resolver, String text) {

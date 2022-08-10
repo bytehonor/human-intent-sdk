@@ -9,7 +9,7 @@ public class IntentSession implements Serializable {
 
     private int id;
 
-    private boolean auto;
+    private boolean paused;
 
     private String uuid;
 
@@ -32,7 +32,7 @@ public class IntentSession implements Serializable {
 
     public IntentSession() {
         this.id = 0;
-        this.auto = true;
+        this.paused = false;
         this.lastAt = 0L;
         this.preIntent = "";
         this.nowIntent = "";
@@ -47,12 +47,12 @@ public class IntentSession implements Serializable {
         this.id = id;
     }
 
-    public boolean isAuto() {
-        return auto;
+    public boolean isPaused() {
+        return paused;
     }
 
-    public void setAuto(boolean auto) {
-        this.auto = auto;
+    public void setPaused(boolean paused) {
+        this.paused = paused;
     }
 
     public String getUuid() {

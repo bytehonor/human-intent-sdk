@@ -100,7 +100,7 @@ public final class HumanIntentRecoginzer {
         Objects.requireNonNull(request, "request");
 
         long now = System.currentTimeMillis();
-        if (session.isAuto() == false && (now - session.getLastAt() < TimeConstants.HOUR)) {
+        if (session.isPaused() && (now - session.getLastAt() < TimeConstants.HOUR)) {
             return IntentResult.non(); // 返回空
         }
 
@@ -108,7 +108,7 @@ public final class HumanIntentRecoginzer {
         List<IntentResolver> list = doParse(payload, session);
         int size = list != null ? list.size() : 0;
         if (size == 0) {
-            return IntentResult.non(); // 返回空
+            return IntentResult.empty(); // 返回空
         }
 
         if (size > 1) {
@@ -127,7 +127,7 @@ public final class HumanIntentRecoginzer {
         for (IntentResolver resolver : resolvers) {
             answers.add(IntentAnswer.text(resolver.matcher().getPattern()));
         }
-        return IntentResult.of("Ambiguous", answers);
+        return IntentResult.of(IntentResult.AMBIGUOUS, answers);
     }
 
     private List<IntentResolver> doParse(IntentPayload payload, IntentSession session) {
