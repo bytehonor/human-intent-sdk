@@ -11,7 +11,7 @@ import com.bytehonor.sdk.intent.human.model.IntentAnswer;
 import com.bytehonor.sdk.intent.human.model.IntentRequest;
 import com.bytehonor.sdk.intent.human.model.IntentResult;
 import com.bytehonor.sdk.intent.human.model.IntentSession;
-import com.bytehonor.sdk.intent.human.worker.CacheIntentWorker;
+import com.bytehonor.sdk.intent.human.worker.DefaultIntentWorker;
 
 public class HumanIntentRecoginzerTest {
 
@@ -19,7 +19,7 @@ public class HumanIntentRecoginzerTest {
 
     @Test
     public void test() {
-        HumanIntentRecoginzer recognizer = HumanIntentRecoginzer.create("测试", new CacheIntentWorker());
+        HumanIntentRecoginzer recognizer = HumanIntentRecoginzer.create("测试", new DefaultIntentWorker());
         String uuid = "testuser";
 
         List<String> list = new ArrayList<String>();
@@ -35,6 +35,8 @@ public class HumanIntentRecoginzerTest {
         list.add("播放音乐");
         list.add("你多大");
         list.add("晚上吃什么");
+        list.add("你会玩王者荣耀吗");
+        list.add("周末去哪玩");
         for (String text : list) {
             LOG.info("**** text:{}", text);
             IntentRequest request = IntentRequest.create(text, uuid);

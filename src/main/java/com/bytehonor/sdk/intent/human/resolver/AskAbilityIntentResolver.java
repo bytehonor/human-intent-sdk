@@ -9,21 +9,26 @@ import com.bytehonor.sdk.intent.human.model.IntentContext;
 import com.bytehonor.sdk.intent.human.model.IntentPayload;
 import com.bytehonor.sdk.intent.human.model.IntentSession;
 
-public class WhoIamIntentResolver implements IntentResolver {
+public class AskAbilityIntentResolver implements IntentResolver {
 
     private final IntentMatcher matcher;
 
-    public WhoIamIntentResolver() {
-        this.matcher = IntentMatcher.builder("你是谁").include("你", "是谁").include("你", "名字").include("你叫", "什么").build();
+    public AskAbilityIntentResolver() {
+        this.matcher = IntentMatcher.builder("你会什么").include("你能", "做什么").include("你会", "什么").include("你有", "什么", "功能")
+                .build();
     }
 
     @Override
     public List<IntentAnswer> answer(IntentPayload payload, IntentSession session, IntentContext context) {
-        boolean contains = payload.getWords().contains("叫") || payload.getWords().contains("名字");
-        StringBuilder sb = new StringBuilder();
-        sb.append("我").append(contains ? "叫" : "是").append(context.getName());
+        List<IntentResolver> resolvers = context.getResolvers();
         List<IntentAnswer> answers = new ArrayList<IntentAnswer>();
-        answers.add(IntentAnswer.text(sb.toString()));
+        answers.add(IntentAnswer.text("你可以对我说："));
+        for (IntentResolver resolver : resolvers) {
+            if (resolver.privated()) {
+                continue;
+            }
+            answers.add(IntentAnswer.text(resolver.matcher().getPattern()));
+        }
         return answers;
     }
 

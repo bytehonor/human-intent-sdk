@@ -14,6 +14,8 @@ public class IntentResult implements Serializable {
 
     public static final String AMBIGUOUS = "Ambiguous";
 
+    public static final String CHAT = "Chat";
+
     private String resolver;
 
     private List<IntentAnswer> answers;
@@ -33,6 +35,10 @@ public class IntentResult implements Serializable {
 
     public static IntentResult empty() {
         return of(EMPTY, new ArrayList<IntentAnswer>());
+    }
+    
+    public static IntentResult chat(String text) {
+        return one(CHAT, text);
     }
 
     public static IntentResult one(String resolver, String text) {

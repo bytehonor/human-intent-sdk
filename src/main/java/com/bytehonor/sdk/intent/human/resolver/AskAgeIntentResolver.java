@@ -10,11 +10,11 @@ import com.bytehonor.sdk.intent.human.model.IntentContext;
 import com.bytehonor.sdk.intent.human.model.IntentPayload;
 import com.bytehonor.sdk.intent.human.model.IntentSession;
 
-public class HowOldIntentResolver implements IntentResolver {
+public class AskAgeIntentResolver implements IntentResolver {
 
     private final IntentMatcher matcher;
 
-    public HowOldIntentResolver() {
+    public AskAgeIntentResolver() {
         this.matcher = IntentMatcher.builder("你多大").include("你", "多大").include("你", "年龄").build();
     }
 

@@ -6,7 +6,7 @@ import com.bytehonor.sdk.intent.human.model.IntentSession;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 
-public class CacheIntentWorker implements IntentWorker {
+public class DefaultIntentWorker implements IntentWorker {
 
     private static int CAPACITY = 1024;
 

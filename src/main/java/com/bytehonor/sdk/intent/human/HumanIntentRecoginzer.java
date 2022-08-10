@@ -7,6 +7,7 @@ import java.util.Objects;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.bytehonor.sdk.intent.human.chat.ChatClient;
 import com.bytehonor.sdk.intent.human.constant.IntentConstants;
 import com.bytehonor.sdk.intent.human.constant.IntentPlatformEnum;
 import com.bytehonor.sdk.intent.human.listener.IntentListenerThread;
@@ -17,12 +18,12 @@ import com.bytehonor.sdk.intent.human.model.IntentPayload;
 import com.bytehonor.sdk.intent.human.model.IntentRequest;
 import com.bytehonor.sdk.intent.human.model.IntentResult;
 import com.bytehonor.sdk.intent.human.model.IntentSession;
-import com.bytehonor.sdk.intent.human.resolver.HowOldIntentResolver;
+import com.bytehonor.sdk.intent.human.resolver.AskAgeIntentResolver;
 import com.bytehonor.sdk.intent.human.resolver.IntentResolver;
-import com.bytehonor.sdk.intent.human.resolver.MusicIntentResolver;
+import com.bytehonor.sdk.intent.human.resolver.AskMusicIntentResolver;
 import com.bytehonor.sdk.intent.human.resolver.UnsupportIntentResolver;
-import com.bytehonor.sdk.intent.human.resolver.WhatAbleIntentResolver;
-import com.bytehonor.sdk.intent.human.resolver.WhoIamIntentResolver;
+import com.bytehonor.sdk.intent.human.resolver.AskAbilityIntentResolver;
+import com.bytehonor.sdk.intent.human.resolver.AskNameIntentResolver;
 import com.bytehonor.sdk.intent.human.worker.IntentWorker;
 import com.bytehonor.sdk.lang.spring.constant.TimeConstants;
 import com.bytehonor.sdk.lang.spring.string.SpringString;
@@ -53,11 +54,11 @@ public final class HumanIntentRecoginzer {
 
     public static HumanIntentRecoginzer create(IntentContext context, IntentWorker worker) {
         HumanIntentRecoginzer recognizer = new HumanIntentRecoginzer(context, worker);
-        recognizer.add(new MusicIntentResolver());
-        recognizer.add(new WhatAbleIntentResolver());
-        recognizer.add(new WhoIamIntentResolver());
         recognizer.add(new UnsupportIntentResolver());
-        recognizer.add(new HowOldIntentResolver());
+        recognizer.add(new AskMusicIntentResolver());
+        recognizer.add(new AskAbilityIntentResolver());
+        recognizer.add(new AskNameIntentResolver());
+        recognizer.add(new AskAgeIntentResolver());
         return recognizer;
     }
 
@@ -108,7 +109,7 @@ public final class HumanIntentRecoginzer {
         List<IntentResolver> list = doParse(payload, session);
         int size = list != null ? list.size() : 0;
         if (size == 0) {
-            return IntentResult.empty(); // 返回空
+            return IntentResult.chat(ChatClient.ask(request.getQuery(), request.getUuid()));
         }
 
         if (size > 1) {
