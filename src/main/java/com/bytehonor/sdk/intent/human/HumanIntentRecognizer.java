@@ -104,6 +104,7 @@ public final class HumanIntentRecognizer {
         if (session.isPaused() && (now - session.getLastAt() < TimeConstants.HOUR)) {
             return IntentResult.non(request.getQuery()); // 返回空
         }
+        session.setPaused(false);
 
         IntentPayload payload = IntentPayload.of(request.getQuery());
         List<IntentResolver> list = doParse(payload, session);
