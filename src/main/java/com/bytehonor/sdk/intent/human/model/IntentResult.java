@@ -1,8 +1,6 @@
 package com.bytehonor.sdk.intent.human.model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 public class IntentResult implements Serializable {
 
@@ -18,33 +16,31 @@ public class IntentResult implements Serializable {
 
     private String resolver;
 
-    private List<IntentAnswer> answers;
+    private String answer;
 
     private IntentSession session;
 
-    public static IntentResult of(String resolver, List<IntentAnswer> answers) {
+    public static IntentResult of(String resolver, String answer) {
         IntentResult result = new IntentResult();
         result.setResolver(resolver);
-        result.setAnswers(answers);
+        result.setAnswer(answer);
         return result;
     }
 
     public static IntentResult non() {
-        return of(NON, new ArrayList<IntentAnswer>());
+        return of(NON, "");
     }
 
     public static IntentResult empty() {
-        return of(EMPTY, new ArrayList<IntentAnswer>());
+        return of(EMPTY, "");
     }
-    
+
     public static IntentResult chat(String text) {
         return one(CHAT, text);
     }
 
     public static IntentResult one(String resolver, String text) {
-        ArrayList<IntentAnswer> answers = new ArrayList<IntentAnswer>();
-        answers.add(IntentAnswer.text(text));
-        return of(resolver, answers);
+        return of(resolver, text);
     }
 
     public String getResolver() {
@@ -55,12 +51,12 @@ public class IntentResult implements Serializable {
         this.resolver = resolver;
     }
 
-    public List<IntentAnswer> getAnswers() {
-        return answers;
+    public String getAnswer() {
+        return answer;
     }
 
-    public void setAnswers(List<IntentAnswer> answers) {
-        this.answers = answers;
+    public void setAnswer(String answer) {
+        this.answer = answer;
     }
 
     public IntentSession getSession() {

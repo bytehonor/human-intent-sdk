@@ -1,11 +1,7 @@
 package com.bytehonor.sdk.intent.human.resolver;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.bytehonor.sdk.intent.human.chat.ChatClient;
 import com.bytehonor.sdk.intent.human.matcher.IntentMatcher;
-import com.bytehonor.sdk.intent.human.model.IntentAnswer;
 import com.bytehonor.sdk.intent.human.model.IntentContext;
 import com.bytehonor.sdk.intent.human.model.IntentPayload;
 import com.bytehonor.sdk.intent.human.model.IntentSession;
@@ -19,10 +15,8 @@ public class UnsupportIntentResolver implements IntentResolver {
     }
 
     @Override
-    public List<IntentAnswer> answer(IntentPayload payload, IntentSession session, IntentContext context) {
-        List<IntentAnswer> answers = new ArrayList<IntentAnswer>();
-        answers.add(IntentAnswer.text(ChatClient.ok()));
-        return answers;
+    public String answer(IntentPayload payload, IntentSession session, IntentContext context) {
+        return ChatClient.ok();
     }
 
     @Override

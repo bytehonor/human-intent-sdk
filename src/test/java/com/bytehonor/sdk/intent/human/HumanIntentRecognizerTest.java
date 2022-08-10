@@ -7,7 +7,6 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.bytehonor.sdk.intent.human.model.IntentAnswer;
 import com.bytehonor.sdk.intent.human.model.IntentRequest;
 import com.bytehonor.sdk.intent.human.model.IntentResult;
 import com.bytehonor.sdk.intent.human.model.IntentSession;
@@ -49,10 +48,7 @@ public class HumanIntentRecognizerTest {
         IntentSession session = result.getSession();
         LOG.info("**** resolver:{}, {}, {}, {}", result.getResolver(), session.getId(), session.getNowIntent(),
                 session.getPreIntent());
-        List<IntentAnswer> answers = result.getAnswers();
-        for (IntentAnswer answer : answers) {
-            LOG.info("{}", answer.getValue());
-        }
+        LOG.info("{}", result.getAnswer());
     }
 
 }
