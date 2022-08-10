@@ -20,12 +20,12 @@ public class AskAbilityIntentResolver implements IntentResolver {
     public String answer(IntentPayload payload, IntentSession session, IntentContext context) {
         List<IntentResolver> resolvers = context.getResolvers();
         StringBuilder answers = new StringBuilder();
-        answers.append("你可以对我说：");
+        answers.append("你可以对我说：").append("\r\n\r\n");
         for (IntentResolver resolver : resolvers) {
             if (resolver.privated()) {
                 continue;
             }
-            answers.append(resolver.matcher().getPattern());
+            answers.append(resolver.matcher().getPattern()).append("\r\n");
         }
         return answers.toString();
     }

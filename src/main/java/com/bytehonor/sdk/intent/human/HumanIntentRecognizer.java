@@ -124,9 +124,9 @@ public final class HumanIntentRecognizer {
 
     private static String doAmbiguous(List<IntentResolver> resolvers) {
         StringBuilder answers = new StringBuilder();
-        answers.append(IntentConstants.TIP_HANDLER_AMBIGUOUS);
+        answers.append(IntentConstants.TIP_HANDLER_AMBIGUOUS).append("\r\n\r\n");
         for (IntentResolver resolver : resolvers) {
-            answers.append(resolver.matcher().getPattern());
+            answers.append(resolver.matcher().getPattern()).append("\r\n");
         }
         return answers.toString();
     }
