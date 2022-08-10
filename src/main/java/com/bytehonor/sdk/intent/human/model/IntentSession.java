@@ -3,6 +3,9 @@ package com.bytehonor.sdk.intent.human.model;
 import java.io.Serializable;
 import java.util.Objects;
 
+import com.bytehonor.sdk.intent.human.constant.NewsChannelEnum;
+import com.bytehonor.sdk.intent.human.constant.PageConstants;
+
 public class IntentSession implements Serializable {
 
     private static final long serialVersionUID = -1460407043271707300L;
@@ -21,6 +24,12 @@ public class IntentSession implements Serializable {
 
     private long lastAt;
 
+    private int page;
+
+    private String newsChannel;
+
+    private int newsIndex;
+
     public static IntentSession init(String uuid, String platform) {
         Objects.requireNonNull(uuid, "uuid");
 
@@ -37,6 +46,9 @@ public class IntentSession implements Serializable {
         this.preIntent = "";
         this.nowIntent = "";
         this.platform = "";
+        this.newsIndex = 0;
+        this.page = PageConstants.PAGE_FIRST;
+        this.newsChannel = NewsChannelEnum.TODAY.getKey();
     }
 
     public int getId() {
@@ -93,6 +105,30 @@ public class IntentSession implements Serializable {
 
     public void setLastAt(long lastAt) {
         this.lastAt = lastAt;
+    }
+
+    public int getPage() {
+        return page;
+    }
+
+    public void setPage(int page) {
+        this.page = page;
+    }
+
+    public String getNewsChannel() {
+        return newsChannel;
+    }
+
+    public void setNewsChannel(String newsChannel) {
+        this.newsChannel = newsChannel;
+    }
+
+    public int getNewsIndex() {
+        return newsIndex;
+    }
+
+    public void setNewsIndex(int newsIndex) {
+        this.newsIndex = newsIndex;
     }
 
 }
