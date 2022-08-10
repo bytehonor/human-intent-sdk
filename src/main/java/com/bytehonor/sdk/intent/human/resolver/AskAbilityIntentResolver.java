@@ -37,7 +37,7 @@ public class AskAbilityIntentResolver implements IntentResolver {
 
     @Override
     public boolean privated() {
-        return false;
+        return true;
     }
 
 }
