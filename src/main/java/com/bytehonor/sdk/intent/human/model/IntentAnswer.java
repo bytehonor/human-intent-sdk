@@ -1,44 +1,39 @@
 package com.bytehonor.sdk.intent.human.model;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 public class IntentAnswer implements Serializable {
 
     private static final long serialVersionUID = -364312310080158140L;
 
-    /**
-     * 媒体
-     */
-    public static final String MEDIA = "media";
+    public static final String TITLE = "title";
 
-    /**
-     * 文本
-     */
-    public static final String TEXT = "text";
+    public static final String P = "p";
 
-    public static final String NON = "non";
+    public static final String A = "a";
 
     private String type;
 
     private String value;
 
-    public static IntentAnswer media(String value) {
-        return of(MEDIA, value);
+    public static IntentAnswer title(String value) {
+        return new IntentAnswer(TITLE, value);
     }
 
-    public static IntentAnswer text(String value) {
-        return of(TEXT, value);
+    public static IntentAnswer p(String value) {
+        return new IntentAnswer(P, value);
     }
 
-    public static IntentAnswer non() {
-        return of(NON, "");
+    public static IntentAnswer a(String value) {
+        return new IntentAnswer(A, value);
     }
 
-    public static IntentAnswer of(String type, String value) {
-        IntentAnswer answer = new IntentAnswer();
-        answer.setType(type);
-        answer.setValue(value);
-        return answer;
+    public IntentAnswer(String type, String value) {
+        Objects.requireNonNull(type, "type");
+        Objects.requireNonNull(value, "value");
+        this.type = type;
+        this.value = value;
     }
 
     public String getType() {

@@ -3,6 +3,7 @@ package com.bytehonor.sdk.intent.human.resolver;
 import java.time.LocalDate;
 
 import com.bytehonor.sdk.intent.human.matcher.IntentMatcher;
+import com.bytehonor.sdk.intent.human.model.IntentAnswers;
 import com.bytehonor.sdk.intent.human.model.IntentContext;
 import com.bytehonor.sdk.intent.human.model.IntentPayload;
 import com.bytehonor.sdk.intent.human.model.IntentSession;
@@ -16,11 +17,11 @@ public class AskAgeIntentResolver implements IntentResolver {
     }
 
     @Override
-    public String answer(IntentPayload payload, IntentSession session, IntentContext context) {
+    public IntentAnswers answer(IntentPayload payload, IntentSession session, IntentContext context) {
         int year = LocalDate.now().getYear();
         StringBuilder sb = new StringBuilder();
         sb.append("我今年").append(year - 2018).append("岁");
-        return sb.toString();
+        return IntentAnswers.make().p(sb.toString());
     }
 
     @Override

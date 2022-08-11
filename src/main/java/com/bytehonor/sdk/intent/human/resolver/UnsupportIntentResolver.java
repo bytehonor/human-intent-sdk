@@ -2,6 +2,7 @@ package com.bytehonor.sdk.intent.human.resolver;
 
 import com.bytehonor.sdk.intent.human.chat.ChatClient;
 import com.bytehonor.sdk.intent.human.matcher.IntentMatcher;
+import com.bytehonor.sdk.intent.human.model.IntentAnswers;
 import com.bytehonor.sdk.intent.human.model.IntentContext;
 import com.bytehonor.sdk.intent.human.model.IntentPayload;
 import com.bytehonor.sdk.intent.human.model.IntentSession;
@@ -15,8 +16,8 @@ public class UnsupportIntentResolver implements IntentResolver {
     }
 
     @Override
-    public String answer(IntentPayload payload, IntentSession session, IntentContext context) {
-        return ChatClient.ok();
+    public IntentAnswers answer(IntentPayload payload, IntentSession session, IntentContext context) {
+        return IntentAnswers.make().p(ChatClient.ok());
     }
 
     @Override

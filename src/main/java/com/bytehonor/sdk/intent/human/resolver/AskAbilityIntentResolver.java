@@ -3,6 +3,7 @@ package com.bytehonor.sdk.intent.human.resolver;
 import java.util.List;
 
 import com.bytehonor.sdk.intent.human.matcher.IntentMatcher;
+import com.bytehonor.sdk.intent.human.model.IntentAnswers;
 import com.bytehonor.sdk.intent.human.model.IntentContext;
 import com.bytehonor.sdk.intent.human.model.IntentPayload;
 import com.bytehonor.sdk.intent.human.model.IntentSession;
@@ -17,17 +18,17 @@ public class AskAbilityIntentResolver implements IntentResolver {
     }
 
     @Override
-    public String answer(IntentPayload payload, IntentSession session, IntentContext context) {
+    public IntentAnswers answer(IntentPayload payload, IntentSession session, IntentContext context) {
         List<IntentResolver> resolvers = context.getResolvers();
-        StringBuilder answers = new StringBuilder();
-        answers.append("你可以对我说：").append("\r\n\r\n");
+        IntentAnswers answers = IntentAnswers.make();
+        answers.title("你可以对我说：");
         for (IntentResolver resolver : resolvers) {
             if (resolver.privated()) {
                 continue;
             }
-            answers.append(resolver.matcher().getPattern()).append("\r\n");
+            answers.p(resolver.matcher().getPattern());
         }
-        return answers.toString();
+        return answers;
     }
 
     @Override

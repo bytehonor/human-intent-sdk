@@ -2,6 +2,7 @@ package com.bytehonor.sdk.intent.human.resolver;
 
 import com.bytehonor.sdk.intent.human.constant.MusicUrlEnum;
 import com.bytehonor.sdk.intent.human.matcher.IntentMatcher;
+import com.bytehonor.sdk.intent.human.model.IntentAnswers;
 import com.bytehonor.sdk.intent.human.model.IntentContext;
 import com.bytehonor.sdk.intent.human.model.IntentPayload;
 import com.bytehonor.sdk.intent.human.model.IntentSession;
@@ -15,9 +16,11 @@ public class AskMusicIntentResolver implements IntentResolver {
     }
 
     @Override
-    public String answer(IntentPayload payload, IntentSession session, IntentContext context) {
+    public IntentAnswers answer(IntentPayload payload, IntentSession session, IntentContext context) {
         String mp3 = MusicUrlEnum.random().getUrl();
-        return mp3;
+        IntentAnswers answer = IntentAnswers.make();
+        answer.title("好的，播放" + context.getName() + "珍藏的音乐");
+        return answer.a(mp3);
     }
 
     @Override

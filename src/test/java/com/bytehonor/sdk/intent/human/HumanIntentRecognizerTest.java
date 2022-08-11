@@ -7,6 +7,7 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.bytehonor.sdk.intent.human.converter.AnswerPrinter;
 import com.bytehonor.sdk.intent.human.model.IntentRequest;
 import com.bytehonor.sdk.intent.human.model.IntentResult;
 import com.bytehonor.sdk.intent.human.model.IntentSession;
@@ -18,8 +19,8 @@ public class HumanIntentRecognizerTest {
 
     @Test
     public void test() {
-        HumanIntentRecognizer recognizer = HumanIntentRecognizer.create("测试", new DefaultIntentWorker());
-        String uuid = "testuser";
+        HumanIntentRecognizer recognizer = HumanIntentRecognizer.create("字节荣耀", new DefaultIntentWorker());
+        String uuid = "62eea88d201601bfc592209554e57964";
 
         List<String> list = new ArrayList<String>();
         list.add("【收到不支持的消息类型，暂无法显示】");
@@ -48,7 +49,7 @@ public class HumanIntentRecognizerTest {
         IntentSession session = result.getSession();
         LOG.info("**** resolver:{}, {}, {}, {}", result.getResolver(), session.getId(), session.getNowIntent(),
                 session.getPreIntent());
-        LOG.info("{}", result.getAnswer());
+        AnswerPrinter.print(result.getAnswers());
     }
 
 }

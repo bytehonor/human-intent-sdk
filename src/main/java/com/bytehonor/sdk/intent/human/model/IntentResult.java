@@ -18,32 +18,32 @@ public class IntentResult implements Serializable {
 
     private String resolver;
 
-    private String answer;
+    private IntentAnswers answers;
 
     private IntentSession session;
 
-    public static IntentResult of(String query, String resolver, String answer) {
+    public static IntentResult of(String query, String resolver, IntentAnswers answers) {
         IntentResult result = new IntentResult();
         result.setQuery(query);
         result.setResolver(resolver);
-        result.setAnswer(answer);
+        result.setAnswers(answers);
         return result;
     }
 
     public static IntentResult non(String query) {
-        return of(query, NON, "");
+        return of(query, NON, IntentAnswers.make());
     }
 
     public static IntentResult empty(String query) {
-        return of(query, EMPTY, "");
+        return of(query, EMPTY, IntentAnswers.make());
     }
 
     public static IntentResult chat(String query, String text) {
-        return of(query, CHAT, text);
+        return of(query, CHAT, IntentAnswers.make().p(text));
     }
 
-    public static IntentResult ambiguous(String query, String text) {
-        return of(query, AMBIGUOUS, text);
+    public static IntentResult ambiguous(String query, IntentAnswers answers) {
+        return of(query, AMBIGUOUS, answers);
     }
 
     public String getQuery() {
@@ -62,12 +62,12 @@ public class IntentResult implements Serializable {
         this.resolver = resolver;
     }
 
-    public String getAnswer() {
-        return answer;
+    public IntentAnswers getAnswers() {
+        return answers;
     }
 
-    public void setAnswer(String answer) {
-        this.answer = answer;
+    public void setAnswers(IntentAnswers answers) {
+        this.answers = answers;
     }
 
     public IntentSession getSession() {

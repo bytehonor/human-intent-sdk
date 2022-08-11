@@ -12,6 +12,7 @@ import com.bytehonor.sdk.intent.human.constant.IntentConstants;
 import com.bytehonor.sdk.intent.human.constant.IntentPlatformEnum;
 import com.bytehonor.sdk.intent.human.listener.IntentListenerThread;
 import com.bytehonor.sdk.intent.human.matcher.IntentMatcher;
+import com.bytehonor.sdk.intent.human.model.IntentAnswers;
 import com.bytehonor.sdk.intent.human.model.IntentContext;
 import com.bytehonor.sdk.intent.human.model.IntentPayload;
 import com.bytehonor.sdk.intent.human.model.IntentRequest;
@@ -135,17 +136,17 @@ public final class HumanIntentRecognizer {
         }
 
         IntentResolver recognizer = list.get(0);
-        String answers = recognizer.answer(payload, session, context);
+        IntentAnswers answers = recognizer.answer(payload, session, context);
         return IntentResult.of(request.getQuery(), recognizer.getClass().getSimpleName(), answers);
     }
 
-    private static String doAmbiguous(List<IntentResolver> resolvers) {
-        StringBuilder answers = new StringBuilder();
-        answers.append(IntentConstants.TIP_HANDLER_AMBIGUOUS).append("\r\n\r\n");
+    private static IntentAnswers doAmbiguous(List<IntentResolver> resolvers) {
+        IntentAnswers answers = IntentAnswers.make();
+        answers.title(IntentConstants.TIP_HANDLER_AMBIGUOUS);
         for (IntentResolver resolver : resolvers) {
-            answers.append(resolver.matcher().getPattern()).append("\r\n");
+            answers.p(resolver.matcher().getPattern());
         }
-        return answers.toString();
+        return answers;
     }
 
     private List<IntentResolver> doParse(IntentPayload payload, IntentSession session) {
