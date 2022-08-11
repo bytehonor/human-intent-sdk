@@ -21,7 +21,7 @@ public class AskAbilityIntentResolver implements IntentResolver {
     public IntentAnswers answer(IntentPayload payload, IntentSession session, IntentContext context) {
         List<IntentResolver> resolvers = context.getResolvers();
         IntentAnswers answers = IntentAnswers.make();
-        answers.title("你可以对我说：");
+        answers.p("你可以对我说：");
         for (IntentResolver resolver : resolvers) {
             if (resolver.privated()) {
                 continue;

@@ -7,8 +7,6 @@ public class IntentAnswer implements Serializable {
 
     private static final long serialVersionUID = -364312310080158140L;
 
-    public static final String TITLE = "title";
-
     public static final String P = "p";
 
     public static final String A = "a";
@@ -16,10 +14,6 @@ public class IntentAnswer implements Serializable {
     private String type;
 
     private String value;
-
-    public static IntentAnswer title(String value) {
-        return new IntentAnswer(TITLE, value);
-    }
 
     public static IntentAnswer p(String value) {
         return new IntentAnswer(P, value);

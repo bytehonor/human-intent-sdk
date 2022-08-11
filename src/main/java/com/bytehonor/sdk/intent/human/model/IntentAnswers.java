@@ -19,10 +19,6 @@ public class IntentAnswers implements Serializable {
         return new IntentAnswers();
     }
 
-    public IntentAnswers title(String text) {
-        return add(IntentAnswer.title(text));
-    }
-
     public IntentAnswers p(String text) {
         return add(IntentAnswer.p(text));
     }

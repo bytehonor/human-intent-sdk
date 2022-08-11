@@ -7,10 +7,10 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.bytehonor.sdk.intent.human.converter.AnswerPrinter;
 import com.bytehonor.sdk.intent.human.model.IntentRequest;
 import com.bytehonor.sdk.intent.human.model.IntentResult;
 import com.bytehonor.sdk.intent.human.model.IntentSession;
+import com.bytehonor.sdk.intent.human.speak.AnswerSpeaker;
 import com.bytehonor.sdk.intent.human.worker.DefaultIntentWorker;
 
 public class HumanIntentRecognizerTest {
@@ -49,7 +49,7 @@ public class HumanIntentRecognizerTest {
         IntentSession session = result.getSession();
         LOG.info("**** resolver:{}, {}, {}, {}", result.getResolver(), session.getId(), session.getNowIntent(),
                 session.getPreIntent());
-        AnswerPrinter.print(result.getAnswers());
+        LOG.info("speech:{}", AnswerSpeaker.speech(result.getAnswers()));
     }
 
 }

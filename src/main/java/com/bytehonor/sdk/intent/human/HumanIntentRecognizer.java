@@ -142,7 +142,7 @@ public final class HumanIntentRecognizer {
 
     private static IntentAnswers doAmbiguous(List<IntentResolver> resolvers) {
         IntentAnswers answers = IntentAnswers.make();
-        answers.title(IntentConstants.TIP_HANDLER_AMBIGUOUS);
+        answers.p(IntentConstants.TIP_HANDLER_AMBIGUOUS);
         for (IntentResolver resolver : resolvers) {
             answers.p(resolver.matcher().getPattern());
         }

@@ -19,7 +19,7 @@ public class AskMusicIntentResolver implements IntentResolver {
     public IntentAnswers answer(IntentPayload payload, IntentSession session, IntentContext context) {
         String mp3 = MusicUrlEnum.random().getUrl();
         IntentAnswers answer = IntentAnswers.make();
-        answer.title("好的，播放" + context.getName() + "珍藏的音乐");
+        answer.p("好的，播放" + context.getName() + "珍藏的音乐");
         return answer.a(mp3);
     }
 
