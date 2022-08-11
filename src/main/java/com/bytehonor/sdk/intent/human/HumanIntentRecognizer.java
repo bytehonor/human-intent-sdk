@@ -65,24 +65,37 @@ public final class HumanIntentRecognizer {
     public IntentResult recognize(IntentRequest request) {
         Objects.requireNonNull(request, "request");
 
-        IntentSession session = worker.get(request.getUuid());
-        if (session == null) {
-            session = IntentSession.init(request.getUuid(), context.getPlatform());
-        }
-        LOG.info("session:{}", JacksonUtils.toJson(session));
+        IntentSession session = doSessionBefore(request.getUuid());
+        LOG.info("doSessionBefore:{}", JacksonUtils.toJson(session));
 
         IntentResult result = doRecognize(request, session);
 
+        doSessionAfter(session, result);
+        return result;
+    }
+
+    private void doSessionAfter(IntentSession session, IntentResult result) {
+        Objects.requireNonNull(session, "session");
+
         session.setId(session.getId() + 1);
-        session.setPreIntent(session.getNowIntent());
         session.setNowIntent(result.getResolver());
-        session.setPlatform(context.getPlatform());
-        worker.put(request.getUuid(), session);
+        worker.put(session.getUuid(), session);
 
         result.setSession(session);
 
         IntentListenerThread.add(result);
-        return result;
+    }
+
+    private IntentSession doSessionBefore(String uuid) {
+        Objects.requireNonNull(uuid, "uuid");
+
+        IntentSession session = worker.get(uuid);
+        if (session == null) {
+            session = IntentSession.init(uuid, context.getPlatform());
+        }
+        session.setPreIntent(session.getNowIntent());
+        session.setNowIntent("TODO");
+        return session;
     }
 
     public HumanIntentRecognizer add(IntentResolver resolver) {
