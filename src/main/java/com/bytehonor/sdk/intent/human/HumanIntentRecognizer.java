@@ -26,6 +26,7 @@ import com.bytehonor.sdk.intent.human.resolver.UnsupportIntentResolver;
 import com.bytehonor.sdk.intent.human.worker.IntentWorker;
 import com.bytehonor.sdk.lang.spring.constant.TimeConstants;
 import com.bytehonor.sdk.lang.spring.string.SpringString;
+import com.bytehonor.sdk.lang.spring.util.JacksonUtils;
 
 public final class HumanIntentRecognizer {
 
@@ -68,6 +69,7 @@ public final class HumanIntentRecognizer {
         if (session == null) {
             session = IntentSession.init(request.getUuid(), context.getPlatform());
         }
+        LOG.info("session:{}", JacksonUtils.toJson(session));
 
         IntentResult result = doRecognize(request, session);
 
