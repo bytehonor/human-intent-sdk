@@ -12,7 +12,8 @@ public class AskMusicIntentResolver implements IntentResolver {
     private final IntentMatcher matcher;
 
     public AskMusicIntentResolver() {
-        this.matcher = IntentMatcher.builder("播放音乐").include("放", "歌").include("来一首", "歌").include("音乐").build();
+        this.matcher = IntentMatcher.builder("播放音乐").include("放", "歌").include("首", "歌").include("听", "歌").include("音乐")
+                .build();
     }
 
     @Override
