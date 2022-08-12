@@ -67,7 +67,6 @@ public final class HumanIntentRecognizer {
         Objects.requireNonNull(request, "request");
 
         IntentSession session = doSessionBefore(request.getUuid());
-        LOG.info("doSessionBefore:{}", JacksonUtils.toJson(session));
 
         IntentResult result = doRecognize(request, session);
 
@@ -96,6 +95,8 @@ public final class HumanIntentRecognizer {
         }
         session.setPreIntent(session.getNowIntent());
         session.setNowIntent("TODO");
+
+        LOG.info("doSessionBefore:{}", JacksonUtils.toJson(session));
         return session;
     }
 
@@ -139,8 +140,6 @@ public final class HumanIntentRecognizer {
         IntentAnswers answers = recognizer.answer(payload, session, context);
         String name = recognizer.getClass().getSimpleName();
         return IntentResult.of(request.getQuery(), name, answers);
-//        return IntentResult.builder().answers(answers).query(request.getQuery()).resolver(name)
-//                .end(END_NAME.equals(name)).build();
     }
 
     private static IntentAnswers doAmbiguous(List<IntentResolver> resolvers) {
