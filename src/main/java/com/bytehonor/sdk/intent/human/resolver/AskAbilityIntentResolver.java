@@ -1,9 +1,9 @@
 package com.bytehonor.sdk.intent.human.resolver;
 
-import java.util.List;
+import java.util.Set;
 
 import com.bytehonor.sdk.intent.human.matcher.IntentMatcher;
-import com.bytehonor.sdk.intent.human.model.IntentAnswers;
+import com.bytehonor.sdk.intent.human.model.IntentAnswer;
 import com.bytehonor.sdk.intent.human.model.IntentContext;
 import com.bytehonor.sdk.intent.human.model.IntentPayload;
 import com.bytehonor.sdk.intent.human.model.IntentSession;
@@ -18,17 +18,15 @@ public class AskAbilityIntentResolver implements IntentResolver {
     }
 
     @Override
-    public IntentAnswers answer(IntentPayload payload, IntentSession session, IntentContext context) {
-        List<IntentResolver> resolvers = context.getResolvers();
-        IntentAnswers answers = IntentAnswers.make();
-        answers.p("你可以对我说：");
-        for (IntentResolver resolver : resolvers) {
-            if (resolver.privated()) {
-                continue;
-            }
-            answers.p(resolver.matcher().getPattern());
+    public IntentAnswer answer(IntentPayload payload, IntentSession session, IntentContext context) {
+        Set<String> patterns = context.getPublics();
+        IntentAnswer answer = IntentAnswer.make();
+        answer.p("你可以对我说：");
+        answer.p("");
+        for (String pattern : patterns) {
+            answer.p(pattern);
         }
-        return answers;
+        return answer;
     }
 
     @Override

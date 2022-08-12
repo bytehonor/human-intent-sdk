@@ -1,8 +1,8 @@
 package com.bytehonor.sdk.intent.human.speak;
 
-import com.bytehonor.sdk.intent.human.model.IntentAnswers;
+import com.bytehonor.sdk.intent.human.model.IntentAnswer;
 
 public interface AnswerSpeak {
 
-    public String speak(IntentAnswers answers);
+    public String speak(IntentAnswer answer);
 }

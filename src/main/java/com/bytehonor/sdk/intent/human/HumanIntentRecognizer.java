@@ -11,7 +11,7 @@ import com.bytehonor.sdk.intent.human.chat.ChatClient;
 import com.bytehonor.sdk.intent.human.constant.IntentConstants;
 import com.bytehonor.sdk.intent.human.listener.IntentListenerThread;
 import com.bytehonor.sdk.intent.human.matcher.IntentMatcher;
-import com.bytehonor.sdk.intent.human.model.IntentAnswers;
+import com.bytehonor.sdk.intent.human.model.IntentAnswer;
 import com.bytehonor.sdk.intent.human.model.IntentContext;
 import com.bytehonor.sdk.intent.human.model.IntentPayload;
 import com.bytehonor.sdk.intent.human.model.IntentRequest;
@@ -27,7 +27,6 @@ import com.bytehonor.sdk.intent.human.worker.DefaultIntentWorker;
 import com.bytehonor.sdk.intent.human.worker.IntentWorker;
 import com.bytehonor.sdk.lang.spring.constant.TimeConstants;
 import com.bytehonor.sdk.lang.spring.string.SpringString;
-import com.bytehonor.sdk.lang.spring.util.JacksonUtils;
 
 public final class HumanIntentRecognizer {
 
@@ -76,9 +75,9 @@ public final class HumanIntentRecognizer {
             session = IntentSession.init(uuid, context.getApp(), context.getPlatform());
         }
         session.setPreIntent(session.getNowIntent());
-        session.setNowIntent("TODO");
+        session.setNowIntent("");
 
-        LOG.info("doSessionBefore:{}", JacksonUtils.toJson(session));
+        LOG.info("session id:{}, app:{}, platform:{}", session.getId(), session.getApp(), session.getPlatform());
         return session;
     }
 
@@ -123,18 +122,18 @@ public final class HumanIntentRecognizer {
         }
 
         IntentResolver recognizer = list.get(0);
-        IntentAnswers answers = recognizer.answer(payload, session, context);
+        IntentAnswer answer = recognizer.answer(payload, session, context);
         String name = recognizer.getClass().getSimpleName();
-        return IntentResult.of(request.getQuery(), name, answers);
+        return IntentResult.of(request.getQuery(), name, answer);
     }
 
-    private static IntentAnswers doAmbiguous(List<IntentResolver> resolvers) {
-        IntentAnswers answers = IntentAnswers.make();
-        answers.p(IntentConstants.TIP_HANDLER_AMBIGUOUS);
+    private static IntentAnswer doAmbiguous(List<IntentResolver> resolvers) {
+        IntentAnswer answer = IntentAnswer.make();
+        answer.p(IntentConstants.TIP_HANDLER_AMBIGUOUS);
         for (IntentResolver resolver : resolvers) {
-            answers.p(resolver.matcher().getPattern());
+            answer.p(resolver.matcher().getPattern());
         }
-        return answers;
+        return answer;
     }
 
     private List<IntentResolver> doParse(IntentPayload payload, IntentSession session) {

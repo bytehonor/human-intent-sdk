@@ -24,7 +24,9 @@ public class IntentContext implements Serializable {
 
     private final List<IntentResolver> resolvers;
 
-    private final Set<String> patterns;
+    private final Set<String> privates;
+
+    private final Set<String> publics;
 
     public IntentContext(boolean ack, String app, String name, String platform) {
         Objects.requireNonNull(app, "app");
@@ -36,7 +38,8 @@ public class IntentContext implements Serializable {
         this.name = name;
         this.platform = platform;
         this.resolvers = new ArrayList<IntentResolver>();
-        this.patterns = new HashSet<String>();
+        this.privates = new HashSet<String>();
+        this.publics = new HashSet<String>();
     }
 
     public boolean isAck() {
@@ -59,13 +62,28 @@ public class IntentContext implements Serializable {
         return resolvers;
     }
 
+    public Set<String> getPrivates() {
+        return privates;
+    }
+
+    public Set<String> getPublics() {
+        return publics;
+    }
+
     public void add(IntentResolver resolver) {
         Objects.requireNonNull(resolver, "resolver");
         String pattern = resolver.matcher().getPattern();
-        if (patterns.contains(pattern)) {
-            throw new HumanIntentException("already exists, pattern:" + pattern);
+        if (privates.contains(pattern)) {
+            throw new HumanIntentException("privates exists, pattern:" + pattern);
+        }
+        if (publics.contains(pattern)) {
+            throw new HumanIntentException("publics exists, pattern:" + pattern);
         }
         this.resolvers.add(resolver);
-        this.patterns.add(pattern);
+        if (resolver.privated()) {
+            this.privates.add(pattern);
+        } else {
+            this.publics.add(pattern);
+        }
     }
 }

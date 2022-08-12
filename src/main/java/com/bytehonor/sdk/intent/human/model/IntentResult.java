@@ -16,31 +16,31 @@ public class IntentResult implements Serializable {
 
     private String resolver;
 
-    private IntentAnswers answers;
+    private IntentAnswer answer;
 
     private IntentSession session;
 
     public IntentResult() {
     }
 
-    public static IntentResult of(String query, String resolver, IntentAnswers answers) {
+    public static IntentResult of(String query, String resolver, IntentAnswer answer) {
         IntentResult result = new IntentResult();
         result.setQuery(query);
         result.setResolver(resolver);
-        result.setAnswers(answers);
+        result.setAnswer(answer);
         return result;
     }
 
     public static IntentResult non(String query) {
-        return of(query, NON, IntentAnswers.make());
+        return of(query, NON, IntentAnswer.make());
     }
 
     public static IntentResult chat(String query, String text) {
-        return of(query, CHAT, IntentAnswers.make().p(text));
+        return of(query, CHAT, IntentAnswer.make().p(text));
     }
 
-    public static IntentResult ambiguous(String query, IntentAnswers answers) {
-        return of(query, AMBIGUOUS, answers);
+    public static IntentResult ambiguous(String query, IntentAnswer answer) {
+        return of(query, AMBIGUOUS, answer);
     }
 
     public String getQuery() {
@@ -59,12 +59,12 @@ public class IntentResult implements Serializable {
         this.resolver = resolver;
     }
 
-    public IntentAnswers getAnswers() {
-        return answers;
+    public IntentAnswer getAnswer() {
+        return answer;
     }
 
-    public void setAnswers(IntentAnswers answers) {
-        this.answers = answers;
+    public void setAnswer(IntentAnswer answer) {
+        this.answer = answer;
     }
 
     public IntentSession getSession() {
@@ -85,7 +85,7 @@ public class IntentResult implements Serializable {
 
         private String resolver;
 
-        private IntentAnswers answers;
+        private IntentAnswer answer;
 
         private IntentSession session;
 
@@ -102,8 +102,8 @@ public class IntentResult implements Serializable {
             return this;
         }
 
-        public Builder answers(IntentAnswers answers) {
-            this.answers = answers;
+        public Builder answer(IntentAnswer answer) {
+            this.answer = answer;
             return this;
         }
 
@@ -113,7 +113,7 @@ public class IntentResult implements Serializable {
         }
 
         public IntentResult build() {
-            IntentResult result = of(query, resolver, answers);
+            IntentResult result = of(query, resolver, answer);
             result.setSession(session);
             return result;
         }

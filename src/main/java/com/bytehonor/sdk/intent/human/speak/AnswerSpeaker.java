@@ -2,17 +2,17 @@ package com.bytehonor.sdk.intent.human.speak;
 
 import java.util.Objects;
 
-import com.bytehonor.sdk.intent.human.model.IntentAnswers;
+import com.bytehonor.sdk.intent.human.model.IntentAnswer;
 
 public class AnswerSpeaker {
 
-    public static String speak(IntentAnswers answers) {
-        return speak(answers, new SimpleAnswerSpeaker());
+    public static String speak(IntentAnswer answer) {
+        return speak(answer, new SimpleAnswerSpeaker());
     }
 
-    public static String speak(IntentAnswers answers, AnswerSpeak speaker) {
-        Objects.requireNonNull(answers, "answers");
+    public static String speak(IntentAnswer answer, AnswerSpeak speaker) {
+        Objects.requireNonNull(answer, "answer");
         Objects.requireNonNull(speaker, "speaker");
-        return speaker.speak(answers);
+        return speaker.speak(answer);
     }
 }

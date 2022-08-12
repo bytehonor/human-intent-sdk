@@ -48,7 +48,7 @@ public class HumanIntentRecognizerTest {
         IntentSession session = result.getSession();
         LOG.info("**** resolver:{}, {}, {}, {}", result.getResolver(), session.getId(), session.getNowIntent(),
                 session.getPreIntent());
-        LOG.info("speech:{}", AnswerSpeaker.speak(result.getAnswers()));
+        LOG.info("speech:{}", AnswerSpeaker.speak(result.getAnswer()));
     }
 
 }

@@ -4,19 +4,19 @@ import java.util.List;
 
 import org.springframework.util.CollectionUtils;
 
+import com.bytehonor.sdk.intent.human.model.IntentOutput;
 import com.bytehonor.sdk.intent.human.model.IntentAnswer;
-import com.bytehonor.sdk.intent.human.model.IntentAnswers;
 
 public class SimpleAnswerSpeaker implements AnswerSpeak {
 
     @Override
-    public String speak(IntentAnswers answers) {
-        List<IntentAnswer> list = answers.getList();
+    public String speak(IntentAnswer answer) {
+        List<IntentOutput> list = answer.getList();
         if (CollectionUtils.isEmpty(list)) {
             return "";
         }
         StringBuilder sb = new StringBuilder();
-        for (IntentAnswer item : list) {
+        for (IntentOutput item : list) {
             sb.append(item.getValue());
             sb.append("\r\n");
         }

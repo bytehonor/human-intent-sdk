@@ -1,49 +1,44 @@
 package com.bytehonor.sdk.intent.human.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class IntentAnswer implements Serializable {
 
-    private static final long serialVersionUID = -364312310080158140L;
+    private static final long serialVersionUID = 4943674754872794906L;
 
-    public static final String P = "p";
+    private List<IntentOutput> list;
 
-    public static final String A = "a";
-
-    private String type;
-
-    private String value;
-
-    public static IntentAnswer p(String value) {
-        return new IntentAnswer(P, value);
+    public IntentAnswer() {
+        list = new ArrayList<IntentOutput>();
     }
 
-    public static IntentAnswer a(String value) {
-        return new IntentAnswer(A, value);
+    public static IntentAnswer make() {
+        return new IntentAnswer();
     }
 
-    public IntentAnswer(String type, String value) {
-        Objects.requireNonNull(type, "type");
-        Objects.requireNonNull(value, "value");
-        this.type = type;
-        this.value = value;
+    public IntentAnswer p(String text) {
+        return add(IntentOutput.p(text));
     }
 
-    public String getType() {
-        return type;
+    public IntentAnswer a(String text) {
+        return add(IntentOutput.a(text));
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public IntentAnswer add(IntentOutput output) {
+        Objects.requireNonNull(output, "output");
+        list.add(output);
+        return this;
     }
 
-    public String getValue() {
-        return value;
+    public List<IntentOutput> getList() {
+        return list;
     }
 
-    public void setValue(String value) {
-        this.value = value;
+    public void setList(List<IntentOutput> list) {
+        this.list = list;
     }
 
 }
