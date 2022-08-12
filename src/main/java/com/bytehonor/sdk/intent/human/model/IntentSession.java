@@ -3,10 +3,6 @@ package com.bytehonor.sdk.intent.human.model;
 import java.io.Serializable;
 import java.util.Objects;
 
-import com.bytehonor.sdk.intent.human.constant.NewsChannelEnum;
-import com.bytehonor.sdk.intent.human.constant.PageConstants;
-import com.bytehonor.sdk.lang.spring.util.MD5Utils;
-
 public class IntentSession implements Serializable {
 
     private static final long serialVersionUID = -1460407043271707300L;
@@ -23,13 +19,13 @@ public class IntentSession implements Serializable {
 
     private String nowIntent;
 
-    private long lastAt;
+    private long time;
 
-    private int page;
-
-    private String newsChannel;
-
-    private int newsIndex;
+//    private int page;
+//
+//    private String newsChannel;
+//
+//    private int newsIndex;
 
     public static IntentSession init(String uuid, String platform) {
         Objects.requireNonNull(uuid, "uuid");
@@ -43,20 +39,20 @@ public class IntentSession implements Serializable {
     public IntentSession() {
         this.id = 0;
         this.paused = false;
-        this.lastAt = 0L;
+        this.time = 0L;
         this.preIntent = "";
         this.nowIntent = "";
         this.platform = "";
-        this.newsIndex = 0;
-        this.page = PageConstants.PAGE_FIRST;
-        this.newsChannel = NewsChannelEnum.TODAY.getKey();
+//        this.newsIndex = 0;
+//        this.page = PageConstants.PAGE_FIRST;
+//        this.newsChannel = NewsChannelEnum.TODAY.getKey();
     }
 
-    public String toCacheKey() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(platform).append(":").append(uuid).append(":").append(page).append(":").append(newsChannel);
-        return MD5Utils.md5(sb.toString());
-    }
+//    public String toCacheKey() {
+//        StringBuilder sb = new StringBuilder();
+//        sb.append(platform).append(":").append(uuid).append(":").append(page).append(":").append(newsChannel);
+//        return MD5Utils.md5(sb.toString());
+//    }
     
     public int getId() {
         return id;
@@ -106,36 +102,11 @@ public class IntentSession implements Serializable {
         this.nowIntent = nowIntent;
     }
 
-    public long getLastAt() {
-        return lastAt;
+    public long getTime() {
+        return time;
     }
 
-    public void setLastAt(long lastAt) {
-        this.lastAt = lastAt;
+    public void setTime(long time) {
+        this.time = time;
     }
-
-    public int getPage() {
-        return page;
-    }
-
-    public void setPage(int page) {
-        this.page = page;
-    }
-
-    public String getNewsChannel() {
-        return newsChannel;
-    }
-
-    public void setNewsChannel(String newsChannel) {
-        this.newsChannel = newsChannel;
-    }
-
-    public int getNewsIndex() {
-        return newsIndex;
-    }
-
-    public void setNewsIndex(int newsIndex) {
-        this.newsIndex = newsIndex;
-    }
-
 }

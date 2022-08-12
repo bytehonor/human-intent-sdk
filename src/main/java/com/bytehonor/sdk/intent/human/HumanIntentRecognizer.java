@@ -117,10 +117,10 @@ public final class HumanIntentRecognizer {
         Objects.requireNonNull(request, "request");
 
         long now = System.currentTimeMillis();
-        if (session.isPaused() && (now - session.getLastAt() < TimeConstants.HOUR)) {
+        if (session.isPaused() && (now - session.getTime() < TimeConstants.HOUR)) {
             return IntentResult.non(request.getQuery()); // 返回空
         }
-        session.setLastAt(now);
+        session.setTime(now);
         session.setPaused(false);
 
         IntentPayload payload = IntentPayload.of(request.getQuery());
