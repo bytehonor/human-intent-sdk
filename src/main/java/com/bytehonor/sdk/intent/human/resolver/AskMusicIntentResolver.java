@@ -20,7 +20,9 @@ public class AskMusicIntentResolver implements IntentResolver {
         String mp3 = MusicUrlEnum.random().getUrl();
         IntentAnswers answer = IntentAnswers.make();
         answer.p("好的，播放" + context.getName() + "珍藏的音乐");
-        return answer.a(mp3);
+        answer.a(mp3);
+        answer.p("好听吗？记住哦，我叫" + context.getName());
+        return answer;
     }
 
     @Override
