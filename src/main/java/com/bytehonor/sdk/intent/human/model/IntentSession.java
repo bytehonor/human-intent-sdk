@@ -13,6 +13,8 @@ public class IntentSession implements Serializable {
 
     private String uuid;
 
+    private String app;
+
     private String platform;
 
     private String preIntent;
@@ -21,17 +23,12 @@ public class IntentSession implements Serializable {
 
     private long time;
 
-//    private int page;
-//
-//    private String newsChannel;
-//
-//    private int newsIndex;
-
-    public static IntentSession init(String uuid, String platform) {
+    public static IntentSession init(String uuid, String app, String platform) {
         Objects.requireNonNull(uuid, "uuid");
 
         IntentSession session = new IntentSession();
         session.setUuid(uuid);
+        session.setApp(app);
         session.setPlatform(platform);
         return session;
     }
@@ -42,18 +39,10 @@ public class IntentSession implements Serializable {
         this.time = 0L;
         this.preIntent = "";
         this.nowIntent = "";
+        this.app = "";
         this.platform = "";
-//        this.newsIndex = 0;
-//        this.page = PageConstants.PAGE_FIRST;
-//        this.newsChannel = NewsChannelEnum.TODAY.getKey();
     }
 
-//    public String toCacheKey() {
-//        StringBuilder sb = new StringBuilder();
-//        sb.append(platform).append(":").append(uuid).append(":").append(page).append(":").append(newsChannel);
-//        return MD5Utils.md5(sb.toString());
-//    }
-    
     public int getId() {
         return id;
     }
@@ -76,6 +65,14 @@ public class IntentSession implements Serializable {
 
     public void setUuid(String uuid) {
         this.uuid = uuid;
+    }
+
+    public String getApp() {
+        return app;
+    }
+
+    public void setApp(String app) {
+        this.app = app;
     }
 
     public String getPlatform() {
@@ -109,4 +106,5 @@ public class IntentSession implements Serializable {
     public void setTime(long time) {
         this.time = time;
     }
+
 }

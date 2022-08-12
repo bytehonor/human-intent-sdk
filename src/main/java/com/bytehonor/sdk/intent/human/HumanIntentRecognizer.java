@@ -73,7 +73,7 @@ public final class HumanIntentRecognizer {
 
         IntentSession session = worker.get(uuid);
         if (session == null) {
-            session = IntentSession.init(uuid, context.getPlatform());
+            session = IntentSession.init(uuid, context.getApp(), context.getPlatform());
         }
         session.setPreIntent(session.getNowIntent());
         session.setNowIntent("TODO");
@@ -159,7 +159,7 @@ public final class HumanIntentRecognizer {
     }
 
     public static class Builder {
-        private String id;
+        private String app;
 
         private String name;
 
@@ -168,15 +168,15 @@ public final class HumanIntentRecognizer {
         private IntentWorker worker;
 
         private Builder() {
-            this.id = "unkonwn";
+            this.app = "unkonwn";
             this.name = "unkonwn";
             this.platform = "unkonwn";
-            this.worker = new DefaultIntentWorker();
+            this.worker = null;
         }
 
-        public Builder id(String id) {
-            Objects.requireNonNull(id, "id");
-            this.id = id;
+        public Builder app(String app) {
+            Objects.requireNonNull(app, "app");
+            this.app = app;
             return this;
         }
 
@@ -199,7 +199,11 @@ public final class HumanIntentRecognizer {
         }
 
         public HumanIntentRecognizer build() {
-            HumanIntentRecognizer recognizer = new HumanIntentRecognizer(new IntentContext(id, name, platform), worker);
+            IntentContext context = new IntentContext(app, name, platform);
+            if (worker == null) {
+                worker = new DefaultIntentWorker();
+            }
+            HumanIntentRecognizer recognizer = new HumanIntentRecognizer(context, worker);
             recognizer.add(new UnsupportIntentResolver());
             recognizer.add(new AskMusicIntentResolver());
             recognizer.add(new AskAbilityIntentResolver());
