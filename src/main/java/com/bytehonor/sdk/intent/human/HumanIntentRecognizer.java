@@ -22,6 +22,7 @@ import com.bytehonor.sdk.intent.human.resolver.AskAbilityIntentResolver;
 import com.bytehonor.sdk.intent.human.resolver.AskAgeIntentResolver;
 import com.bytehonor.sdk.intent.human.resolver.AskMusicIntentResolver;
 import com.bytehonor.sdk.intent.human.resolver.AskNameIntentResolver;
+import com.bytehonor.sdk.intent.human.resolver.FinishIntentResolver;
 import com.bytehonor.sdk.intent.human.resolver.IntentResolver;
 import com.bytehonor.sdk.intent.human.resolver.UnsupportIntentResolver;
 import com.bytehonor.sdk.intent.human.worker.IntentWorker;
@@ -32,6 +33,8 @@ import com.bytehonor.sdk.lang.spring.util.JacksonUtils;
 public final class HumanIntentRecognizer {
 
     private static final Logger LOG = LoggerFactory.getLogger(HumanIntentRecognizer.class);
+
+    private static final String END_NAME = FinishIntentResolver.class.getSimpleName();
 
     private final IntentContext context;
 
@@ -60,6 +63,7 @@ public final class HumanIntentRecognizer {
         recognizer.add(new AskAbilityIntentResolver());
         recognizer.add(new AskNameIntentResolver());
         recognizer.add(new AskAgeIntentResolver());
+        recognizer.add(new FinishIntentResolver());
         return recognizer;
     }
 
@@ -83,6 +87,7 @@ public final class HumanIntentRecognizer {
         worker.put(session.getUuid(), session);
 
         result.setSession(session);
+        result.setFinished(END_NAME.equals(result.getResolver()));
 
         IntentListenerThread.add(result);
     }
@@ -137,7 +142,10 @@ public final class HumanIntentRecognizer {
 
         IntentResolver recognizer = list.get(0);
         IntentAnswers answers = recognizer.answer(payload, session, context);
-        return IntentResult.of(request.getQuery(), recognizer.getClass().getSimpleName(), answers);
+        String name = recognizer.getClass().getSimpleName();
+        return IntentResult.of(request.getQuery(), name, answers);
+//        return IntentResult.builder().answers(answers).query(request.getQuery()).resolver(name)
+//                .end(END_NAME.equals(name)).build();
     }
 
     private static IntentAnswers doAmbiguous(List<IntentResolver> resolvers) {
