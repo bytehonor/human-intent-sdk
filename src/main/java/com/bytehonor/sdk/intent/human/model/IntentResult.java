@@ -14,8 +14,6 @@ public class IntentResult implements Serializable {
 
     public static final String CHAT = "Chat";
 
-    private boolean finished;
-
     private String query;
 
     private String resolver;
@@ -25,7 +23,6 @@ public class IntentResult implements Serializable {
     private IntentSession session;
 
     public IntentResult() {
-        this.finished = false;
     }
 
     public static IntentResult of(String query, String resolver, IntentAnswers answers) {
@@ -50,14 +47,6 @@ public class IntentResult implements Serializable {
 
     public static IntentResult ambiguous(String query, IntentAnswers answers) {
         return of(query, AMBIGUOUS, answers);
-    }
-
-    public boolean isFinished() {
-        return finished;
-    }
-
-    public void setFinished(boolean finished) {
-        this.finished = finished;
     }
 
     public String getQuery() {
@@ -98,8 +87,6 @@ public class IntentResult implements Serializable {
 
     public static class Builder {
 
-        private boolean finished;
-
         private String query;
 
         private String resolver;
@@ -109,12 +96,6 @@ public class IntentResult implements Serializable {
         private IntentSession session;
 
         private Builder() {
-            this.finished = false;
-        }
-
-        public Builder finished(boolean finished) {
-            this.finished = finished;
-            return this;
         }
 
         public Builder query(String query) {
@@ -139,7 +120,6 @@ public class IntentResult implements Serializable {
 
         public IntentResult build() {
             IntentResult result = of(query, resolver, answers);
-            result.setFinished(finished);
             result.setSession(session);
             return result;
         }
