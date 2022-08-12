@@ -109,8 +109,12 @@ public final class HumanIntentRecognizer {
         List<IntentResolver> list = doParse(payload, session);
         int size = list != null ? list.size() : 0;
         if (size == 0) {
-            String chat = ChatClient.ask(request.getQuery(), request.getUuid());
-            return IntentResult.chat(request.getQuery(), chat);
+            StringBuilder chat = new StringBuilder();
+            if (context.isAck()) {
+                chat.append("你说的是“").append(request.getQuery()).append("”吗? 嗯, ");
+            }
+            chat.append(ChatClient.ask(request.getQuery(), request.getUuid()));
+            return IntentResult.chat(request.getQuery(), chat.toString());
         }
 
         if (size > 1) {
@@ -159,6 +163,8 @@ public final class HumanIntentRecognizer {
     }
 
     public static class Builder {
+        private boolean ack;
+
         private String app;
 
         private String name;
@@ -168,10 +174,16 @@ public final class HumanIntentRecognizer {
         private IntentWorker worker;
 
         private Builder() {
+            this.ack = false;
             this.app = "unkonwn";
             this.name = "unkonwn";
             this.platform = "unkonwn";
             this.worker = null;
+        }
+
+        public Builder ack(boolean ack) {
+            this.ack = ack;
+            return this;
         }
 
         public Builder app(String app) {
@@ -199,7 +211,7 @@ public final class HumanIntentRecognizer {
         }
 
         public HumanIntentRecognizer build() {
-            IntentContext context = new IntentContext(app, name, platform);
+            IntentContext context = new IntentContext(ack, app, name, platform);
             if (worker == null) {
                 worker = new DefaultIntentWorker();
             }

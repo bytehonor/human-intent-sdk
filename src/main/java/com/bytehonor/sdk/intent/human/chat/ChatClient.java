@@ -17,7 +17,7 @@ public class ChatClient {
         if (SpringString.isEmpty(clear)) {
             return ok();
         }
-        return TulingApiClient.simpleAsk(query, user);
+        return TulingApiClient.simpleAsk(query, user).trim();
     }
 
     public static String ok() {

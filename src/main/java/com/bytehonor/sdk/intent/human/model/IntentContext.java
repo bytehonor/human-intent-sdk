@@ -14,6 +14,8 @@ public class IntentContext implements Serializable {
 
     private static final long serialVersionUID = -774487225071783615L;
 
+    private final boolean ack;
+
     private final String app;
 
     private final String name;
@@ -24,16 +26,21 @@ public class IntentContext implements Serializable {
 
     private final Set<String> patterns;
 
-    public IntentContext(String app, String name, String platform) {
+    public IntentContext(boolean ack, String app, String name, String platform) {
         Objects.requireNonNull(app, "app");
         Objects.requireNonNull(name, "name");
         Objects.requireNonNull(platform, "platform");
 
+        this.ack = ack;
         this.app = app;
         this.name = name;
         this.platform = platform;
         this.resolvers = new ArrayList<IntentResolver>();
         this.patterns = new HashSet<String>();
+    }
+
+    public boolean isAck() {
+        return ack;
     }
 
     public String getApp() {
@@ -50,10 +57,6 @@ public class IntentContext implements Serializable {
 
     public List<IntentResolver> getResolvers() {
         return resolvers;
-    }
-
-    public Set<String> getPatterns() {
-        return patterns;
     }
 
     public void add(IntentResolver resolver) {
