@@ -1,60 +1,20 @@
 package com.bytehonor.sdk.intent.human.model;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.io.Serializable;
 
-public class IntentRequest {
+public class IntentRequest implements Serializable {
 
-    private long ts;
+    private static final long serialVersionUID = -7527759063863982328L;
 
     private String query;
 
     private String uuid;
 
-    private String app;
-
-    private Set<String> words;
-
-    private IntentSession session;
-
-    public IntentRequest() {
-        this.ts = System.currentTimeMillis();
-        this.session = new IntentSession();
-    }
-
-    public static IntentRequest create(String query, String uuid, String app) {
+    public static IntentRequest create(String query, String uuid) {
         IntentRequest request = new IntentRequest();
         request.setQuery(query);
         request.setUuid(uuid);
-        request.setApp(app);
-        request.setWords(new HashSet<String>());
-        request.getSession().setUuid(uuid);
-        request.getSession().setApp(app);
         return request;
-    }
-
-    public long getTs() {
-        return ts;
-    }
-
-    public void setTs(long ts) {
-        this.ts = ts;
-    }
-
-    public String getApp() {
-        return app;
-    }
-
-    public void setApp(String app) {
-        this.app = app;
-    }
-
-    public String getUuid() {
-        return uuid;
-    }
-
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
     }
 
     public String getQuery() {
@@ -65,20 +25,12 @@ public class IntentRequest {
         this.query = query;
     }
 
-    public Set<String> getWords() {
-        return words;
+    public String getUuid() {
+        return uuid;
     }
 
-    public void setWords(Set<String> words) {
-        this.words = words;
-    }
-
-    public IntentSession getSession() {
-        return session;
-    }
-
-    public void setSession(IntentSession session) {
-        this.session = session;
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
     }
 
 }

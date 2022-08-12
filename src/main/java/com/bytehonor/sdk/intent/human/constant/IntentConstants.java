@@ -74,5 +74,5 @@ public class IntentConstants {
 
     public static final String TIP_HANDLER_ERROR = "出错了";
 
-    public static final String TIP_HANDLER_AMBIGUOUS = "您是否想说:";
+    public static final String TIP_HANDLER_AMBIGUOUS = "你是否想说:";
 }

@@ -1,64 +1,46 @@
 package com.bytehonor.sdk.intent.human.model;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-import com.bytehonor.sdk.intent.human.constant.IntentConstants;
-import com.bytehonor.sdk.intent.human.constant.NewsChannelEnum;
-import com.bytehonor.sdk.intent.human.constant.PageConstants;
-import com.bytehonor.sdk.lang.spring.util.MD5Utils;
+public class IntentSession implements Serializable {
 
-public class IntentSession {
+    private static final long serialVersionUID = -1460407043271707300L;
 
     private int id;
 
-    private boolean auto;
+    private boolean paused;
 
     private String uuid;
 
     private String app;
 
-    private long preTime;
+    private String platform;
 
     private String preIntent;
 
     private String nowIntent;
 
-    // 下面三个参数可以用个MAP代替
+    private long time;
 
-    private int page;
-
-    private String newsChannel;
-
-    private int newsIndex;
-
-    public static IntentSession init(String uuid, String app) {
+    public static IntentSession init(String uuid, String app, String platform) {
         Objects.requireNonNull(uuid, "uuid");
 
         IntentSession session = new IntentSession();
         session.setUuid(uuid);
         session.setApp(app);
-        session.setPage(PageConstants.PAGE_FIRST);
-        session.setNewsChannel(NewsChannelEnum.TODAY.getKey());
-        session.setPreIntent("");
-        session.setNowIntent(IntentConstants.PUBLIC_DEFAULT);
-        session.setNewsIndex(0);
+        session.setPlatform(platform);
         return session;
     }
 
     public IntentSession() {
         this.id = 0;
-        this.auto = true;
-        this.preTime = 0L;
+        this.paused = false;
+        this.time = 0L;
         this.preIntent = "";
-        this.nowIntent = IntentConstants.PUBLIC_DEFAULT;
-        this.newsIndex = 0;
-        this.page = PageConstants.PAGE_FIRST;
-    }
-
-    public String toCacheKey() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(app).append(":").append(uuid).append(":").append(page).append(":").append(newsChannel);
-        return MD5Utils.md5(sb.toString());
+        this.nowIntent = "";
+        this.app = "";
+        this.platform = "";
     }
 
     public int getId() {
@@ -69,20 +51,12 @@ public class IntentSession {
         this.id = id;
     }
 
-    public boolean isAuto() {
-        return auto;
+    public boolean isPaused() {
+        return paused;
     }
 
-    public void setAuto(boolean auto) {
-        this.auto = auto;
-    }
-
-    public long getPreTime() {
-        return preTime;
-    }
-
-    public void setPreTime(long preTime) {
-        this.preTime = preTime;
+    public void setPaused(boolean paused) {
+        this.paused = paused;
     }
 
     public String getUuid() {
@@ -101,6 +75,14 @@ public class IntentSession {
         this.app = app;
     }
 
+    public String getPlatform() {
+        return platform;
+    }
+
+    public void setPlatform(String platform) {
+        this.platform = platform;
+    }
+
     public String getPreIntent() {
         return preIntent;
     }
@@ -117,28 +99,12 @@ public class IntentSession {
         this.nowIntent = nowIntent;
     }
 
-    public int getPage() {
-        return page;
+    public long getTime() {
+        return time;
     }
 
-    public void setPage(int page) {
-        this.page = page;
-    }
-
-    public String getNewsChannel() {
-        return newsChannel;
-    }
-
-    public void setNewsChannel(String newsChannel) {
-        this.newsChannel = newsChannel;
-    }
-
-    public int getNewsIndex() {
-        return newsIndex;
-    }
-
-    public void setNewsIndex(int newsIndex) {
-        this.newsIndex = newsIndex;
+    public void setTime(long time) {
+        this.time = time;
     }
 
 }

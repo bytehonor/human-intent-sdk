@@ -1,59 +1,44 @@
 package com.bytehonor.sdk.intent.human.model;
 
-public class IntentAnswer {
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
-    /**
-     * 图片
-     */
-    public static final String IMAGE = "image";
+public class IntentAnswer implements Serializable {
 
-    /**
-     * 文本
-     */
-    public static final String TEXT = "text";
+    private static final long serialVersionUID = 4943674754872794906L;
 
-    /**
-     * 没有回答
-     */
-    public static final String NON = "non";
+    private List<IntentOutput> list;
 
-    private String type;
-
-    private String value;
-
-    public static IntentAnswer image(String value) {
-        return of(IMAGE, value);
+    public IntentAnswer() {
+        list = new ArrayList<IntentOutput>();
     }
 
-    public static IntentAnswer text(String value) {
-        return of(TEXT, value);
+    public static IntentAnswer make() {
+        return new IntentAnswer();
     }
 
-    public static IntentAnswer non() {
-        return of(NON, "");
+    public IntentAnswer p(String text) {
+        return add(IntentOutput.p(text));
     }
 
-    public static IntentAnswer of(String type, String value) {
-        IntentAnswer answer = new IntentAnswer();
-        answer.setType(type);
-        answer.setValue(value);
-        return answer;
+    public IntentAnswer a(String text) {
+        return add(IntentOutput.a(text));
     }
 
-    public String getType() {
-        return type;
+    public IntentAnswer add(IntentOutput output) {
+        Objects.requireNonNull(output, "output");
+        list.add(output);
+        return this;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public List<IntentOutput> getList() {
+        return list;
     }
 
-    public String getValue() {
-        return value;
-    }
-
-    public void setValue(String value) {
-        this.value = value;
+    public void setList(List<IntentOutput> list) {
+        this.list = list;
     }
 
 }
