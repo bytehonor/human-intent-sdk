@@ -11,7 +11,6 @@ import com.bytehonor.sdk.intent.human.model.IntentRequest;
 import com.bytehonor.sdk.intent.human.model.IntentResult;
 import com.bytehonor.sdk.intent.human.model.IntentSession;
 import com.bytehonor.sdk.intent.human.speak.AnswerSpeaker;
-import com.bytehonor.sdk.intent.human.worker.DefaultIntentWorker;
 
 public class HumanIntentRecognizerTest {
 
@@ -19,7 +18,7 @@ public class HumanIntentRecognizerTest {
 
     @Test
     public void test() {
-        HumanIntentRecognizer recognizer = HumanIntentRecognizer.create("字节荣耀", new DefaultIntentWorker());
+        HumanIntentRecognizer recognizer = HumanIntentRecognizer.builder().name("字节荣耀").build();
         String uuid = "62eea88d201601bfc592209554e57964";
 
         List<String> list = new ArrayList<String>();

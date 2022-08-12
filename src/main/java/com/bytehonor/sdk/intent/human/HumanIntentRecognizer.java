@@ -9,7 +9,6 @@ import org.slf4j.LoggerFactory;
 
 import com.bytehonor.sdk.intent.human.chat.ChatClient;
 import com.bytehonor.sdk.intent.human.constant.IntentConstants;
-import com.bytehonor.sdk.intent.human.constant.IntentPlatformEnum;
 import com.bytehonor.sdk.intent.human.listener.IntentListenerThread;
 import com.bytehonor.sdk.intent.human.matcher.IntentMatcher;
 import com.bytehonor.sdk.intent.human.model.IntentAnswers;
@@ -18,12 +17,8 @@ import com.bytehonor.sdk.intent.human.model.IntentPayload;
 import com.bytehonor.sdk.intent.human.model.IntentRequest;
 import com.bytehonor.sdk.intent.human.model.IntentResult;
 import com.bytehonor.sdk.intent.human.model.IntentSession;
-import com.bytehonor.sdk.intent.human.resolver.AskAbilityIntentResolver;
-import com.bytehonor.sdk.intent.human.resolver.AskAgeIntentResolver;
-import com.bytehonor.sdk.intent.human.resolver.AskMusicIntentResolver;
-import com.bytehonor.sdk.intent.human.resolver.AskNameIntentResolver;
 import com.bytehonor.sdk.intent.human.resolver.IntentResolver;
-import com.bytehonor.sdk.intent.human.resolver.UnsupportIntentResolver;
+import com.bytehonor.sdk.intent.human.worker.DefaultIntentWorker;
 import com.bytehonor.sdk.intent.human.worker.IntentWorker;
 import com.bytehonor.sdk.lang.spring.constant.TimeConstants;
 import com.bytehonor.sdk.lang.spring.string.SpringString;
@@ -37,30 +32,12 @@ public final class HumanIntentRecognizer {
 
     private final IntentWorker worker;
 
-    public HumanIntentRecognizer(IntentContext context, IntentWorker worker) {
+    private HumanIntentRecognizer(IntentContext context, IntentWorker worker) {
         Objects.requireNonNull(context, "context");
         Objects.requireNonNull(worker, "worker");
 
         this.context = context;
         this.worker = worker;
-    }
-
-    public static HumanIntentRecognizer create(String name, String platform, IntentWorker worker) {
-        return create(new IntentContext(name, platform), worker);
-    }
-
-    public static HumanIntentRecognizer create(String name, IntentWorker worker) {
-        return create(new IntentContext(name, IntentPlatformEnum.UNDEFINED.getKey()), worker);
-    }
-
-    public static HumanIntentRecognizer create(IntentContext context, IntentWorker worker) {
-        HumanIntentRecognizer recognizer = new HumanIntentRecognizer(context, worker);
-        recognizer.add(new UnsupportIntentResolver());
-        recognizer.add(new AskMusicIntentResolver());
-        recognizer.add(new AskAbilityIntentResolver());
-        recognizer.add(new AskNameIntentResolver());
-        recognizer.add(new AskAgeIntentResolver());
-        return recognizer;
     }
 
     public IntentResult recognize(IntentRequest request) {
@@ -170,5 +147,54 @@ public final class HumanIntentRecognizer {
 
     private static boolean doMatch(IntentMatcher matcher, IntentPayload payload) {
         return matcher.match(payload.getWords());
+    }
+
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    public static class Builder {
+        private String id;
+
+        private String name;
+
+        private String platform;
+
+        private IntentWorker worker;
+
+        private Builder() {
+            this.id = "unkonwn";
+            this.name = "unkonwn";
+            this.platform = "unkonwn";
+            this.worker = new DefaultIntentWorker();
+        }
+
+        public Builder id(String id) {
+            Objects.requireNonNull(id, "id");
+            this.id = id;
+            return this;
+        }
+
+        public Builder name(String name) {
+            Objects.requireNonNull(name, "name");
+            this.name = name;
+            return this;
+        }
+
+        public Builder platform(String platform) {
+            Objects.requireNonNull(platform, "platform");
+            this.platform = platform;
+            return this;
+        }
+
+        public Builder worker(IntentWorker worker) {
+            Objects.requireNonNull(worker, "worker");
+            this.worker = worker;
+            return this;
+        }
+
+        public HumanIntentRecognizer build() {
+            return new HumanIntentRecognizer(new IntentContext(id, name, platform), worker);
+        }
     }
 }

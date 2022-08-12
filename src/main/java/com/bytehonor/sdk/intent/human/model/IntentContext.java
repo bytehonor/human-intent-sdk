@@ -14,6 +14,8 @@ public class IntentContext implements Serializable {
 
     private static final long serialVersionUID = -774487225071783615L;
 
+    private final String id;
+
     private final String name;
 
     private final String platform;
@@ -22,14 +24,20 @@ public class IntentContext implements Serializable {
 
     private final Set<String> patterns;
 
-    public IntentContext(String name, String platform) {
+    public IntentContext(String id, String name, String platform) {
+        Objects.requireNonNull(id, "id");
         Objects.requireNonNull(name, "name");
         Objects.requireNonNull(platform, "platform");
-        
+
+        this.id = id;
         this.name = name;
         this.platform = platform;
         this.resolvers = new ArrayList<IntentResolver>();
         this.patterns = new HashSet<String>();
+    }
+
+    public String getId() {
+        return id;
     }
 
     public String getName() {
@@ -40,12 +48,12 @@ public class IntentContext implements Serializable {
         return platform;
     }
 
-    public Set<String> getPatterns() {
-        return patterns;
-    }
-
     public List<IntentResolver> getResolvers() {
         return resolvers;
+    }
+
+    public Set<String> getPatterns() {
+        return patterns;
     }
 
     public void add(IntentResolver resolver) {
