@@ -111,7 +111,7 @@ public final class HumanIntentRecognizer {
         if (size == 0) {
             StringBuilder chat = new StringBuilder();
             if (context.isAck()) {
-                chat.append("你说的是“").append(request.getQuery()).append("”吗? 嗯, ");
+                chat.append("你说的是“").append(request.getQuery()).append("”吗？嗯，");
             }
             chat.append(ChatClient.ask(request.getQuery(), request.getUuid()));
             return IntentResult.chat(request.getQuery(), chat.toString());

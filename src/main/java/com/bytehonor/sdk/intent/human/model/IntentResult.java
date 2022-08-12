@@ -8,8 +8,6 @@ public class IntentResult implements Serializable {
 
     public static final String NON = "Non";
 
-    public static final String EMPTY = "Empty";
-
     public static final String AMBIGUOUS = "Ambiguous";
 
     public static final String CHAT = "Chat";
@@ -35,10 +33,6 @@ public class IntentResult implements Serializable {
 
     public static IntentResult non(String query) {
         return of(query, NON, IntentAnswers.make());
-    }
-
-    public static IntentResult empty(String query) {
-        return of(query, EMPTY, IntentAnswers.make());
     }
 
     public static IntentResult chat(String query, String text) {
