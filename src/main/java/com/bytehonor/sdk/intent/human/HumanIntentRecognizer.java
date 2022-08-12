@@ -17,7 +17,12 @@ import com.bytehonor.sdk.intent.human.model.IntentPayload;
 import com.bytehonor.sdk.intent.human.model.IntentRequest;
 import com.bytehonor.sdk.intent.human.model.IntentResult;
 import com.bytehonor.sdk.intent.human.model.IntentSession;
+import com.bytehonor.sdk.intent.human.resolver.AskAbilityIntentResolver;
+import com.bytehonor.sdk.intent.human.resolver.AskAgeIntentResolver;
+import com.bytehonor.sdk.intent.human.resolver.AskMusicIntentResolver;
+import com.bytehonor.sdk.intent.human.resolver.AskNameIntentResolver;
 import com.bytehonor.sdk.intent.human.resolver.IntentResolver;
+import com.bytehonor.sdk.intent.human.resolver.UnsupportIntentResolver;
 import com.bytehonor.sdk.intent.human.worker.DefaultIntentWorker;
 import com.bytehonor.sdk.intent.human.worker.IntentWorker;
 import com.bytehonor.sdk.lang.spring.constant.TimeConstants;
@@ -194,7 +199,13 @@ public final class HumanIntentRecognizer {
         }
 
         public HumanIntentRecognizer build() {
-            return new HumanIntentRecognizer(new IntentContext(id, name, platform), worker);
+            HumanIntentRecognizer recognizer = new HumanIntentRecognizer(new IntentContext(id, name, platform), worker);
+            recognizer.add(new UnsupportIntentResolver());
+            recognizer.add(new AskMusicIntentResolver());
+            recognizer.add(new AskAbilityIntentResolver());
+            recognizer.add(new AskNameIntentResolver());
+            recognizer.add(new AskAgeIntentResolver());
+            return recognizer;
         }
     }
 }
