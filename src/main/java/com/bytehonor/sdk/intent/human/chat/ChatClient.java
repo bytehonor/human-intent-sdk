@@ -19,6 +19,9 @@ public class ChatClient {
         if (SpringString.isEmpty(clear)) {
             return ok();
         }
+        if (clear.length() > 128) {
+            return DEF;
+        }
         String answer = TulingApiClient.simpleAsk(query, user).trim();
         if (SpringString.isEmpty(answer) == false) {
             return answer;
