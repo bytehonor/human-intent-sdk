@@ -14,11 +14,19 @@ public class IntentPayload implements Serializable {
 
     private Set<String> words;
 
+    private int length;
+    
+    public IntentPayload() {
+        this.query = "";
+        this.length = 0;
+    }
+
     public static IntentPayload of(String query) {
         Objects.requireNonNull(query, "query");
         IntentPayload payload = new IntentPayload();
         payload.setQuery(query);
         payload.setWords(IntentMatcher.words(query));
+        payload.setLength(query.length());
         return payload;
     }
 
@@ -36,6 +44,14 @@ public class IntentPayload implements Serializable {
 
     public void setWords(Set<String> words) {
         this.words = words;
+    }
+
+    public int getLength() {
+        return length;
+    }
+
+    public void setLength(int length) {
+        this.length = length;
     }
 
 }

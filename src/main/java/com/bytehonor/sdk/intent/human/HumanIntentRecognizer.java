@@ -154,7 +154,7 @@ public final class HumanIntentRecognizer {
     }
 
     private static boolean doMatch(IntentMatcher matcher, IntentPayload payload) {
-        return matcher.match(payload.getWords());
+        return matcher.match(payload.getLength(), payload.getWords());
     }
 
     public static Builder builder() {

@@ -9,6 +9,7 @@ import java.util.Set;
 import org.springframework.util.CollectionUtils;
 
 import com.bytehonor.sdk.lang.spring.constant.CharConstants;
+import com.bytehonor.sdk.lang.spring.exception.SpringLangException;
 import com.bytehonor.sdk.lang.spring.match.WordMatcher;
 import com.bytehonor.sdk.lang.spring.regex.PatternUtils;
 import com.bytehonor.sdk.lang.spring.string.SpringString;
@@ -23,6 +24,8 @@ public class IntentMatcher {
 
     private final String pattern;
 
+    private final int limit;
+
     /**
      * 排除的条件, 满足一组就排除 or
      */
@@ -33,8 +36,9 @@ public class IntentMatcher {
      */
     private final List<WordMatcher> includers;
 
-    public IntentMatcher(String pattern, List<WordMatcher> excluders, List<WordMatcher> includers) {
+    public IntentMatcher(String pattern, int limit, List<WordMatcher> excluders, List<WordMatcher> includers) {
         this.pattern = pattern;
+        this.limit = limit;
         this.excluders = excluders;
         this.includers = includers;
     }
@@ -44,11 +48,15 @@ public class IntentMatcher {
             return false;
         }
 
-        return match(words(text));
+        return match(text.length(), words(text));
     }
 
-    public boolean match(Set<String> words) {
+    public boolean match(int length, Set<String> words) {
         if (CollectionUtils.isEmpty(words)) {
+            return false;
+        }
+
+        if (length > this.limit) {
             return false;
         }
 
@@ -149,14 +157,27 @@ public class IntentMatcher {
 
         private final String pattern;
 
+        private int limit;
+
         private final List<WordMatcher> excluders;
 
         private final List<WordMatcher> includers;
 
         private Builder(String pattern) {
+            Objects.requireNonNull(pattern, "pattern");
             this.pattern = pattern;
+            this.limit = pattern.length() * 30;
             this.excluders = new ArrayList<WordMatcher>();
             this.includers = new ArrayList<WordMatcher>();
+        }
+
+        public Builder limit(int limit) {
+            if (limit < 1) {
+                throw new SpringLangException("invalid limit:" + limit);
+            }
+
+            this.limit = limit;
+            return this;
         }
 
         public Builder exclude(String... words) {
@@ -174,7 +195,7 @@ public class IntentMatcher {
         }
 
         public IntentMatcher build() {
-            return new IntentMatcher(pattern, excluders, includers);
+            return new IntentMatcher(pattern, limit, excluders, includers);
         }
     }
 }
