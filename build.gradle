@@ -1,33 +1,32 @@
 plugins {
-	id 'java-library'
+    id 'java-library'
+    id 'maven-publish'
 }
 
-apply from: 'repository.gradle'
-
 group = 'com.bytehonor.sdk'
-version = '0.5.1'
+version = '0.5.2'
 sourceCompatibility = 1.8
 
 [compileJava, compileTestJava, javadoc]*.options*.encoding = 'UTF-8'
 
 configurations {
-	developmentOnly
-	runtimeClasspath {
-		extendsFrom developmentOnly
-	}
+    developmentOnly
+    runtimeClasspath {
+        extendsFrom developmentOnly
+    }
 }
 
 repositories {
-	mavenCentral()
-	maven { url "https://maven.huajietaojin.cn/repository/bytehonor/" }
+    mavenCentral()
+    maven { url "https://maven.huajietaojin.cn/repository/bytehonor/" }
 }
 
 
 dependencies {
-    api('com.bytehonor.sdk:tuling-api-sdk:1.9.0')
-    api('com.bytehonor.sdk:spring-lang-sdk:0.3.9')
+    api('com.bytehonor.sdk:tuling-api-sdk:1.9.1')
+    api('com.bytehonor.sdk:spring-lang-sdk:0.4.14')
     implementation('org.slf4j:slf4j-api:1.7.36')
-    implementation('ch.qos.logback:logback-classic:1.2.11')
+    implementation('ch.qos.logback:logback-classic:1.2.12')
     testImplementation('junit:junit:4.13.2')
 }
 
@@ -37,3 +36,27 @@ jar {
                    'Implementation-Version': project.version)
     }
 }
+
+
+java {
+    withSourcesJar()
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            from components.java
+        }
+    }
+    repositories {
+        maven {
+            url = "https://maven.huajietaojin.cn/repository/bytehonor/"
+            credentials {
+                username 'bytehonor'
+                password 'permit'
+            }
+        }
+    }
+}
+
+
