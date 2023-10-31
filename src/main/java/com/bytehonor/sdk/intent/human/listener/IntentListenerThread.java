@@ -25,7 +25,7 @@ public class IntentListenerThread {
                 doProcess(payload);
             }
 
-        }, getClass().getSimpleName());
+        }).mount(IntentListenerThread.class);
 
         thread.start();
     }
