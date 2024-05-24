@@ -4,7 +4,7 @@ plugins {
 }
 
 group = 'com.bytehonor.sdk'
-version = '0.6.1'
+version = '0.6.2'
 
 java {
     sourceCompatibility = 17
@@ -19,7 +19,7 @@ repositories {
 
 dependencies {
     api('com.bytehonor.sdk:spring-lang-sdk:0.5.4')
-    api('com.bytehonor.sdk:tuling-api-sdk:1.9.6')
+    api('com.bytehonor.sdk:tuling-api-sdk:1.9.7')
     implementation('org.slf4j:slf4j-api:2.0.13')
     implementation('ch.qos.logback:logback-classic:1.5.6')
     testImplementation('junit:junit:4.13.2')
