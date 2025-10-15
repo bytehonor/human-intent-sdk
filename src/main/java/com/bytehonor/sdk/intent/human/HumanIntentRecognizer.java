@@ -7,6 +7,8 @@ import java.util.Objects;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.bytehonor.sdk.framework.lang.constant.TimeConstants;
+import com.bytehonor.sdk.framework.lang.string.SpringString;
 import com.bytehonor.sdk.intent.human.chat.ChatClient;
 import com.bytehonor.sdk.intent.human.constant.IntentConstants;
 import com.bytehonor.sdk.intent.human.listener.IntentListenerThread;
@@ -25,8 +27,6 @@ import com.bytehonor.sdk.intent.human.resolver.IntentResolver;
 import com.bytehonor.sdk.intent.human.resolver.UnsupportIntentResolver;
 import com.bytehonor.sdk.intent.human.worker.DefaultIntentWorker;
 import com.bytehonor.sdk.intent.human.worker.IntentWorker;
-import com.bytehonor.sdk.lang.spring.constant.TimeConstants;
-import com.bytehonor.sdk.lang.spring.string.SpringString;
 
 public final class HumanIntentRecognizer {
 

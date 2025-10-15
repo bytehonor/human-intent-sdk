@@ -8,13 +8,13 @@ import java.util.Set;
 
 import org.springframework.util.CollectionUtils;
 
-import com.bytehonor.sdk.lang.spring.constant.CharConstants;
-import com.bytehonor.sdk.lang.spring.exception.SpringLangException;
-import com.bytehonor.sdk.lang.spring.match.WordMatcher;
-import com.bytehonor.sdk.lang.spring.regex.PatternUtils;
-import com.bytehonor.sdk.lang.spring.string.SpringString;
-import com.bytehonor.sdk.lang.spring.string.StringSliceUtils;
-import com.bytehonor.sdk.lang.spring.string.StringSplitUtils;
+import com.bytehonor.sdk.framework.lang.constant.CharConstants;
+import com.bytehonor.sdk.framework.lang.exception.SpringLangException;
+import com.bytehonor.sdk.framework.lang.match.WordMatcher;
+import com.bytehonor.sdk.framework.lang.regex.PatternUtils;
+import com.bytehonor.sdk.framework.lang.string.SpringString;
+import com.bytehonor.sdk.framework.lang.string.StringSliceUtils;
+import com.bytehonor.sdk.framework.lang.string.StringSplitUtils;
 
 public class IntentMatcher {
 

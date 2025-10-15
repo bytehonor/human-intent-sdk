@@ -1,7 +1,7 @@
 package com.bytehonor.sdk.intent.human.util;
 
+import com.bytehonor.sdk.framework.lang.string.SpringString;
 import com.bytehonor.sdk.intent.human.resolver.IntentResolver;
-import com.bytehonor.sdk.lang.spring.string.SpringString;
 
 public class IntentRecognizeUtils {
 

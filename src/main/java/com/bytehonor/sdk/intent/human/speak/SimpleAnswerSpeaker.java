@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.springframework.util.CollectionUtils;
 
-import com.bytehonor.sdk.intent.human.model.IntentOutput;
 import com.bytehonor.sdk.intent.human.model.IntentAnswer;
+import com.bytehonor.sdk.intent.human.model.IntentOutput;
 
 public class SimpleAnswerSpeaker implements AnswerSpeak {
 

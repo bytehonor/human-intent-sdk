@@ -1,9 +1,9 @@
 package com.bytehonor.sdk.intent.human.matcher;
 
-import com.bytehonor.sdk.lang.spring.constant.CharConstants;
-import com.bytehonor.sdk.lang.spring.regex.PatternUtils;
-import com.bytehonor.sdk.lang.spring.string.SpringString;
-import com.bytehonor.sdk.lang.spring.string.StringRemoveUtils;
+import com.bytehonor.sdk.framework.lang.constant.CharConstants;
+import com.bytehonor.sdk.framework.lang.regex.PatternUtils;
+import com.bytehonor.sdk.framework.lang.string.SpringString;
+import com.bytehonor.sdk.framework.lang.string.StringRemoveUtils;
 
 public class IntentQuery {
 

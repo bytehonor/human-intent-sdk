@@ -1,6 +1,6 @@
 package com.bytehonor.sdk.intent.human.constant;
 
-import com.bytehonor.sdk.lang.spring.string.SpringString;
+import com.bytehonor.sdk.framework.lang.string.SpringString;
 
 /**
  * 

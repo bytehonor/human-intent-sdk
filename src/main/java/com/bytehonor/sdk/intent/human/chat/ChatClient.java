@@ -3,9 +3,9 @@ package com.bytehonor.sdk.intent.human.chat;
 import java.util.List;
 
 import com.bytehonor.sdk.api.tuling.TulingApiClient;
-import com.bytehonor.sdk.lang.spring.core.Randomizer;
-import com.bytehonor.sdk.lang.spring.string.SpringString;
-import com.bytehonor.sdk.lang.spring.string.StringRemoveUtils;
+import com.bytehonor.sdk.framework.lang.core.Randomizer;
+import com.bytehonor.sdk.framework.lang.string.SpringString;
+import com.bytehonor.sdk.framework.lang.string.StringRemoveUtils;
 import com.google.common.collect.Lists;
 
 public class ChatClient {
