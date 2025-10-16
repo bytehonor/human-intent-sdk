@@ -8,7 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.bytehonor.sdk.framework.lang.constant.TimeConstants;
-import com.bytehonor.sdk.framework.lang.string.SpringString;
+import com.bytehonor.sdk.framework.lang.string.StringKit;
 import com.bytehonor.sdk.intent.human.chat.ChatClient;
 import com.bytehonor.sdk.intent.human.constant.IntentConstants;
 import com.bytehonor.sdk.intent.human.listener.IntentListenerThread;
@@ -138,7 +138,7 @@ public final class HumanIntentRecognizer {
 
     private List<IntentResolver> doParse(IntentPayload payload, IntentSession session) {
         Objects.requireNonNull(payload, "payload");
-        if (SpringString.isEmpty(payload.getQuery())) {
+        if (StringKit.isEmpty(payload.getQuery())) {
             LOG.warn("query is empty");
             return new ArrayList<IntentResolver>();
         }

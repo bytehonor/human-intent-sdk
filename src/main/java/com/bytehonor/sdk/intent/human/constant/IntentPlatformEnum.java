@@ -1,6 +1,6 @@
 package com.bytehonor.sdk.intent.human.constant;
 
-import com.bytehonor.sdk.framework.lang.string.SpringString;
+import com.bytehonor.sdk.framework.lang.string.StringKit;
 
 /**
  * 
@@ -29,7 +29,7 @@ public enum IntentPlatformEnum {
     }
 
     public static IntentPlatformEnum keyOf(String key) {
-        if (SpringString.isEmpty(key)) {
+        if (StringKit.isEmpty(key)) {
             return UNDEFINED;
         }
         key = key.toLowerCase();

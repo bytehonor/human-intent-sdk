@@ -1,8 +1,8 @@
 package com.bytehonor.sdk.intent.human.matcher;
 
 import com.bytehonor.sdk.framework.lang.constant.CharConstants;
-import com.bytehonor.sdk.framework.lang.regex.PatternUtils;
-import com.bytehonor.sdk.framework.lang.string.SpringString;
+import com.bytehonor.sdk.framework.lang.regex.PatternKit;
+import com.bytehonor.sdk.framework.lang.string.StringKit;
 import com.bytehonor.sdk.framework.lang.string.StringRemoveUtils;
 
 public class IntentQuery {
@@ -16,7 +16,7 @@ public class IntentQuery {
     public static String prepare(String text) {
         text = StringRemoveUtils.removeHttp(text);
         text = StringRemoveUtils.replaceNonNormalWithBlank(text);
-        if (SpringString.isEmpty(text)) {
+        if (StringKit.isEmpty(text)) {
             return "";
         }
         int length = text.length();
@@ -24,7 +24,7 @@ public class IntentQuery {
         char[] target = new char[length * 2];
         int at = 0;
         for (int i = 0; i < length; i++) {
-            if (PatternUtils.isNormalChar(source[i])) {
+            if (PatternKit.isNormalChar(source[i])) {
                 if (i > 1 && blank(source[i - 1], source[i])) {
                     // 非中文之间补个空格
                     target[at++] = CharConstants.BLANK;
@@ -41,10 +41,10 @@ public class IntentQuery {
         if (last == CharConstants.BLANK || now == CharConstants.BLANK) {
             return false;
         }
-        if (PatternUtils.isChineseChar(last) && PatternUtils.isChineseChar(now) == false) {
+        if (PatternKit.isChineseChar(last) && PatternKit.isChineseChar(now) == false) {
             return true;
         }
-        if (PatternUtils.isChineseChar(last) == false && PatternUtils.isChineseChar(now)) {
+        if (PatternKit.isChineseChar(last) == false && PatternKit.isChineseChar(now)) {
             return true;
         }
         return false;

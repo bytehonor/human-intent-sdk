@@ -1,7 +1,7 @@
 package com.bytehonor.sdk.intent.human.constant;
 
 import com.bytehonor.sdk.framework.lang.core.Randomizer;
-import com.bytehonor.sdk.framework.lang.string.SpringString;
+import com.bytehonor.sdk.framework.lang.string.StringKit;
 
 /**
  * 
@@ -34,7 +34,7 @@ public enum MusicUrlEnum {
     }
 
     public static MusicUrlEnum keyOf(String key) {
-        if (SpringString.isEmpty(key)) {
+        if (StringKit.isEmpty(key)) {
             return HOAPROX_MONBET_REMIX;
         }
         for (MusicUrlEnum sc : MusicUrlEnum.values()) {

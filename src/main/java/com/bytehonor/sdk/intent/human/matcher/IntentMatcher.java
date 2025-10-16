@@ -11,8 +11,8 @@ import org.springframework.util.CollectionUtils;
 import com.bytehonor.sdk.framework.lang.constant.CharConstants;
 import com.bytehonor.sdk.framework.lang.exception.SpringLangException;
 import com.bytehonor.sdk.framework.lang.match.WordMatcher;
-import com.bytehonor.sdk.framework.lang.regex.PatternUtils;
-import com.bytehonor.sdk.framework.lang.string.SpringString;
+import com.bytehonor.sdk.framework.lang.regex.PatternKit;
+import com.bytehonor.sdk.framework.lang.string.StringKit;
 import com.bytehonor.sdk.framework.lang.string.StringSliceUtils;
 import com.bytehonor.sdk.framework.lang.string.StringSplitUtils;
 
@@ -44,7 +44,7 @@ public class IntentMatcher {
     }
 
     public boolean match(String text) {
-        if (SpringString.isEmpty(text)) {
+        if (StringKit.isEmpty(text)) {
             return false;
         }
 
@@ -94,7 +94,7 @@ public class IntentMatcher {
     public static Set<String> words(String text) {
         // 只保留 英文,数字,汉字,空格
         text = IntentQuery.prepare(text);
-        if (SpringString.isEmpty(text)) {
+        if (StringKit.isEmpty(text)) {
             return new HashSet<String>();
         }
         Set<String> raws = StringSplitUtils.toSet(text, CharConstants.BLANK);
@@ -106,15 +106,15 @@ public class IntentMatcher {
                 continue;
             }
 
-            if (PatternUtils.isLetter(raw)) {
+            if (PatternKit.isLetter(raw)) {
                 result.add(raw.toLowerCase()); // 纯英文,直接使用, 且小写
                 continue;
             }
-            if (PatternUtils.isNumber(raw)) {
+            if (PatternKit.isNumber(raw)) {
                 result.add(raw); // 纯数字,直接使用
                 continue;
             }
-            if (PatternUtils.isChinese(raw)) {
+            if (PatternKit.isChinese(raw)) {
                 chineseWords.add(raw); // 汉字块二次分割
                 continue;
             }

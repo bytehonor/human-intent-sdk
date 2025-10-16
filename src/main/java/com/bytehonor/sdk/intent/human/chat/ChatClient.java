@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.bytehonor.sdk.api.tuling.TulingApiClient;
 import com.bytehonor.sdk.framework.lang.core.Randomizer;
-import com.bytehonor.sdk.framework.lang.string.SpringString;
+import com.bytehonor.sdk.framework.lang.string.StringKit;
 import com.bytehonor.sdk.framework.lang.string.StringRemoveUtils;
 import com.google.common.collect.Lists;
 
@@ -16,14 +16,14 @@ public class ChatClient {
 
     public static String ask(String query, String user) {
         String clear = StringRemoveUtils.removeNonChinese(query);
-        if (SpringString.isEmpty(clear)) {
+        if (StringKit.isEmpty(clear)) {
             return ok();
         }
         if (clear.length() > 128) {
             return DEF;
         }
         String answer = TulingApiClient.simpleAsk(query, user).trim();
-        if (SpringString.isEmpty(answer) == false) {
+        if (StringKit.isEmpty(answer) == false) {
             return answer;
         }
         return DEF;
