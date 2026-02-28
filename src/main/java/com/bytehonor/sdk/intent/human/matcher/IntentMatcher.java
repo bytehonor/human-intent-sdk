@@ -11,10 +11,10 @@ import org.springframework.util.CollectionUtils;
 import com.bytehonor.sdk.framework.lang.constant.CharConstants;
 import com.bytehonor.sdk.framework.lang.exception.SpringLangException;
 import com.bytehonor.sdk.framework.lang.match.WordMatcher;
-import com.bytehonor.sdk.framework.lang.regex.PatternKit;
 import com.bytehonor.sdk.framework.lang.string.StringKit;
 import com.bytehonor.sdk.framework.lang.string.StringSliceUtils;
 import com.bytehonor.sdk.framework.lang.string.StringSplitUtils;
+import com.bytehonor.sdk.framework.lang.util.PatternKit;
 
 public class IntentMatcher {
 

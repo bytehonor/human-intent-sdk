@@ -1,9 +1,9 @@
 package com.bytehonor.sdk.intent.human.matcher;
 
 import com.bytehonor.sdk.framework.lang.constant.CharConstants;
-import com.bytehonor.sdk.framework.lang.regex.PatternKit;
 import com.bytehonor.sdk.framework.lang.string.StringKit;
 import com.bytehonor.sdk.framework.lang.string.StringRemoveUtils;
+import com.bytehonor.sdk.framework.lang.util.PatternKit;
 
 public class IntentQuery {
 

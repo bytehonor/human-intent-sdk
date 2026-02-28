@@ -3,9 +3,9 @@ package com.bytehonor.sdk.intent.human.chat;
 import java.util.List;
 
 import com.bytehonor.sdk.api.tuling.TulingApiClient;
-import com.bytehonor.sdk.framework.lang.core.Randomizer;
 import com.bytehonor.sdk.framework.lang.string.StringKit;
 import com.bytehonor.sdk.framework.lang.string.StringRemoveUtils;
+import com.bytehonor.sdk.framework.lang.util.RandomKit;
 import com.google.common.collect.Lists;
 
 public class ChatClient {
@@ -30,7 +30,7 @@ public class ChatClient {
     }
 
     public static String ok() {
-        int index = Randomizer.integer(0, 100) % LIST.size();
+        int index = RandomKit.integer(0, 100) % LIST.size();
         return LIST.get(index);
     }
 }

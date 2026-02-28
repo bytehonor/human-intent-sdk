@@ -1,7 +1,7 @@
 package com.bytehonor.sdk.intent.human.constant;
 
-import com.bytehonor.sdk.framework.lang.core.Randomizer;
 import com.bytehonor.sdk.framework.lang.string.StringKit;
+import com.bytehonor.sdk.framework.lang.util.RandomKit;
 
 /**
  * 
@@ -46,7 +46,7 @@ public enum MusicUrlEnum {
     }
 
     public static MusicUrlEnum random() {
-        return MusicUrlEnum.values()[Randomizer.integer(0, 2)];
+        return MusicUrlEnum.values()[RandomKit.integer(0, 2)];
     }
 
     public String getKey() {
